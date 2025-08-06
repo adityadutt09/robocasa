@@ -938,6 +938,7 @@ def _get_placement_initializer(env, cfg_list, z_offset=0.01):
                 # treat "ref" as sentinel 5 (or -5) so it survives rotation
                 placeholder = 5.0
                 raw_pos = placement.get("pos", (None, None))
+                sampler_kwargs["rotation"] -= rel_yaw
 
                 numeric_pos = []
                 for v in raw_pos:
@@ -950,7 +951,6 @@ def _get_placement_initializer(env, cfg_list, z_offset=0.01):
                 rotated = T.rotate_2d_point(np.array(numeric_pos), rot=rel_yaw)
 
                 def unpack(v):
-                    diff = abs(abs(v) - placeholder)
                     if abs(abs(v) - placeholder) < 1e-2:
                         return "ref"
                     return float(np.clip(v, -1.0, 1.0))

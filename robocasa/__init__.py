@@ -294,6 +294,27 @@ from robocasa.environments.kitchen.multi_stage.plating_food.balanced_meal_prep i
 from robocasa.environments.kitchen.multi_stage.plating_food.plate_store_dinner import (
     PlateStoreDinner,
 )
+from robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken import (
+    DistributeChicken,
+)
+from robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl import (
+    PortionFruitBowl,
+)
+from robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs import (
+    PortionHotDogs,
+)
+from robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware import (
+    PortionInTupperware,
+)
+from robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size import (
+    PortionOnSize,
+)
+from robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt import (
+    PortionYogurt,
+)
+from robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning import (
+    ScalePortioning,
+)
 from robocasa.environments.kitchen.multi_stage.organizing_dishes_and_containers.empty_dish_rack import (
     EmptyDishRack,
 )
