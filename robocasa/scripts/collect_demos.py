@@ -442,6 +442,7 @@ if __name__ == "__main__":
             layout_ids = args.layout or -1
             style_ids = args.style or -1
         obj_instance_split = "test"
+        config["clutter_mode"] = 1
     elif args.split == "train":
         layout_ids = args.layout or -2
         style_ids = args.style or -2

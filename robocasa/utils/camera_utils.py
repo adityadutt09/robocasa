@@ -10,31 +10,31 @@ import collections
 
 # default free cameras for different kitchen layouts
 LAYOUT_CAMS = {
-    0: dict(
+    1: dict(
         lookat=[2.26593463, -1.00037131, 1.38769295],
         distance=3.0505089839567323,
         azimuth=90.71563812375285,
         elevation=-12.63948837207208,
     ),
-    1: dict(
+    2: dict(
         lookat=[2.66147999, -1.00162429, 1.2425155],
         distance=3.7958766287746255,
         azimuth=89.75784013699234,
         elevation=-15.177406642875091,
     ),
-    2: dict(
+    3: dict(
         lookat=[3.02344359, -1.48874618, 1.2412914],
         distance=3.6684844368165512,
         azimuth=51.67880851867874,
         elevation=-13.302619131542388,
     ),
-    # 3: dict(
+    # 4: dict(
     #     lookat=[11.44842548, -11.47664723, 11.24115989],
     #     distance=43.923271794728187,
     #     azimuth=227.12928449329333,
     #     elevation=-16.495686334624907,
     # ),
-    4: dict(
+    5: dict(
         lookat=[1.6, -1.0, 1.0],
         distance=5,
         azimuth=89.70301806083651,

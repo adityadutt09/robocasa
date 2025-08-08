@@ -63,6 +63,7 @@
         <geom mesh="Jar020_collision_mesh_14" type="mesh" class="collision"/>
         <geom mesh="Jar020_collision_mesh_15" type="mesh" class="collision"/>
       </body>
+      <site name="anchor_site" pos="0.0 0.0 0.11560700" size="0.005" rgba="0 1 0 0"/>
     </body>
   </worldbody>
   <actuator/>

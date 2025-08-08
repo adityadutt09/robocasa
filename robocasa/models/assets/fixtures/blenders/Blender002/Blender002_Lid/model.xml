@@ -1,0 +1,37 @@
+<mujoco model="model">
+  <option timestep="0.002" gravity="0.0 0.0 -9.81"/>
+  <compiler angle="radian"/>
+  <asset>
+    <texture file="visuals/T_BC001.png" name="Lid001_material" type="2d"/>
+    <material name="Lid001_material" rgba="1 1 1 1.0" texture="Lid001_material" shininess="0.141421377658844" specular="0.3103448502657381"/>
+    <mesh file="visuals/Lid001.obj" name="Lid001_vis"/>
+  </asset>
+  <default>
+    <default class="visual">
+      <geom conaffinity="0" contype="0" group="1" type="mesh"/>
+    </default>
+    <default class="collision">
+      <geom group="0" rgba="0.5 0 0 0.5"/>
+    </default>
+    <default class="spawn">
+      <geom group="0" rgba="1 1 1 0.5" contype="0" conaffinity="0"/>
+      <site group="0" rgba="1 1 1 0.5"/>
+    </default>
+    <default class="region">
+      <geom group="1" conaffinity="0" contype="0" rgba="0 1 0 0"/>
+    </default>
+  </default>
+  <worldbody>
+    <body>
+      <body name="object">
+        <geom mesh="Lid001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Lid001_material"/>
+        <geom class="collision" type="cylinder" pos="-0.005542231908313832 -6.381662484856825e-05 0.009146134883702" size="0.07600142806768417 0.006195507012307644" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
+        <geom class="collision" type="cylinder" pos="-0.005542231908313832 -6.381662484856825e-05 -0.009434125116297987" size="0.06399042159318924 0.011746169999241829" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
+        <geom class="collision" type="cylinder" pos="-0.005542231908313832 -6.381662484856825e-05 0.027524924883702007" size="0.03432024270296097 0.0019606673158705235" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
+        <geom class="collision" type="box" pos="0.09591398809168616 7.349337515143162e-05 0.007425554883702001" size="0.03143944963812828 0.015363558195531368 0.003451445372775197" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
+        <geom class="collision" type="cylinder" pos="-0.005542231908313832 -6.381662484856825e-05 0.020942314883702018" size="0.02572418749332428 0.00496209692209959" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
+        <geom class="region" name="reg_main" density="0" type="box" pos="0.023445880000000002 -1.0999999999969368e-06 0.004605509999999998" size="0.1044825 0.07544999999999999 0.0264055"/>
+      </body>
+    </body>
+  </worldbody>
+</mujoco>

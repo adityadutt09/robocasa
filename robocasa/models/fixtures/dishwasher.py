@@ -65,7 +65,7 @@ class Dishwasher(Fixture):
         Checks whether the specified object is in contact with the top rack.
         """
         joint_name = self._joint_names["rack"]
-        joint_id = env.sim.model.joint_name2id(joint_name)
+        joint_id = env.sim.model.get_joint_qpos_addr(joint_name)
         body_id = env.sim.model.jnt_bodyid[joint_id]
 
         rack_geoms = [

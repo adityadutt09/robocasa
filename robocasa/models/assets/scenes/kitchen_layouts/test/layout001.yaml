@@ -275,17 +275,37 @@ main_group:
         pos: ["ref", 1.0]
         rotation: [0, 0]
 
-    - name: coffee_machine
-      type: coffee_machine
+    - name: oil_bottle
+      type: oil_bottle
+      is_clutter: true
+      has_free_joints: true
+      aux_fixture_config:
+        is_clutter: true
+        has_free_joints: true
+        placement: anchor 
 
       placement:
         fixture: counter_main_main_group
         sample_region_kwargs:
-          ref: cab_1
-        size: [1.0, 0.52]
-        pos: [null, 1.0]
+          ref: stove
+        size: [0.3, obj]
+        pos: ["ref", 0.8]
         rotation: [0, 0]
-        margin: 0.0
+
+    - name: soap_dispenser
+      type: soap_dispenser
+      is_clutter: true
+      has_free_joints: true
+
+      placement:
+        fixture: counter_main_main_group
+        sample_region_kwargs:
+          ref: sink
+          loc: left_right
+        size: [obj, 0.15]
+        # in general soap will be near back of sink no need to randomize it too much
+        pos: ["ref", 0.9]
+        rotation: [-3.14, 3.14]
 
     - name: toaster
       type: toaster
@@ -314,6 +334,18 @@ main_group:
       placement:
         fixture: counter_right_main_group
         size: [1.0, obj]
+        pos: [null, 1.0]
+        rotation: [0, 0]
+
+    - name: digital_scale
+      type: digital_scale
+      is_clutter: true
+
+      placement:
+        fixture: counter_main_main_group
+        sample_region_kwargs:
+          ref: cab_main
+        size: [0.5, 0.3]
         pos: [null, 1.0]
         rotation: [0, 0]
 
@@ -358,10 +390,62 @@ main_group:
     - name: blender
       type: blender
       enable: false
+      aux_fixture_config:
+        enable: true
+        has_free_joints: true
+        placement: anchor 
+        auxiliary_placement_args:
+          ensure_valid_placement: false
 
       placement:
         fixture: counter_main_main_group
-        size: [1.0, 0.25]
-        pos: [null, -1]
+        sample_region_kwargs:
+          ref: sink
+          loc: right
+        size: [0.5, 0.25]
+        pos: ["ref", -1.0]
         rotation: [0, 0]
         margin: 0.03
+
+    - name: coffee_machine
+      type: coffee_machine
+
+      placement:
+        fixture: counter_main_main_group
+        sample_region_kwargs:
+          ref: cab_1
+        size: [1.0, 0.52]
+        pos: [null, 1.0]
+        rotation: [0, 0]
+        margin: 0.0
+
+    - name: glass_cup
+      type: glass_cup
+      is_clutter: true
+
+      placement:
+        fixture: cab_3_main_group
+        size: [1.0, obj]
+        pos: [null, -0.5]
+        rotation: [0, 0]
+
+    - name: glass_cup_2
+      type: glass_cup
+      is_clutter: true
+
+      placement:
+        fixture: cab_3_main_group
+        size: [1.0, obj]
+        pos: [null, -0.5]
+        rotation: [0, 0]
+
+    - name: glass_cup_3
+      type: glass_cup
+      is_clutter: true
+
+      placement:
+        fixture: cab_3_main_group
+        size: [1.0, obj]
+        pos: [null, -0.5]
+        rotation: [0, 0]
+    

@@ -51,7 +51,7 @@
         <geom mesh="OilBottle001_collision_mesh_4" type="mesh" class="collision"/>
         <geom mesh="OilBottle001_collision_mesh_5" type="mesh" class="collision"/>
       </body>
-      <site rgba="0 1 0 1" size="0.005" pos="0.1167095999999999 0 0" name="anchor_site"/>
+      <site rgba="0 1 0 0" size="0.005" pos="0.1167095999999999 0 0" name="anchor_site"/>
     </body>
   </worldbody>
   <actuator/>

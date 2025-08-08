@@ -84,6 +84,13 @@ class Fixture(MujocoXMLObjectRobocasa):
         size (3-tuple): desired (width, depth, height) of the fixture
     """
 
+    BASE_TO_AUXILIARY_FIXTURES = dict(
+        blender="blender_lid",
+        oil_bottle="vinegar_bottle",
+        salt_shaker="pepper_shaker",
+        jar="jar_lid",
+    )
+
     def __init__(
         self,
         xml,
@@ -95,14 +102,16 @@ class Fixture(MujocoXMLObjectRobocasa):
         max_size=None,
         placement=None,
         rng=None,
+        joints=None,
     ):
+
         if not xml.endswith(".xml"):
             xml = os.path.join(xml, "model.xml")
 
         super().__init__(
             xml_path_completion(xml, root=robocasa.models.assets_root),
             name=name,
-            joints=None,
+            joints=joints,
             duplicate_collision_geoms=duplicate_collision_geoms,
             scale=scale,
         )
@@ -657,7 +666,7 @@ class Fixture(MujocoXMLObjectRobocasa):
         joint_state = dict()
 
         for j_name in joint_names:
-            joint_qpos = env.sim.data.qpos[env.sim.model.joint_name2id(j_name)]
+            joint_qpos = env.sim.data.qpos[env.sim.model.get_joint_qpos_addr(j_name)]
             joint_info = self._joint_infos.get(j_name, None)
             assert joint_info is not None
             joint_min, joint_max = joint_info["range"]

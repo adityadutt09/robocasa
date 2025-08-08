@@ -419,7 +419,9 @@ def sample_kitchen_object_helper(
 
             # exclude out objects based on split
             if split is not None:
-                split_th = max(len(choices) - 4, int(math.ceil(len(reg_choices) / 2)))
+                split_th = max(
+                    len(reg_choices) - 5, int(math.ceil(len(reg_choices) / 2))
+                )
                 if split == "train":
                     reg_choices = reg_choices[:split_th]
                 elif split == "test":

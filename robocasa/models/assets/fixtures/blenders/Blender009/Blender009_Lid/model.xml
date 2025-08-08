@@ -1,0 +1,34 @@
+<mujoco model="model">
+  <option timestep="0.002" gravity="0.0 0.0 -9.81"/>
+  <compiler angle="radian"/>
+  <asset>
+    <texture file="visuals/T_BC001.png" name="Lid001_material" type="2d"/>
+    <material name="Lid001_material" rgba="1 1 1 1.0" texture="Lid001_material" shininess="0.4472135901451111" specular="0.3103448502657381"/>
+    <mesh file="visuals/Lid001.obj" name="Lid001_vis"/>
+  </asset>
+  <default>
+    <default class="visual">
+      <geom conaffinity="0" contype="0" group="1" type="mesh"/>
+    </default>
+    <default class="collision">
+      <geom group="0" rgba="0.5 0 0 0.5"/>
+    </default>
+    <default class="spawn">
+      <geom group="0" rgba="1 1 1 0.5" contype="0" conaffinity="0"/>
+      <site group="0" rgba="1 1 1 0.5"/>
+    </default>
+    <default class="region">
+      <geom group="1" conaffinity="0" contype="0" rgba="0 1 0 0"/>
+    </default>
+  </default>
+  <worldbody>
+    <body>
+      <body name="object">
+        <geom mesh="Lid001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Lid001_material"/>
+        <geom class="collision" type="cylinder" pos="5.4064527389707795e-08 -5.075229077711879e-07 -0.0004525298551582013" size="0.07391905039548874 0.005566863343119621" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
+        <geom class="collision" type="cylinder" pos="5.4064527389707795e-08 -5.075229077711879e-07 0.00962287014484181" size="0.039618849754333496 0.006499830633401871" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
+        <geom class="region" name="reg_main" density="0" type="box" pos="3.1000000000336314e-07 -7.100000000009876e-07 0.00449033" size="0.0726695 0.0726695 0.011866999999999999"/>
+      </body>
+    </body>
+  </worldbody>
+</mujoco>

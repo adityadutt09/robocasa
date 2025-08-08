@@ -32,7 +32,7 @@ Plant008:
 
 Plant009:
   xml: objects/lightwheel/plant/Plant009
-  size: [null, null, 0.16]
+  size: [null, null, 0.14]
 
 Plant010:
   xml: objects/lightwheel/plant/Plant010

@@ -294,7 +294,9 @@ class UniformRandomSampler(ObjectPositionSampler):
                 )
             )
 
-    def sample(self, placed_objects=None, reference=None, on_top=True):
+    def sample(
+        self, placed_objects=None, reference=None, on_top=True, use_reference_quat=False
+    ):
         """
         Uniformly sample relative to this sampler's reference_pos or @reference (if specified).
 
@@ -310,6 +312,9 @@ class UniformRandomSampler(ObjectPositionSampler):
             on_top (bool): if True, sample placement on top of the reference object. This corresponds to a sampled
                 z-offset of the current sampled object's bottom_offset + the reference object's top_offset
                 (if specified)
+
+            use_reference_quat (bool): if True, use the reference object's quaternion as the base for the sampled object's.
+                If True, reference must be a string corresponding to an object in placed_objects.
 
         Return:
             dict: dictionary of all object placements, mapping object_names to (pos, quat, obj), including the
@@ -352,9 +357,12 @@ class UniformRandomSampler(ObjectPositionSampler):
             success = False
 
             # get reference rotation
-            ref_quat = convert_quat(
-                mat2quat(euler2mat([0, 0, self.reference_rot])), to="wxyz"
-            )
+            if use_reference_quat:
+                ref_quat = placed_objects[reference][1]
+            else:
+                ref_quat = convert_quat(
+                    mat2quat(euler2mat([0, 0, self.reference_rot])), to="wxyz"
+                )
 
             ### get boundary points ###
             region_points = np.array(
@@ -368,9 +376,10 @@ class UniformRandomSampler(ObjectPositionSampler):
                 region_points[i][0:2] = rotate_2d_point(
                     region_points[i][0:2], rot=self.reference_rot
                 )
-            region_points += base_offset
 
             from robocasa.models.fixtures import Fixture
+
+            region_points += base_offset
 
             if (
                 isinstance(obj, MJCFObject) or isinstance(obj, Fixture)
@@ -383,6 +392,16 @@ class UniformRandomSampler(ObjectPositionSampler):
                 obj_size = (px[0] - p0[0], py[1] - p0[1], pz[2] - p0[2])
             else:
                 obj_size = None
+
+            def is_auxiliary_pair(a, b):
+                """
+                Return True if exactly one of (a,b) is the auxiliary partner of the other
+                """
+                if b.startswith(a + "_auxiliary_"):
+                    return True
+                if a.startswith(b + "_auxiliary_"):
+                    return True
+                return False
 
             for i in range(5000):  # 5000 retries
                 # sample object coordinates
@@ -436,16 +455,20 @@ class UniformRandomSampler(ObjectPositionSampler):
                     ) in placed_objects.items():
                         if placed_obj_name == self.reference_object:
                             continue
-                        if objs_intersect(
-                            obj=obj,
-                            obj_pos=[object_x, object_y, object_z],
-                            obj_quat=convert_quat(quat, to="xyzw"),
-                            other_obj=other_obj,
-                            other_obj_pos=[x, y, z],
-                            other_obj_quat=convert_quat(other_quat, to="xyzw"),
-                        ):
-                            location_valid = False
-                            break
+                        if not is_auxiliary_pair(obj.name, other_obj.name):
+                            if objs_intersect(
+                                obj=obj,
+                                obj_pos=[object_x, object_y, object_z],
+                                obj_quat=convert_quat(quat, to="xyzw"),
+                                other_obj=other_obj,
+                                other_obj_pos=[x, y, z],
+                                other_obj_quat=convert_quat(other_quat, to="xyzw"),
+                            ):
+                                location_valid = False
+                                break
+
+                if "_auxiliary_" in obj.name and not location_valid:
+                    break
 
                 if location_valid:
                     # location is valid, put the object down
@@ -455,7 +478,7 @@ class UniformRandomSampler(ObjectPositionSampler):
                     break
 
             if not success:
-                raise PlacementError("Cannot place all objects ):")
+                raise PlacementError(f"Cannot place all objects, failed for {obj.name}")
 
         return placed_objects
 

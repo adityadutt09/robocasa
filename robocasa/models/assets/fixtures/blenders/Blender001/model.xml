@@ -9,7 +9,6 @@
     <mesh file="visuals/Jug001.obj" name="Jug001_vis"/>
     <mesh file="visuals/Jug001_Clear.obj" name="Jug001_Clear_vis"/>
     <mesh file="visuals/Knob001.obj" name="Knob001_vis"/>
-    <mesh file="visuals/Lid001.obj" name="Lid001_vis"/>
     <texture file="visuals/T_BC001.png" name="Body001_material" type="2d"/>
     <material name="Body001_material" rgba="1 1 1 1.0" texture="Body001_material" shininess="0.1" specular="1"/>
     <texture file="visuals/T_BC001.png" name="Button001_material" type="2d"/>
@@ -54,7 +53,7 @@
           <geom class="collision" type="cylinder" pos="-0.01595779 -0.08434111 -0.07724272" size="0.007227575872093439 0.00347500410862267" quat="0.7071068286895752 0.7071067690849304 0.0 0.0"/>
         </body>
         <body name="pitcher">
-          <joint axis="0.0 0.0 1.0" pos="0.01402409 0.00780655 0.06737188" limited="true" name="pitcher_joint" range="0.0 0.1" type="slide" damping="1" frictionloss="1" armature=".01" stiffness="0.05"/>
+          <!-- <joint axis="0.0 0.0 1.0" pos="0.01402409 0.00780655 0.06737188" limited="true" name="pitcher_joint" range="0.0 0.1" type="slide" damping="1" frictionloss="1" armature=".01" stiffness="0.05"/> -->
           <geom mesh="Jug001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Jug001_material"/>
           <geom class="collision" type="cylinder" pos="-0.01387144 0.00759112 -0.02343743" size="0.0755901038646698 0.031190989539027214" quat="1.0 0.0 0.0 0.0"/>
           <geom class="collision" type="box" pos="0.06034970 0.00758336 0.06784143" size="0.011583236046135426 0.027263129130005836 0.12090808898210526" quat="1.0 0.0 0.0 0.0"/>
@@ -93,14 +92,6 @@
             <geom class="collision" type="box" pos="-0.07734878 -0.01746379 0.09247573" size="0.005154433660209179 0.027263129130005836 0.09614638984203339" quat="0.1901738941669464 0.018973061814904213 0.0036759646609425545 -0.9815601706504822"/>
             <geom class="collision" type="box" pos="0.03788485 0.05238785 0.09247573" size="0.005154434125870466 0.027263129130005836 0.09614638984203339" quat="0.9367375373840332 -0.006755633745342493 0.018106667324900627 0.3494986593723297"/>
           </body>
-          <body name="lid">
-            <joint axis="0.0 0.0 1.0" pos="0.00646350 0.00780470 0.20770767" limited="true" name="lid_joint" range="0.0 0.1" type="slide" damping="1" frictionloss="1" armature=".01" stiffness="0.05"/>
-            <geom mesh="Lid001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Lid001_material"/>
-            <geom class="collision" type="cylinder" pos="-0.01365060 0.00787059 0.23791380" size="0.03057319112122059 0.010535256937146187" quat="1.0 0.0 0.0 0.0"/>
-            <geom class="collision" type="cylinder" pos="-0.01365060 0.00787059 0.19385339" size="0.06502468883991241 0.03509926795959473" quat="1.0 0.0 0.0 0.0"/>
-            <geom class="collision" type="box" pos="0.05663588 0.00801055 0.20659944" size="0.01173425279557705 0.026565389707684517 0.015394516289234161" quat="1.0 0.0 0.0 0.0"/>
-            <geom class="collision" type="box" pos="0.08630183 0.00749852 0.20609520" size="0.020895959809422493 0.01577948033809662 0.01489027589559555" quat="1.0 0.0 0.0 0.0"/>
-          </body>
         </body>
         <body name="knob_speed">
           <joint axis="0.0 1.0 0.0" pos="-0.01392435 -0.09473100 -0.16594788" limited="true" name="knob_speed_joint" range="0.0 4.014257279586958" type="hinge" damping="0.05" armature="0.001"/>
@@ -110,13 +101,14 @@
         </body>
         <geom class="region" name="reg_main" type="box" pos="-0.013871435000000001 0.0075911150000000024 0.001150994999999988" size="0.106338895 0.10634711499999999 0.252751275"/>
       </body>
+      <site rgba="0 1 0 0" size="0.005" pos="-0.01045485 0.00780499 0.20547592" name="anchor_site"/>
     </body>
   </worldbody>
   <actuator>
     <motor name="power_button_joint_actuator" joint="power_button_joint" gear="0.1"/>
-    <motor name="pitcher_joint_actuator" joint="pitcher_joint" gear="200"/>
+    <!-- <motor name="pitcher_joint_actuator" joint="pitcher_joint" gear="200"/> -->
     <motor name="knob_speed_joint_actuator" joint="knob_speed_joint" gear="10"/>
     <motor name="blade_joint_actuator" joint="blade_joint" gear="10"/>
-    <motor name="lid_joint_actuator" joint="lid_joint" gear="50"/>
+    <!-- <motor name="lid_joint_actuator" joint="lid_joint" gear="50"/> -->
   </actuator>
 </mujoco>

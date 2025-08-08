@@ -54,6 +54,7 @@ room:
     
     - name: utensil_rack
       type: utensil_rack
+      
       attach_to: wall
       pos: [1.9, null, 1.15]
 
@@ -336,7 +337,80 @@ main_group:
         size: [0.4, 0.3]
         pos: [-1.0, 1.0]
         rotation: [0, 0]
-      
+
+    - name: oil_bottle
+      type: oil_bottle
+      has_free_joints: true
+      is_clutter: true
+      aux_fixture_config:
+        is_clutter: true
+        has_free_joints: true
+        placement: anchor 
+
+      placement:
+        fixture: counter_1_main_group
+        sample_region_kwargs:
+          ref: stovetop
+          loc: right
+        size: [1.0, 0.2]
+        pos: [null, 1.0]
+        rotation: [0, 0]
+
+    - name: knife_block
+      type: knife_block
+
+      placement:
+        fixture: counter_main_main_group
+        sample_region_kwargs:
+          ref: cab_1_main_group
+        size: [1.0, obj]
+        pos: [null, 1.0]
+        rotation: [0, 0]
+
+    - name: jar
+      type: jar
+      is_clutter: true
+      aux_fixture_config:
+        is_clutter: true
+        placement: anchor
+        auxiliary_placement_args:
+          ensure_valid_placement: false 
+
+      placement:
+        fixture: shelves_1_main_group
+        size: [1.0, 0.3]
+        rotation: [0, 0]
+
+    - name: cinnamon
+      type: cinnamon
+      is_clutter: true
+
+      placement:
+        fixture: shelves_1_main_group
+        size: [1.0, 0.15]
+        pos: [null, -0.75]
+        rotation: [0, 0]
+
+    - name: turmeric
+      type: turmeric
+      is_clutter: true
+
+      placement:
+        fixture: shelves_2_main_group
+        size: [1.0, 0.15]
+        pos: [null, -0.75]
+        rotation: [0, 0]
+
+    - name: paprika
+      type: paprika
+      is_clutter: true
+
+      placement:
+        fixture: shelves_2_main_group
+        size: [1.0, 0.15]
+        pos: [null, -0.75]
+        rotation: [0, 0]
+
 # Group for island
 front_group:
   group_origin: [0, 0]
@@ -371,6 +445,21 @@ front_group:
         pos: [null, -1.0]
         rotation: [-1.57, -1.57]
         offset: [0, 0.01]
+
+    - name: salt_shaker
+      type: salt_shaker
+      is_clutter: true
+      has_free_joints: true
+      aux_fixture_config:
+        is_clutter: true
+        has_free_joints: true
+        placement: anchor 
+
+      placement:
+        fixture: counter_1_front_group
+        size: [1.0, 0.2]
+        pos: [0, -0.75]
+        rotation: [0, 0]
     
 # fixtures on the left wall
 left_group:
@@ -512,6 +601,12 @@ left_group:
     - name: blender
       type: blender
       enable: false
+      aux_fixture_config:
+        enable: true
+        has_free_joints: true
+        placement: anchor 
+        auxiliary_placement_args:
+          ensure_valid_placement: false
 
       placement:
         fixture: counter_1_left_group
@@ -519,6 +614,31 @@ left_group:
         pos: [null, -1]
         rotation: [0, 0]
         margin: 0.03
+
+    - name: soap_dispenser
+      type: soap_dispenser
+      is_clutter: true
+      has_free_joints: true
+
+      placement:
+        fixture: counter_1_left_group
+        sample_region_kwargs:
+          ref: sink
+          loc: left_right
+        size: [0.15, 0.15]
+        # in general soap will be near back of sink no need to randomize it too much
+        pos: ["ref", 0.8]
+        rotation: [-3.14, 3.14]
+
+    - name: fruit_bowl
+      type: fruit_bowl
+      is_clutter: true
+
+      placement:
+        fixture: counter_1_left_group
+        size: [1.0, 0.4]
+        pos: [null, 1.0]
+        rotation: [0, 0]
 
 
 # # fixtures on the right wall

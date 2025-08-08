@@ -1,6 +1,6 @@
 from copy import deepcopy
 from xml.etree import ElementTree as ET
-
+import re
 import numpy as np
 from robosuite.utils.mjcf_utils import array_to_string as a2s
 from robosuite.utils.mjcf_utils import (
@@ -657,9 +657,11 @@ class HingeCabinet(Cabinet):
         sim = env.sim
 
         # Get raw qpos values
-        left_qpos = sim.data.qpos[sim.model.joint_name2id(f"{self.name}_leftdoorhinge")]
+        left_qpos = sim.data.qpos[
+            sim.model.get_joint_qpos_addr(f"{self.name}_leftdoorhinge")
+        ]
         right_qpos = sim.data.qpos[
-            sim.model.joint_name2id(f"{self.name}_rightdoorhinge")
+            sim.model.get_joint_qpos_addr(f"{self.name}_rightdoorhinge")
         ]
 
         # Normalize each based on correct direction
@@ -714,6 +716,89 @@ class OpenCabinet(Cabinet):
         """
         geom_names = ["top", "bottom"]
         return self._get_elements_by_name(geom_names)[0]
+
+    def get_reset_regions(self, env=None, shelf_level=None, z_range=(0.45, 1.50)):
+        """
+        Returns a dictionary containing reset regions for specified shelf levels within a z_range.
+        Each region is defined by its world-space offset (the top surface of the shelf), its planar size, and its height.
+
+        Args:
+            env (Kitchen): the kitchen environment (unused here, but provided for API consistency).
+            shelf_level (int or None): index of the shelf to use. If None, returns all shelves within z_range.
+                0   → the bottom shelf (level0),
+                1   → the next shelf (level1),
+                …,
+                -1  → the topmost shelf,
+                -2  → one below the topmost, etc.
+            z_range (tuple): optional Z bounds to filter usable regions by height
+                (only used when shelf_level is None)
+
+        Returns:
+            dict: mapping the region's name to a dict with keys:
+                "offset": (x, y, z) world-coordinate at the top surface of that shelf,
+                "size":   (sx, sy) planar dimensions of the shelf top,
+                "height": vertical thickness of the shelf surface.
+        """
+
+        regions = []
+        for key, reg in self._regions.items():
+            m = re.fullmatch(r"level(\d+)", key)
+            if not m:
+                continue
+            idx = int(m.group(1))
+            p0, px, py, pz = reg["p0"], reg["px"], reg["py"], reg["pz"]
+
+            # Check z_range if shelf_level is not specified
+            if shelf_level is None and z_range is not None:
+                reg_abs_z = self.pos[2] + p0[2]
+                if reg_abs_z < z_range[0] or reg_abs_z > z_range[1]:
+                    continue
+
+            regions.append((idx, key, p0, px, py, pz))
+
+        if not regions:
+            raise ValueError(
+                f"No 'levelX' regions found for '{self.name}' within z_range {z_range}"
+            )
+
+        regions.sort(key=lambda x: x[0])
+        indices = [r[0] for r in regions]
+        names = [r[1] for r in regions]
+
+        # If shelf_level is specified, return only that shelf
+        if shelf_level is not None:
+            n = len(regions)
+            pos = shelf_level if shelf_level >= 0 else n + shelf_level
+            if pos < 0 or pos >= n:
+                raise IndexError(
+                    f"shelf_level {shelf_level} out of range (0..{n-1} or negative)"
+                )
+            idx, key, p0, px, py, pz = regions[pos]
+
+            offset = (
+                float(np.mean((p0[0], px[0]))),
+                float(np.mean((p0[1], py[1]))),
+                float(p0[2]),
+            )
+            size = (float(px[0] - p0[0]), float(py[1] - p0[1]))
+            height = float(pz[2] - p0[2])
+
+            return {key: {"offset": offset, "size": size, "height": height}}
+
+        # Otherwise, return all regions within z_range
+        reset_regions = {}
+        for idx, key, p0, px, py, pz in regions:
+            offset = (
+                float(np.mean((p0[0], px[0]))),
+                float(np.mean((p0[1], py[1]))),
+                float(p0[2]),
+            )
+            size = (float(px[0] - p0[0]), float(py[1] - p0[1]))
+            height = float(pz[2] - p0[2])
+
+            reset_regions[key] = {"offset": offset, "size": size, "height": height}
+
+        return reset_regions
 
     def _create_cab(self):
         """
@@ -977,7 +1062,9 @@ class Drawer(Cabinet):
             dict: maps door name to a percentage of how open the door is
         """
         sim = env.sim
-        hinge_qpos = sim.data.qpos[sim.model.joint_name2id(f"{self.name}_slidejoint")]
+        hinge_qpos = sim.data.qpos[
+            sim.model.get_joint_qpos_addr(f"{self.name}_slidejoint")
+        ]
         sign = -1
         hinge_qpos = hinge_qpos * sign
 

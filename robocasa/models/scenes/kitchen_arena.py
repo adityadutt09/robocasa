@@ -26,6 +26,22 @@ def enable_fixtures_in_config(config, names):
             enable_fixtures_in_config(d, names)
 
 
+def disable_clutter_in_config(config):
+    # scan config and disable fixtures with is_clutter=True
+    for key, value in config.items():
+        inner_dicts = []
+        if isinstance(value, dict):
+            inner_dicts.append(value)
+        elif isinstance(value, list):
+            for elem in value:
+                if isinstance(elem, dict):
+                    inner_dicts.append(elem)
+        for d in inner_dicts:
+            if d.get("is_clutter", False):
+                d["enable"] = False
+            disable_clutter_in_config(d)
+
+
 # base class for kitchens
 class KitchenArena(Arena):
     """
@@ -40,9 +56,13 @@ class KitchenArena(Arena):
             fixture state in the KitchenArena
 
         enable_fixtures (list of str): any fixtures to enable (some are disabled by default)
+
+        clutter_mode (int): sets clutter level. default is 0.
     """
 
-    def __init__(self, layout_id, style_id, rng=None, enable_fixtures=None):
+    def __init__(
+        self, layout_id, style_id, rng=None, enable_fixtures=None, clutter_mode=0
+    ):
         super().__init__(
             xml_path_completion(
                 "arenas/empty_kitchen_arena.xml", root=robocasa.models.assets_root
@@ -59,6 +79,14 @@ class KitchenArena(Arena):
 
         if enable_fixtures is not None:
             enable_fixtures_in_config(layout_config, enable_fixtures)
+
+        # disable clutter fixtures unless enable_clutter is True
+        if clutter_mode == 0:
+            disable_clutter_in_config(layout_config)
+        elif clutter_mode:
+            pass
+        else:
+            raise ValueError("Invalid clutter mode. Must be 0 or 1.")
 
         # load style config
         if isinstance(style_id, dict):

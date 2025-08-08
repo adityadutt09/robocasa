@@ -93,8 +93,7 @@ class Sink(Fixture):
         assert min_temp <= max_temp, "min_temp must be less than or equal to max_temp"
 
         joint_name = f"{self.naming_prefix}handle_temp_joint"
-        joint_id = env.sim.model.joint_name2id(joint_name)
-        joint_range = env.sim.model.jnt_range[joint_id]
+        joint_range = env.sim.model.jnt_range[env.sim.model.joint_name2id(joint_name)]
 
         lo, hi = joint_range
 
@@ -126,9 +125,8 @@ class Sink(Fixture):
         if self.handle_joint is None:
             return handle_state
 
-        # On/Off joint
-        handle_joint_id = env.sim.model.joint_name2id(
-            f"{self.naming_prefix}handle_joint"
+        handle_joint_id = env.sim.model.get_joint_qpos_addr(
+            "{}handle_joint".format(self.naming_prefix)
         )
         handle_joint_max = string_to_array(self.handle_joint.get("range"))[1]
         handle_joint_qpos = deepcopy(env.sim.data.qpos[handle_joint_id])
@@ -150,7 +148,9 @@ class Sink(Fixture):
             handle_state["water_pressure"] = "zero"
 
         # Spout rotation
-        spout_joint_id = env.sim.model.joint_name2id(f"{self.naming_prefix}spout_joint")
+        spout_joint_id = env.sim.model.get_joint_qpos_addr(
+            "{}spout_joint".format(self.naming_prefix)
+        )
         spout_joint_qpos = deepcopy(env.sim.data.qpos[spout_joint_id])
         spout_joint_qpos = spout_joint_qpos % (2 * np.pi)
         if spout_joint_qpos < 0:
@@ -165,13 +165,15 @@ class Sink(Fixture):
         handle_state["spout_ori"] = spout_ori
 
         # Temperature joint
-        temp_joint_id = env.sim.model.joint_name2id(
+        temp_joint_id = env.sim.model.get_joint_qpos_addr(
             f"{self.naming_prefix}handle_temp_joint"
         )
         temp_joint_qpos = float(env.sim.data.qpos[temp_joint_id])
         handle_state["temp_joint"] = temp_joint_qpos
 
-        lo, hi = env.sim.model.jnt_range[temp_joint_id]
+        lo, hi = env.sim.model.jnt_range[
+            env.sim.model.joint_name2id(f"{self.naming_prefix}handle_temp_joint")
+        ]
 
         # Normalize temp where lo = cold (0.0) and hi = hot (1.0)
         normalized_temp = (temp_joint_qpos - lo) / (hi - lo)

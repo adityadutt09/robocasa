@@ -28,6 +28,7 @@ dishwasher: Dishwasher039
 coffee_machine: CoffeeMachine042
 toaster: Toaster052
 blender: Blender006
+blender_lid: BlenderLid006
 toaster_oven: ToasterOven018
 stand_mixer: StandMixer012
 electric_kettle: ElectricKettle003
@@ -41,6 +42,21 @@ knife_block: KnifeBlock010
 utensil_rack: UtensilRack007
 utensil_set: UtensilSet010
 plant: Plant002
+flower_vase: FlowerVase012
+oil_bottle: OilBottle017
+vinegar_bottle: VinegarBottle017
+salt_shaker: SaltShaker008
+pepper_shaker: PepperShaker008
+jar: Jar024
+jar_lid: Jar024_Lid
+fruit_bowl: FruitBowl019
+digital_scale: DigitalScale010
+glass_cup: GlassCup022
+cinnamon: Cinnamon008
+turmeric: Turmeric010
+soap_dispenser: SoapDispenser009
+tiered_basket: TieredBasket023
+paprika: Paprika010
 box: default
 window: Window044
 

@@ -149,6 +149,16 @@ class MujocoXMLObjectRobocasa(MujocoXMLObject):
                 s_size = array_to_string(s_size_np)
                 elem.set("size", s_size)
 
+    @property
+    def anchor_offset(self):
+        anchor_site = self.worldbody.find(
+            "./body/site[@name='{}anchor_site']".format(self.naming_prefix)
+        )
+        if anchor_site is None:
+            return None
+        site_values = string_to_array(anchor_site.get("pos"))
+        return np.array(site_values)
+
 
 class MJCFObject(MujocoXMLObjectRobocasa):
     """

@@ -52,7 +52,7 @@
         </body>
         <body name="Jug001_Clear">
           <geom class="region" name="reg_int" type="box" pos="-0.032130729999999996 0.009665190000000004 0.13343475" size="0.06979121 0.0672799 0.08648693"/>
-          <joint axis="0.0 0.0 1.0" pos="0.00048447 0.01028055 0.10387684" limited="true" name="Jug001_Clear_joint" range="0.0 0.05" type="slide" damping="1" frictionloss="1" armature=".01" stiffness="0.05"/>
+          <!-- <joint axis="0.0 0.0 1.0" pos="0.00048447 0.01028055 0.10387684" limited="true" name="Jug001_Clear_joint" range="0.0 0.05" type="slide" damping="1" frictionloss="1" armature=".01" stiffness="0.05"/> -->
           <geom mesh="Jug001_Clear_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Jug001_Clear_material"/>
           <geom class="collision" type="box" pos="-0.03396280 0.10241802 0.11139487" size="0.056509215384721756 0.008711088448762894 0.12795716524124146" quat="1.0 0.0 0.0 0.0"/>
           <geom class="collision" type="box" pos="-0.11034779 0.08306386 0.11139487" size="0.032513655722141266 0.008711197413504124 0.12795889377593994" quat="0.933960497379303 0.0 0.0 0.35737624764442444"/>
@@ -109,14 +109,9 @@
           <geom class="collision" type="cylinder" pos="-0.03200669 -0.08238636 -0.13961077" size="0.030412523075938225 0.006172697059810162" quat="0.7071067094802856 0.7071068286895752 0.0 0.0"/>
           <geom class="collision" type="box" pos="-0.03214500 -0.09542076 -0.13954633" size="0.006515718065202236 0.014615816064178944 0.023852845653891563" quat="0.8647358417510986 -4.5700311651554904e-15 0.5022270083427429 6.747864489398125e-08"/>
         </body>
-        <body name="Lid001">
-          <joint axis="0.0 0.0 1.0" pos="-0.04194411 0.01025638 0.25305092" limited="true" name="Lid001_joint" range="0.0 0.05" type="slide" damping="1" frictionloss="1" armature=".01" stiffness="0.05"/>
-          <geom mesh="Lid001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Lid001_material"/>
-          <geom class="collision" type="box" pos="-0.03560916 0.00918471 0.25380158" size="0.10527113080024719 0.10018409788608551 0.01374603621661663" quat="1.0 0.0 0.0 0.0"/>
-          <geom class="collision" type="box" pos="-0.03411070 0.01050357 0.27079961" size="0.042463742196559906 0.04234278202056885 0.01106703095138073" quat="1.0 0.0 0.0 0.0"/>
-        </body>
         <geom class="region" name="reg_main" type="box" pos="-0.041557159999999996 0.010226100000000002 0.0" size="0.11028239 0.10077628 0.28032143"/>
       </body>
+      <site rgba="0 1 0 0" size="0.005" pos="-0.03408582 0.01025725 0.25190478" name="anchor_site"/>
     </body>
   </worldbody>
   <actuator>

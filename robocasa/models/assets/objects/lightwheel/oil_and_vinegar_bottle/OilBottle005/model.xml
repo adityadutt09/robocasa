@@ -41,6 +41,7 @@
         <geom class="region" name="reg_bbox" type="box" pos="0.0 0.0 -0.000460809999999999" size="0.0213578 0.0213578 0.12277099999999999"/>
         <geom mesh="OilBottle005_collision_mesh_0" type="mesh" class="collision"/>
       </body>
+      <site rgba="0 1 0 0" size="0.005" pos="0.07 0 0" name="anchor_site"/>
     </body>
   </worldbody>
   <actuator/>

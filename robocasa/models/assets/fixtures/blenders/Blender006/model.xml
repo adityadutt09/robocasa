@@ -65,7 +65,7 @@
           <geom class="collision" type="cylinder" pos="-0.06655253469944 -0.06422373652458191 -0.14217321574687958" size="0.007525994908064604 0.0013521818909794092" quat="0.7372773885726929 0.6755901575088501 -1.6078366169891328e-16 -1.523387564496777e-16"/>
         </body>
         <body name="Jug001">
-          <joint axis="0.0 0.0 1.0" pos="0.0333019383251667 0.010972334071993828 0.08564426749944687" limited="true" name="Jug001_joint" range="0.0 0.1" type="slide" damping="1" frictionloss="1" armature=".01" stiffness="0.05"/>
+          <!-- <joint axis="0.0 0.0 1.0" pos="0.0333019383251667 0.010972334071993828 0.08564426749944687" limited="true" name="Jug001_joint" range="0.0 0.1" type="slide" damping="1" frictionloss="1" armature=".01" stiffness="0.05"/> -->
           <geom mesh="Jug001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Jug001_material"/>
           <geom class="collision" type="box" pos="-0.081379733979702 0.010130036622285843 0.049280185252428055" size="0.0029590476769953966 0.01903216540813446 0.06470920145511627" quat="0.9974465370178223 -1.1931020221404376e-15 -0.07141713798046112 -9.595525263250693e-09"/>
           <geom class="collision" type="cylinder" pos="-0.022718634456396103 0.010130046866834164 -0.015385578386485577" size="0.04932210594415665 0.0013838945887982845" quat="1.0 0.0 0.0 0.0"/>
@@ -113,7 +113,7 @@
             <geom class="collision" type="box" pos="-0.023458171635866165 0.02114049345254898 0.02140624076128006" size="0.0034575453028082848 0.008669809438288212 0.00036451275809668005" quat="0.4017453193664551 -0.9157514572143555 -2.0333765729179347e-16 1.967528118198305e-23"/>
           </body>
           <body name="Jug001_Clear">
-            <geom class="region" name="reg_int" type="box" pos="-0.023407485336065292 0.011055770330131054 0.10209203604608774" size="0.037950815469026566 0.03795081640034914 0.07320532651990652"/>
+            <!-- <geom class="region" name="reg_int" type="box" pos="-0.023407485336065292 0.011055770330131054 0.10209203604608774" size="0.037950815469026566 0.03795081640034914 0.07320532651990652"/> -->
             <geom mesh="Jug001_Clear_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Jug001_Clear_material"/>
             <geom class="collision" type="box" pos="-0.081379733979702 0.010130036622285843 0.049280185252428055" size="0.0029590476769953966 0.01903216540813446 0.06470920145511627" quat="0.9974465370178223 -1.1931020221404376e-15 -0.07141713798046112 -9.595525263250693e-09"/>
             <geom class="collision" type="cylinder" pos="-0.022718634456396103 0.010130046866834164 -0.015385578386485577" size="0.04932210594415665 0.0013838945887982845" quat="1.0 0.0 0.0 0.0"/>
@@ -143,13 +143,6 @@
             <geom class="collision" type="box" pos="-0.09945792704820633 -0.0003995802253484726 0.18065233528614044" size="0.002958409721031785 0.019032161682844162 0.011675574816763401" quat="0.9396675825119019 0.002497683744877577 -0.006862326990813017 0.342011034488678"/>
             <geom class="collision" type="box" pos="-0.0976974368095398 0.02441496029496193 0.18065233528614044" size="0.0029584099538624287 0.019032161682844162 0.011675574816763401" quat="0.9238548874855042 -0.0027946368791162968 -0.006746850907802582 -0.3826732039451599"/>
           </body>
-          <body name="Lid001">
-            <joint axis="0.0 0.0 1.0" pos="-0.012684758752584457 0.010972360149025917 0.19444337487220764" limited="true" name="Lid001_joint" range="0.0 0.05" type="slide" damping="1" frictionloss="1" armature=".01" stiffness="0.05"/>
-            <geom mesh="Lid001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Lid001_material"/>
-            <geom class="collision" type="cylinder" pos="-0.023431582376360893 0.010900856927037239 0.1984582245349884" size="0.06867838650941849 0.005201192107051611" quat="1.0 0.0 0.0 0.0"/>
-            <geom class="collision" type="cylinder" pos="-0.02343158610165119 0.010900854133069515 0.20879223942756653" size="0.02612263336777687 0.005131117068231106" quat="1.0 0.0 0.0 0.0"/>
-            <geom class="collision" type="box" pos="0.043942589312791824 0.01146834809333086 0.1981183886528015" size="0.022866295650601387 0.01229377556592226 0.003732527606189251" quat="0.9993242025375366 -1.5204171522996543e-15 0.036758556962013245 4.9388284573126384e-09"/>
-          </body>
         </body>
         <body name="Konb001">
           <joint axis="0.0 1.0 0.0" pos="-0.023714657872915268 -0.07196100056171417 -0.12436006218194962" limited="true" name="Konb001_joint" range="0.0 4.1887902047863905" type="hinge" damping="1" frictionloss="0.1" armature=".01"/>
@@ -159,13 +152,14 @@
         </body>
         <geom class="region" name="reg_main" type="box" pos="-0.02172207646071911 0.010653667151927948 0.0" size="0.09036356008052826 0.0765433738231659 0.21434168314933777"/>
       </body>
+      <site rgba="0 1 0 0" size="0.005" pos="-0.0185759 0.01097328 0.19138097" name="anchor_site"/>
     </body>
   </worldbody>
   <actuator>
     <motor name="Button001_joint_actuator" joint="Button001_joint" gear="0.1"/>
-    <motor name="Jug001_joint_actuator" joint="Jug001_joint" gear="15"/>
+    <!-- <motor name="Jug001_joint_actuator" joint="Jug001_joint" gear="15"/> -->
     <motor name="Konb001_joint_actuator" joint="Konb001_joint" gear="10"/>
     <motor name="Blade001_joint_actuator" joint="Blade001_joint" gear="10"/>
-    <motor name="Lid001_joint_actuator" joint="Lid001_joint" gear="10"/>
+    <!-- <motor name="Lid001_joint_actuator" joint="Lid001_joint" gear="10"/> -->
   </actuator>
 </mujoco>

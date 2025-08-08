@@ -1,0 +1,36 @@
+<mujoco model="model">
+  <option timestep="0.002" gravity="0.0 0.0 -9.81"/>
+  <compiler angle="radian"/>
+  <asset>
+    <texture file="visuals/T_BC001.png" name="Lid001_material" type="2d"/>
+    <material name="Lid001_material" rgba="1 1 1 1.0" texture="Lid001_material" shininess="0.4472135901451111" specular="0.3103448502657381"/>
+    <mesh file="visuals/Lid001.obj" name="Lid001_vis"/>
+  </asset>
+  <default>
+    <default class="visual">
+      <geom conaffinity="0" contype="0" group="1" type="mesh"/>
+    </default>
+    <default class="collision">
+      <geom group="0" rgba="0.5 0 0 0.5"/>
+    </default>
+    <default class="spawn">
+      <geom group="0" rgba="1 1 1 0.5" contype="0" conaffinity="0"/>
+      <site group="0" rgba="1 1 1 0.5"/>
+    </default>
+    <default class="region">
+      <geom group="1" conaffinity="0" contype="0" rgba="0 1 0 0"/>
+    </default>
+  </default>
+  <worldbody>
+    <body>
+      <body name="object">
+        <geom mesh="Lid001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Lid001_material"/>
+        <geom class="collision" type="cylinder" pos="-0.000426113427849633 -9.082793274997527e-05 -0.015304416704503304" size="0.07152660936117172 0.010581719689071178" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
+        <geom class="collision" type="cylinder" pos="7.976572150365097e-06 -9.082793274997527e-05 0.008445693295496687" size="0.08795700967311859 0.014345938339829445" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
+        <geom class="collision" type="cylinder" pos="7.976572150365097e-06 -9.082793274997527e-05 0.026947613295496692" size="0.010166909545660019 0.006375753786414862" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
+        <geom class="collision" type="cylinder" pos="7.976572150365097e-06 -9.082793274997527e-05 0.03677652329549669" size="0.020150093361735344 0.005524957552552223" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
+        <geom class="region" name="reg_main" density="0" type="box" pos="7.98000000000465e-06 -9.086999999999984e-05 0.007742499999999999" size="0.083008 0.083147 0.033795"/>
+      </body>
+    </body>
+  </worldbody>
+</mujoco>

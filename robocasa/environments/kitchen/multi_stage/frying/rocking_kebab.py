@@ -108,7 +108,7 @@ class RockingKebab(Kitchen):
 
         burner_on = self.stove.is_burner_on(env=self, burner_loc=self.knob)
 
-        pan_joint_id = self.sim.model.joint_name2id("pan_joint0")
+        pan_joint_id = self.sim.model.get_joint_qpos_addr("pan_joint0")
         pan_velocity = self.sim.data.qvel[pan_joint_id]
         velocity_threshold = 0.07
 

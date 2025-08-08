@@ -94,7 +94,7 @@
           <geom class="collision" type="cylinder" pos="-0.01896529 -0.06192039 -0.06927289" size="0.008001218549907207 0.004626220557838678" quat="0.7071068286895752 0.7071067690849304 0.0 0.0"/>
         </body>
         <body name="Jug001">
-          <joint axis="0.0 0.0 1.0" pos="0.01690692 0.01088085 0.07850766" limited="true" name="Jug001_joint" range="0.0 0.1" type="slide" damping="1" frictionloss="1" armature=".01" stiffness="0.05"/>
+          <!-- <joint axis="0.0 0.0 1.0" pos="0.01690692 0.01088085 0.07850766" limited="true" name="Jug001_joint" range="0.0 0.1" type="slide" damping="1" frictionloss="1" armature=".01" stiffness="0.05"/> -->
           <geom mesh="Jug001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Jug001_material"/>
           <geom class="collision" type="box" pos="-0.02157444 0.01190083 -0.00689259" size="0.05418802425265312 0.05418802425265312 0.013749852776527405" quat="1.0 0.0 0.0 0.0"/>
           <geom class="collision" type="cylinder" pos="-0.02033783 0.01155110 0.01156995" size="0.015780305489897728 0.008454694412648678" quat="1.0 0.0 0.0 0.0"/>
@@ -173,15 +173,6 @@
             <geom class="collision" type="box" pos="0.01068451 -0.05090387 0.10461194" size="0.018826475366950035 0.002732254099100828 0.0740242451429367" quat="0.9738985896110535 0.022180767729878426 0.005143522750586271 0.22583864629268646"/>
             <geom class="collision" type="box" pos="-0.10369241 0.01091495 0.16857263" size="0.00855797715485096 0.010857014916837215 0.009734752587974072" quat="1.0 0.0 0.0 0.0"/>
           </body>
-          <body name="Lid001">
-            <joint axis="0.0 0.0 1.0" pos="0.00776766 0.01088247 0.18117738" limited="true" name="Lid001_joint" range="0.0 0.1" type="slide" damping="1" frictionloss="1" armature=".01" stiffness="0.05"/>
-            <geom mesh="Lid001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Lid001_material"/>
-            <geom class="collision" type="cylinder" pos="-0.02122061 0.01081978 0.18571812" size="0.07600142806768417 0.006195507012307644" quat="1.0 0.0 0.0 0.0"/>
-            <geom class="collision" type="cylinder" pos="-0.02122061 0.01081978 0.16713786" size="0.06399042159318924 0.011746169999241829" quat="1.0 0.0 0.0 0.0"/>
-            <geom class="collision" type="cylinder" pos="-0.02122061 0.01081978 0.20409691" size="0.03432024270296097 0.0019606673158705235" quat="1.0 0.0 0.0 0.0"/>
-            <geom class="collision" type="box" pos="0.08023561 0.01095709 0.18399754" size="0.03143944963812828 0.015363558195531368 0.003451445372775197" quat="1.0 0.0 0.0 0.0"/>
-            <geom class="collision" type="cylinder" pos="-0.02122061 0.01081978 0.19751430" size="0.02572418749332428 0.00496209692209959" quat="1.0 0.0 0.0 0.0"/>
-          </body>
         </body>
         <body name="Knob001">
           <joint axis="0.0 1.0 0.0" pos="-0.02107783 -0.08739519 -0.13215874" limited="true" name="Knob001_joint" range="0.0 4.71238898038469" type="hinge" damping="0.05" armature="0.001"/>
@@ -191,13 +182,14 @@
         </body>
         <geom class="region" name="reg_main" type="box" pos="-0.026009295 0.010860124999999998 0.0" size="0.087241095 0.081966695 0.20858319"/>
       </body>
+      <site rgba="0 1 0 0" size="0.005" pos="-0.01567838 0.0108836 0.17657199" name="anchor_site"/>
     </body>
   </worldbody>
   <actuator>
     <motor name="Button001_joint_actuator" joint="Button001_joint" gear="0.5"/>
-    <motor name="Jug001_joint_actuator" joint="Jug001_joint" gear="100"/>
+    <!-- <motor name="Jug001_joint_actuator" joint="Jug001_joint" gear="100"/> -->
     <motor name="Knob001_joint_actuator" joint="Knob001_joint" gear="10"/>
     <motor name="Blade001_joint_actuator" joint="Blade001_joint" gear="20"/>
-    <motor name="Lid001_joint_actuator" joint="Lid001_joint" gear="20"/>
+    <!-- <motor name="Lid001_joint_actuator" joint="Lid001_joint" gear="20"/> -->
   </actuator>
 </mujoco>

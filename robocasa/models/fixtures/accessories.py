@@ -17,11 +17,27 @@ class Accessory(Fixture):
         pos (list): position of the object
     """
 
-    def __init__(self, xml, name, pos=None, *args, **kwargs):
+    def __init__(
+        self,
+        xml,
+        name,
+        has_free_joints=False,
+        pos=None,
+        is_clutter=False,
+        *args,
+        **kwargs
+    ):
+        if has_free_joints:
+            joints = [dict(type="free", damping="0.0005")]
+        else:
+            joints = None
+        self.is_clutter = is_clutter
+
         super().__init__(
             xml=xml,
             name=name,
             duplicate_collision_geoms=False,
+            joints=joints,
             pos=pos,
             *args,
             **kwargs

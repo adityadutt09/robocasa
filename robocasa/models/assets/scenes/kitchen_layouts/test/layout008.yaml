@@ -71,6 +71,7 @@ room:
 
     - name: utensil_rack
       type: utensil_rack
+
       attach_to: wall_right
       pos: [null, -0.5, 1.15]
 
@@ -236,9 +237,44 @@ main_group:
         pos: [null, 1.0]
         rotation: [0, 0]
 
+    - name: oil_bottle
+      type: oil_bottle
+      is_clutter: true
+      has_free_joints: true
+      aux_fixture_config:
+        is_clutter: true
+        has_free_joints: true
+        placement: anchor 
+
+      placement:
+        fixture: counter_main_main_group
+        sample_region_kwargs:
+          ref: stack_3
+        size: [1.0, 0.2]
+        pos: [null, 1.0]
+        rotation: [0, 0]
+
+    - name: fruit_bowl
+      type: fruit_bowl
+      is_clutter: true
+
+      placement:
+        fixture: counter_main_main_group
+        sample_region_kwargs:
+          ref: stack_2
+        size: [1.0, 0.4]
+        pos: [null, 1.0]
+        rotation: [0, 0]
+
     - name: blender
       type: blender
       enable: false
+      aux_fixture_config:
+        enable: true
+        has_free_joints: true
+        placement: anchor 
+        auxiliary_placement_args:
+          ensure_valid_placement: false
 
       placement:
         fixture: counter_main_main_group
@@ -252,7 +288,7 @@ main_group:
 
       placement:
         fixture: counter_corner_main_group
-        size: [0.4, obj]
+        size: [0.35, obj]
         pos: [1.0, 1.0]
         rotation: [0, 0]
 
@@ -463,6 +499,21 @@ left_group:
         rotation: [0, 0]
         margin: 0.0
 
+    - name: salt_shaker
+      type: salt_shaker
+      is_clutter: true
+      has_free_joints: true
+      aux_fixture_config:
+        is_clutter: true
+        has_free_joints: true
+        placement: anchor 
+
+      placement:
+        fixture: counter_1_front_group
+        size: [1.0, 0.2]
+        pos: [0, -0.9]
+        rotation: [0, 0]
+
 # fixtures on the right wall
 right_group: 
   # rotation and displacement of the group
@@ -565,11 +616,67 @@ right_group:
         pos: ["ref", 1.0]
         rotation: [0, 0]
 
-    - name: plant
-      type: plant
+    - name: flower_vase
+      type: flower_vase
+      is_clutter: true
 
       placement:
         fixture: counter_corner_right_group
         size: [1.0, 0.4]
         pos: [0.0, 0.0]
+        rotation: [0, 0]
+
+    - name: soap_dispenser
+      type: soap_dispenser
+      is_clutter: true
+      has_free_joints: true
+
+      placement:
+        fixture: counter_1_right_group
+        sample_region_kwargs:
+          ref: sink
+          loc: right
+        size: [0.15, 0.15]
+        # in general soap will be near back of sink no need to randomize it too much
+        pos: ["ref", 0.8]
+        rotation: [0, 0]
+
+    - name: glass_cup
+      type: glass_cup
+      is_clutter: true
+      
+      placement:
+        fixture: shelves_right_group
+        size: [1.0, 0.2]
+        pos: [null, 1.0]
+        rotation: [0, 0]
+
+    - name: glass_cup_2
+      type: glass_cup
+      is_clutter: true
+      
+      placement:
+        fixture: shelves_right_group
+        size: [1.0, 0.2]
+        pos: [null, 1.0]
+        rotation: [0, 0]
+
+    - name: paprika
+      type: paprika
+      is_clutter: true
+      
+      placement:
+        fixture: shelves_right_group
+        size: [1.0, 0.2]
+        pos: [null, -1.0]
+        rotation: [0, 0]
+
+    - name: cinnamon
+      type: cinnamon
+      is_clutter: true
+      
+      placement:
+        fixture: shelves_right_group
+        size: [1.0, 0.2]
+        pos: [null, -1.0]
         rotation: [0, 0]

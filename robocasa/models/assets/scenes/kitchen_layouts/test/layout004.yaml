@@ -219,7 +219,7 @@ main_group:
 
       placement:
         fixture: counter_corner_main_main_group
-        size: [obj, 0.5]
+        size: [obj, 0.35]
         pos: [-1.0, -1.0]
         rotation: [0, 0]
 
@@ -228,8 +228,8 @@ main_group:
 
       placement:
         fixture: counter_corner_main_main_group
-        size: [1.0, obj]
-        pos: [null, 1.0]
+        size: [0.35, obj]
+        pos: [1.0, 1.0]
         rotation: [0, 0]
 
     - name: toaster
@@ -266,6 +266,12 @@ main_group:
     - name: blender
       type: blender
       enable: false
+      aux_fixture_config:
+        enable: true
+        has_free_joints: true
+        placement: anchor
+        auxiliary_placement_args:
+          ensure_valid_placement: false
 
       placement:
         fixture: counter_1_right_main_group
@@ -273,6 +279,56 @@ main_group:
         pos: [null, -1]
         rotation: [0, 0]
         margin: 0.03
+    
+    - name: jar
+      type: jar
+      is_clutter: true
+      aux_fixture_config:
+        is_clutter: true
+        placement: anchor 
+        auxiliary_placement_args:
+          ensure_valid_placement: false
+
+      placement:
+        fixture: shelves_main_group  
+        size: [0.6, 0.3]
+        pos: [-1.0, null]
+        rotation: [0, 0]
+
+    - name: jar_2
+      type: jar
+      is_clutter: true
+      aux_fixture_config:
+        is_clutter: true
+        placement: anchor 
+        auxiliary_placement_args:
+          ensure_valid_placement: false
+
+      placement:
+        fixture: shelves_main_group  
+        size: [0.6, 0.3]
+        pos: [1.0, null]
+        rotation: [0, 0]
+
+    - name: glass_cup
+      type: glass_cup
+      is_clutter: true
+
+      placement:
+        fixture: shelves_main_group  
+        size: [1.0, obj]
+        pos: [1.0, 0]
+        rotation: [0, 0]
+
+    - name: glass_cup_2
+      type: glass_cup
+      is_clutter: true
+
+      placement:
+        fixture: shelves_main_group
+        size: [0.5, obj]
+        pos: [1.0, 0]
+        rotation: [0, 0]
 
 # fixtures on the left wall
 left_group:
@@ -447,9 +503,8 @@ left_group:
       placement:
         fixture: counter_1_left_left_group
         sample_region_kwargs:
-          ref: sink
-          loc: right
-        size: [0.50, 0.52]
+          ref: cab_1
+        size: [1.0, 0.52]
         pos: [null, 1.0]
         rotation: [0, 0]
         margin: 0.0
@@ -466,6 +521,31 @@ left_group:
         size: [1.0, 0.30]
         pos: [null, -0.75]
         rotation: [-1.0, 0.1]
+
+    - name: soap_dispenser
+      type: soap_dispenser
+      is_clutter: true
+      has_free_joints: true
+
+      placement:
+        fixture: counter_1_left_left_group
+        sample_region_kwargs:
+          ref: sink
+          loc: left_right
+        size: [0.15, 0.15]
+        # in general soap will be near back of sink no need to randomize it too much
+        pos: ["ref", 0.8]
+        rotation: [-3.14, 3.14]
+
+    - name: tiered_basket
+      type: tiered_basket
+      is_clutter: true
+
+      placement:
+        fixture: counter_1_left_left_group
+        size: [1.0, 0.4]
+        pos: [null, 1.0]
+        rotation: [0, 0]
 
 # island group
 island_group:
@@ -487,7 +567,9 @@ island_group:
 
       placement:
         fixture: island_island_group
-        size: [1.0, 0.4]
+        sample_region_kwargs:
+          ref: stool_2
+        size: [0.6, 0.4]
         pos: [null, null]
         rotation: [0, 0]
     
@@ -501,3 +583,30 @@ island_group:
         pos: [null, -0.90]
         rotation: [-1.57, -1.57]
         offset: [0, 0.01]
+
+    - name: fruit_bowl
+      type: fruit_bowl
+      is_clutter: true
+
+      placement:
+        fixture: island_island_group
+        sample_region_kwargs:
+          ref: stool_1
+        pos: [null, null]
+        size: [0.5, 0.4]
+        rotation: [0, 0]
+    
+    - name: salt_shaker
+      type: salt_shaker
+      is_clutter: true
+      aux_fixture_config:
+        is_clutter: true
+        placement: anchor
+
+      placement:
+        fixture: island_island_group
+        sample_region_kwargs:
+          ref: stool_3
+        size: [0.5, 0.2]
+        pos: [null, 0]
+        rotation: [0, 0]

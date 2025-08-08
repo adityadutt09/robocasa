@@ -622,6 +622,7 @@ def check_obj_fixture_contact(env, obj_name, fixture_name):
 
 def check_obj_any_counter_contact(env, obj_name):
     from robocasa.models.fixtures import Counter
+
     """
     check if the object is in contact with any counter fixture in the environment.
     """
@@ -651,7 +652,7 @@ def check_obj_grasped(env, obj_name, threshold=0.035):
 
     gripper_joints = ["gripper0_right_finger_joint1", "gripper0_right_finger_joint2"]
     gripper_joint_positions = [
-        env.sim.data.qpos[env.sim.model.joint_name2id(joint)]
+        env.sim.data.qpos[env.sim.model.get_joint_qpos_addr(joint)]
         for joint in gripper_joints
     ]
 

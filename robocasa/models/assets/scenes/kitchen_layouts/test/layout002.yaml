@@ -291,17 +291,6 @@ main_group:
 
   # Decorations on counters
   counter_accessories:
-    - name: knife_block
-      type: knife_block
-
-      placement:
-        fixture: counter_main_main_group
-        sample_region_kwargs:
-          ref: cab_main
-        size: [0.3, obj]
-        pos: [-1.0, 1.0]
-        rotation: [0, 0]
-
     - name: toaster
       type: toaster
 
@@ -330,8 +319,19 @@ main_group:
       placement:
         fixture: counter_main_main_group
         sample_region_kwargs:
-          ref: stove
+          ref: cab_main
         size: [1.0, 0.45]
+        pos: [null, 1.0]
+        rotation: [0, 0]
+
+    - name: knife_block
+      type: knife_block
+
+      placement:
+        fixture: counter_main_main_group
+        sample_region_kwargs:
+          ref: cab_main
+        size: [1.0, obj]
         pos: [null, 1.0]
         rotation: [0, 0]
 
@@ -342,7 +342,7 @@ main_group:
         fixture: counter_main_main_group
         sample_region_kwargs:
           ref: shelves
-        size: [1.0, 0.40]
+        size: [1.0, obj]
         pos: [null, 1.0]
         rotation: [0, 0]
 
@@ -361,13 +361,98 @@ main_group:
     - name: blender
       type: blender
       enable: false
+      aux_fixture_config:
+        enable: true
+        has_free_joints: true
+        placement: anchor 
+        auxiliary_placement_args:
+          ensure_valid_placement: false
 
       placement:
         fixture: counter_main_main_group
-        size: [1.0, 0.25]
-        pos: [null, -1]
+        sample_region_kwargs:
+          ref: stovetop
+          loc: left
+        size: [0.5, 0.25]
+        pos: [1.0, -1.0]
         rotation: [0, 0]
         margin: 0.03
+
+    - name: digital_scale
+      type: digital_scale
+      is_clutter: true
+
+      placement:
+        fixture: counter_main_main_group
+        size: [1.0, 0.5]
+        pos: [null, 1.0]
+        rotation: [0, 0]
+        margin: 0.03
+
+    - name: oil_bottle
+      type: oil_bottle
+      is_clutter: true
+      has_free_joints: true
+      aux_fixture_config:
+        is_clutter: true
+        has_free_joints: true
+        placement: anchor
+
+      placement:
+        fixture: counter_main_main_group
+        sample_region_kwargs:
+          ref: cab_2
+        size: [1.0, 0.2]
+        pos: [null, 0.8]
+        rotation: [0, 0]
+
+    - name: jar
+      type: jar
+      is_clutter: true
+      aux_fixture_config:
+        is_clutter: true
+        placement: anchor 
+        auxiliary_placement_args:
+          ensure_valid_placement: false
+
+      placement:
+        fixture: shelves_main_group
+        sample_region_kwargs:
+          shelf_level: 1
+        size: [0.5, 0.3]
+        pos: [-1.0, 0]
+        rotation: [0, 0]
+
+    - name: paprika
+      type: paprika
+      is_clutter: true
+
+      placement:
+        fixture: shelves_main_group  
+        size: [0.5, obj]
+        pos: [1.0, 0]
+        rotation: [0, 0]
+
+    - name: cinnamon
+      type: cinnamon
+      is_clutter: true
+
+      placement:
+        fixture: shelves_main_group  
+        size: [0.5, obj]
+        pos: [0.75, 0]
+        rotation: [0, 0]
+
+    - name: turmeric
+      type: turmeric
+      is_clutter: true
+
+      placement:
+        fixture: shelves_main_group  
+        size: [0.5, obj]
+        pos: [0.5, 0]
+        rotation: [0, 0]
+
 
 island_group:
   group_origin: [0, 0]
@@ -489,6 +574,48 @@ island_group:
         fixture: island_island_group
         sample_region_kwargs:
           ref: stool_2
-        size: [1.0, 0.4]
-        pos: [null, -1.0]
+        size: [0.5, 0.4]
+        pos: [0, -1.0]
+        rotation: [0, 0]
+
+    - name: soap_dispenser
+      type: soap_dispenser
+      is_clutter: true
+      has_free_joints: true
+
+      placement:
+        fixture: island_island_group
+        sample_region_kwargs:
+          ref: sink
+          loc: left_right
+        size: [0.15, 0.15]
+        # in general soap will be near back of sink no need to randomize it too much
+        pos: ["ref", -0.3]
+        rotation: [-3.14, 3.14]
+    
+    - name: fruit_bowl
+      type: fruit_bowl
+      is_clutter: true
+
+      placement:
+        fixture: island_island_group
+        sample_region_kwargs:
+          ref: stool_1
+        size: [1.0, 0.3]
+        pos: [null, 0.25]
+        rotation: [0, 0]
+    
+    - name: salt_shaker
+      type: salt_shaker
+      is_clutter: true
+      aux_fixture_config:
+        is_clutter: true
+        placement: anchor
+
+      placement:
+        fixture: island_island_group
+        sample_region_kwargs:
+          ref: stool_3
+        size: [1.0, 0.15]
+        pos: [null, 0.25]
         rotation: [0, 0]

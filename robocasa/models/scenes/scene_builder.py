@@ -2,6 +2,8 @@ import numpy as np
 import yaml
 from robosuite.utils.mjcf_utils import array_to_string as a2s
 from robosuite.utils.mjcf_utils import string_to_array as s2a
+from copy import deepcopy
+
 
 from robocasa.models.scenes.scene_registry import get_layout_path, get_style_path
 from robocasa.models.scenes.scene_utils import *
@@ -33,10 +35,24 @@ FIXTURES = dict(
     accessory=Accessory,
     paper_towel=Accessory,
     candle=Accessory,
+    turmeric=Accessory,
+    cinnamon=Accessory,
+    paprika=Accessory,
     flower_vase=Accessory,
     utensil_set=Accessory,
     plant=Accessory,
     knife_block=Accessory,
+    soap_dispenser=Accessory,
+    fruit_bowl=Accessory,
+    oil_bottle=Accessory,
+    vinegar_bottle=Accessory,
+    salt_shaker=Accessory,
+    pepper_shaker=Accessory,
+    tiered_basket=Accessory,
+    digital_scale=Accessory,
+    glass_cup=Accessory,
+    jar=Accessory,
+    jar_lid=Accessory,
     dish_rack=DishRack,
     stool=Stool,
     utensil_holder=Accessory,
@@ -44,6 +60,7 @@ FIXTURES = dict(
     toaster=Toaster,
     toaster_oven=ToasterOven,
     blender=Blender,
+    blender_lid=BlenderLid,
     stand_mixer=StandMixer,
     utensil_rack=WallAccessory,
     electric_kettle=ElectricKettle,
@@ -150,6 +167,48 @@ def create_fixtures(layout_config, style_config, rng=None):
                         else:
                             if isinstance(fxtr_config[k], str):
                                 fxtr_config[k] += "_" + group_name
+
+                if fxtr_config[
+                    "type"
+                ] in Fixture.BASE_TO_AUXILIARY_FIXTURES and fxtr_config.get(
+                    "enable", True
+                ):
+                    auxiliary_fxtr_cfg = fxtr_config.pop("aux_fixture_config", None)
+                    if auxiliary_fxtr_cfg is None or not auxiliary_fxtr_cfg.get(
+                        "enable", True
+                    ):
+                        continue
+
+                    auxiliary_fxtr_cfg["name"] = fxtr_config["name"] + "_auxiliary"
+                    auxiliary_fxtr_cfg["type"] = Fixture.BASE_TO_AUXILIARY_FIXTURES[
+                        fxtr_config["type"]
+                    ]
+                    if auxiliary_fxtr_cfg["placement"] == "parent_region":
+                        # place the aux object in the same region as the main (parent) object's region
+                        auxiliary_fxtr_cfg["placement"] = deepcopy(
+                            fxtr_config["placement"]
+                        )
+                        auxiliary_fxtr_cfg["placement"]["sample_region_kwargs"] = dict(
+                            ref=fxtr_config["name"]
+                        )
+                        auxiliary_fxtr_cfg["placement"]["pos"][0] = "ref"
+
+                    elif auxiliary_fxtr_cfg["placement"] == "anchor":
+                        # place the aux object at the anchor site of the main (parent) object
+                        auxiliary_fxtr_cfg["placement"] = dict(
+                            anchor_to=fxtr_config["name"],
+                        )
+                    else:
+                        raise ValueError(
+                            'Invalid value for auxiliary fixture placement: "{}".'.format(
+                                auxiliary_fxtr_cfg["placement"]
+                            )
+                        )
+                    auxiliary_placement_args = auxiliary_fxtr_cfg.pop(
+                        "auxiliary_placement_args", {}
+                    )
+                    auxiliary_fxtr_cfg["placement"].update(auxiliary_placement_args)
+                    fixture_list.append(auxiliary_fxtr_cfg)
 
             group_fixtures.extend(fixture_list)
 

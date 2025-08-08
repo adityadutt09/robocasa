@@ -37,6 +37,7 @@
         <geom mesh="SaltShaker009_collision_mesh_0" type="mesh" class="collision"/>
         <geom mesh="SaltShaker009_collision_mesh_1" type="mesh" class="collision"/>
       </body>
+      <site rgba="0 1 0 0" size="0.005" pos="0.0767095999999999 0 0" name="anchor_site"/>
     </body>
   </worldbody>
   <actuator/>

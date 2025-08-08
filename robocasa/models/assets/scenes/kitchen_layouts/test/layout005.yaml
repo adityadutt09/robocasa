@@ -66,6 +66,7 @@ room:
 
     - name: untensil_rack
       type: utensil_rack
+
       attach_to: wall_left
       
       pos: [null, -3.3, 1.15]
@@ -215,20 +216,37 @@ left_group:
         size: [obj, 0.50]
         pos: ["ref", 1.0]
         rotation: [0, 0]
-        
-    - name: paper_towel
-      type: paper_towel
+
+    - name: flower_vase
+      type: flower_vase
+      is_clutter: true
+      
+      placement:
+        fixture: counter_left_group
+        sample_region_kwargs:
+          ref: cab_1_left_group
+        size: [1.0, 0.4]
+        pos: [null, 1.0]
+        rotation: [0, 0]
+
+    - name: soap_dispenser
+      type: soap_dispenser
+      is_clutter: true
+      has_free_joints: true
 
       placement:
         fixture: counter_left_group
         sample_region_kwargs:
           ref: sink
-        size: [1.0, 0.25]
+          loc: left_right
+        size: [0.15, 0.15]
+        # in general soap will be near back of sink no need to randomize it too much
         pos: ["ref", 1.0]
-        rotation: [0, 0]
+        rotation: [-3.14, 3.14]
 
     - name: knife_block
       type: knife_block
+      is_clutter: true
 
       placement:
         fixture: counter_left_group
@@ -251,13 +269,80 @@ left_group:
     - name: blender
       type: blender
       enable: false
+      aux_fixture_config:
+        enable: true
+        has_free_joints: true
+        placement: anchor 
+        auxiliary_placement_args:
+          ensure_valid_placement: false
 
       placement:
         fixture: counter_left_group
         size: [1.0, 0.25]
-        pos: [null, -1]
+        pos: [null, -1.0]
         rotation: [0, 0]
         margin: 0.03
+
+    - name: paprika
+      type: paprika
+      is_clutter: true
+
+      placement:
+        fixture: cab_2_left_group  
+        size: [0.5, obj]
+        pos: [1.0, 0]
+        rotation: [0, 0]
+
+    - name: cinnamon
+      type: cinnamon
+      is_clutter: true
+
+      placement:
+        fixture: cab_2_left_group  
+        size: [0.5, obj]
+        pos: [0.75, 0]
+        rotation: [0, 0]
+
+    - name: turmeric
+      type: turmeric
+      is_clutter: true
+
+      placement:
+        fixture: cab_2_left_group  
+        size: [0.5, obj]
+        pos: [0.5, 0]
+        rotation: [0, 0]
+
+    - name: glass_cup
+      type: glass_cup
+      is_clutter: true
+
+      placement:
+        fixture: cab_2_left_group
+        size: [0.3, 0.3]
+        pos: [-1.0, null]
+        rotation: [0, 0]
+    
+    - name: digital_scale
+      type: digital_scale
+      is_clutter: true
+
+      placement:
+        fixture: counter_left_group
+        size: [1.0, 0.3]
+        pos: [null, 0.95]
+        rotation: [0, 0]
+
+    - name: paper_towel
+      type: paper_towel
+
+      placement:
+        fixture: counter_left_group
+        sample_region_kwargs:
+          ref: sink
+        size: [1.0, obj]
+        pos: [null, 1.0]
+        rotation: [0, 0]
 
 # fixtures on the right wall
 main_group:
@@ -440,3 +525,15 @@ main_group:
         pos: [-0.5, -1.0]
         rotation: [-1.57, -1.57]
         offset: [0, 0.01]
+
+    - name: tiered_basket
+      type: tiered_basket
+      is_clutter: true
+
+      placement:
+        fixture: counter_main_main_group
+        sample_region_kwargs:
+          ref: cab_main_main_group
+        size: [1.0, 0.4]
+        pos: ["ref", 0.9]
+        rotation: [0, 0]

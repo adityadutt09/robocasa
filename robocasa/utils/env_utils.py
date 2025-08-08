@@ -350,7 +350,10 @@ def compute_robot_base_placement_pose(env, ref_fixture, ref_object=None, offset=
     ground_fixture = None
 
     # manipulate drawer envs are exempt from dining counter/stool placement rules
-    from robocasa.environments.kitchen.single_stage.kitchen_drawer import ManipulateDrawer
+    from robocasa.environments.kitchen.single_stage.kitchen_drawer import (
+        ManipulateDrawer,
+    )
+
     manipulate_drawer_env = isinstance(env, ManipulateDrawer)
 
     if not fixture_is_type(ref_fixture, FixtureType.DINING_COUNTER):
@@ -765,6 +768,7 @@ def _check_cfg_is_valid(cfg):
             "init_robot_here",
             "reset_region",
             "rotate_upright",
+            "auxiliary_object_config",
         }
     )
 
@@ -784,6 +788,7 @@ def _check_cfg_is_valid(cfg):
             "ref_obj",
             "fixture",
             "try_to_place_in",
+            "anchor_to",
             "object",
             "try_to_place_in_kwargs",
         }
@@ -802,13 +807,26 @@ def _check_cfg_is_valid(cfg):
         ), f"got invaild key \"{k}\" in placement config for {cfg['name']}"
 
 
+def get_single_fixture_sampler(env, cfg, z_offset=0.003):
+    """
+    Creates a SequentialCompositeSampler for a single fixture,
+    skipping if it's an auxiliary fixture without valid placement.
+    """
+
+    if type(cfg) == list:
+        return _get_placement_initializer(env, cfg, z_offset)
+    else:
+        return _get_placement_initializer(env, [cfg], z_offset)
+
+
 def _get_placement_initializer(env, cfg_list, z_offset=0.01):
     """
     Creates a placement initializer for the objects/fixtures based on the specifications in the configurations list.
 
     Args:
         cfg_list (list): list of object configurations
-        z_offset (float): offset in z direction
+
+        z_offset (float): offset in z direction if not specified in cfg
 
     Returns:
         SequentialCompositeSampler: placement initializer
@@ -820,6 +838,31 @@ def _get_placement_initializer(env, cfg_list, z_offset=0.01):
     )
 
     placement_initializer = SequentialCompositeSampler(name="SceneSampler", rng=env.rng)
+
+    def has_auxiliary_pair(cfg_list, name):
+        from robocasa.models.fixtures.fixture import Fixture
+
+        """
+        Returns true if fixture is a base fixture type eligible for an auxiliary,
+        and its corresponding auxiliary name also exists in cfg_list
+        """
+        if not isinstance(name, str):
+            return False
+
+        all_names = {cfg["name"] for cfg in cfg_list}
+
+        parts = name.rsplit("_", 2)
+        if len(parts) != 3:
+            return False
+        base_type, group, group_id = parts
+        suffix = f"{group}_{group_id}"
+
+        if base_type not in Fixture.BASE_TO_AUXILIARY_FIXTURES:
+            return False
+
+        aux_name = f"{name}_auxiliary_{suffix}"
+
+        return aux_name in all_names
 
     for (obj_i, cfg) in enumerate(cfg_list):
         _check_cfg_is_valid(cfg)
@@ -837,10 +880,40 @@ def _get_placement_initializer(env, cfg_list, z_offset=0.01):
 
         fixture_id = placement.get("fixture", None)
         reference_object = None
+        anchor_to = placement.pop("anchor_to", None)
+
+        if anchor_to is not None:
+            if cfg["type"] == "fixture":
+                anchor_model = env.fixtures[anchor_to]
+            elif cfg["type"] == "object":
+                anchor_model = env.objects[anchor_to]
+            else:
+                raise ValueError
+            offset = anchor_model.anchor_offset
+            new_placement = dict(
+                size=(0.0, 0.0),
+                ensure_object_boundary_in_range=False,
+                ensure_valid_placement=True,
+                sample_args=dict(
+                    reference=anchor_to,
+                    on_top=False,
+                    use_reference_quat=True,
+                ),
+                offset=(offset[0], offset[1], offset[2] + 0.001),
+                rotation=0.0,
+            )
+            new_placement.update(placement)
+            placement = new_placement
+
         rotation = placement.get("rotation", np.array([-np.pi / 4, np.pi / 4]))
 
         if hasattr(mj_obj, "mirror_placement") and mj_obj.mirror_placement:
             rotation = [-rotation[1], -rotation[0]]
+
+        aux_x_offset = 0
+        if has_auxiliary_pair(cfg_list, cfg["name"]):
+            if hasattr(mj_obj, "anchor_offset"):
+                aux_x_offset = mj_obj.anchor_offset[0]
 
         ensure_object_boundary_in_range = placement.get(
             "ensure_object_boundary_in_range", True
@@ -857,12 +930,28 @@ def _get_placement_initializer(env, cfg_list, z_offset=0.01):
             rotation=rotation,
         )
 
-        if fixture_id is None:
+        if anchor_to is not None:
+            target_size = placement.get("size", None)
+
+            x_range = np.array([-target_size[0] / 2, target_size[0] / 2]) + offset[0]
+            y_range = np.array([-target_size[1] / 2, target_size[1] / 2]) + offset[1]
+
+            # ref pos doesnt matter since we already have a reference object
+            # arbitrarily set to 0
+            ref_pos = [0, 0, 0]
+            # use reference rotation of base object!
+            ref_rot = placement_initializer.samplers[
+                f"{anchor_to}_Sampler"
+            ].reference_rot
+            this_z_offset = offset[2]
+        # infer and fill in rest of configs now
+        elif fixture_id is None:
             target_size = placement.get("size", None)
             x_range = np.array([-target_size[0] / 2, target_size[0] / 2])
             y_range = np.array([-target_size[1] / 2, target_size[1] / 2])
             ref_pos = [0, 0, 0]
             ref_rot = 0.0
+            this_z_offset = z_offset
         else:
             fixture = env.get_fixture(
                 id=fixture_id,
@@ -876,7 +965,8 @@ def _get_placement_initializer(env, cfg_list, z_offset=0.01):
             # this checks if the reference fixture and dining counter are facing different directions
             ref_dining_counter_mismatch = False
             if fixture_is_type(fixture, FixtureType.DINING_COUNTER) and fixture_is_type(
-                ref_fixture, FixtureType.STOOL):
+                ref_fixture, FixtureType.STOOL
+            ):
                 if abs(abs(ref_fixture.rot) - abs(fixture.rot)) > 0.01:
                     ref_dining_counter_mismatch = True
 
@@ -886,30 +976,33 @@ def _get_placement_initializer(env, cfg_list, z_offset=0.01):
                 ref_obj_cfg = find_object_cfg_by_name(env, ref_obj_name)
                 reset_region = ref_obj_cfg["reset_region"]
             else:
-                if (
-                    ensure_object_boundary_in_range
-                    and ensure_valid_placement
-                    and rotation_axis == "z"
-                ):
-                    sample_region_kwargs["min_size"] = mj_obj.size
-                try:
-                    if reuse_region_from is None:
-                        reset_region = fixture.sample_reset_region(
-                            env=env, **sample_region_kwargs
-                        )
-                    else:
-                        # find and re-use sampling region from another object
-                        reset_region = None
-                        for this_obj_config in cfg_list:
-                            if this_obj_config["name"] == reuse_region_from:
-                                reset_region = this_obj_config["reset_region"]
-                                break
-                        assert (
-                            reset_region is not None
-                        ), "Could not find reset region to reuse"
+                if cfg.get("reset_region", None) is not None:
+                    reset_region = cfg["reset_region"]
+                else:
+                    if (
+                        ensure_object_boundary_in_range
+                        and ensure_valid_placement
+                        and rotation_axis == "z"
+                    ):
+                        sample_region_kwargs["min_size"] = mj_obj.size
+                    try:
+                        if reuse_region_from is None:
+                            reset_region = fixture.sample_reset_region(
+                                env=env, **sample_region_kwargs
+                            )
+                        else:
+                            # find and re-use sampling region from another object
+                            reset_region = None
+                            for this_obj_config in cfg_list:
+                                if this_obj_config["name"] == reuse_region_from:
+                                    reset_region = this_obj_config["reset_region"]
+                                    break
+                            assert (
+                                reset_region is not None
+                            ), "Could not find reset region to reuse"
 
-                except SamplingError:
-                    raise PlacementError("Cannot initialize placement.")
+                    except SamplingError:
+                        raise PlacementError("Cannot initialize placement.")
                 reference_object = fixture.name
 
             cfg["reset_region"] = reset_region
@@ -979,8 +1072,10 @@ def _get_placement_initializer(env, cfg_list, z_offset=0.01):
                 for size_dim in [0, 1]:
                     if target_size[size_dim] == "obj":
                         target_size[size_dim] = mj_obj.size[size_dim] + 0.005
+                        if size_dim == 0:
+                            target_size[size_dim] += aux_x_offset
                     if target_size[size_dim] == "obj.x":
-                        target_size[size_dim] = mj_obj.size[0] + 0.005
+                        target_size[size_dim] = mj_obj.size[0] + 0.005 + aux_x_offset
                     if target_size[size_dim] == "obj.y":
                         target_size[size_dim] = mj_obj.size[1] + 0.005
                 inner_size = np.min((outer_size, target_size), axis=0)
@@ -1069,13 +1164,18 @@ def _get_placement_initializer(env, cfg_list, z_offset=0.01):
                 + reset_region["offset"][1]
                 + intra_offset[1]
             )
+            this_z_offset = offset[2] if len(offset) == 3 else z_offset
+
+        x_range_og = x_range.copy()
+        if has_auxiliary_pair(cfg_list, cfg["name"]):
+            x_range[1] = x_range.mean()
 
         placement_initializer.append_sampler(
             sampler=UniformRandomSampler(
                 reference_object=reference_object,
                 reference_pos=ref_pos,
                 reference_rot=ref_rot,
-                z_offset=z_offset,
+                z_offset=this_z_offset,
                 x_range=x_range,
                 y_range=y_range,
                 **sampler_kwargs,
@@ -1083,8 +1183,12 @@ def _get_placement_initializer(env, cfg_list, z_offset=0.01):
             sample_args=placement.get("sample_args", None),
         )
 
+        x_range = x_range_og
+
         # optional: visualize the sampling region
-        if macros.SHOW_SITES is True:
+        if macros.SHOW_SITES is True and (
+            target_size[0] > 0.0 and target_size[1] > 0.0
+        ):
             """
             show outer reset region
             """
@@ -1105,7 +1209,7 @@ def _get_placement_initializer(env, cfg_list, z_offset=0.01):
             site_str = """<site type="box" rgba="0 0 1 0.4" size="{size}" pos="{pos}" name="reset_region_outer_{postfix}"/>""".format(
                 pos=array_to_string(pos_to_vis),
                 size=array_to_string(size_to_vis),
-                postfix=str(obj_i),
+                postfix=cfg["name"],
             )
             site_tree = ET.fromstring(site_str)
             env.model.worldbody.append(site_tree)
@@ -1134,7 +1238,7 @@ def _get_placement_initializer(env, cfg_list, z_offset=0.01):
             site_str = """<site type="box" rgba="1 0 0 0.4" size="{size}" pos="{pos}" name="reset_region_inner_{postfix}"/>""".format(
                 pos=array_to_string(pos_to_vis),
                 size=array_to_string(size_to_vis),
-                postfix=str(obj_i),
+                postfix=cfg["name"],
             )
             site_tree = ET.fromstring(site_str)
             env.model.worldbody.append(site_tree)
@@ -1267,7 +1371,8 @@ def create_obj(env, cfg):
             # however, cakes are not cookable in general, only bakable.
             # so we are making an exception here.
             if any(
-                cat in obj_groups for cat in ["oven_tray", "pan", "pot", "saucepan", "cake"]
+                cat in obj_groups
+                for cat in ["oven_tray", "pan", "pot", "saucepan", "cake"]
             ):
                 cookable = False
             else:
@@ -1395,7 +1500,7 @@ def set_robot_base(
         env.sim.data.qpos[
             env.sim.model.get_joint_qpos_addr("mobilebase0_joint_mobile_yaw")
         ] = env.rng.uniform(-rot_dev, rot_dev)
-        # l_elbow_pitch_id = self.sim.model.joint_name2id("robot0_l_elbow_pitch")
+        # l_elbow_pitch_id = self.sim.model.get_joint_qpos_addr("robot0_l_elbow_pitch")
         # l_elbow_pitch_range = self.sim.model.jnt_range[l_elbow_pitch_id]
         # self.sim.data.qpos[
         #     self.sim.model.get_joint_qpos_addr("robot0_l_elbow_pitch")

@@ -105,7 +105,7 @@ class Stove(Fixture):
             if joint is None:
                 env.sim.model.site_rgba[site_id][3] = 0.0
                 continue
-            joint_id = env.sim.model.joint_name2id(
+            joint_id = env.sim.model.get_joint_qpos_addr(
                 "{}knob_{}_joint".format(self.naming_prefix, location)
             )
 
@@ -168,7 +168,7 @@ class Stove(Fixture):
             if site is None:
                 continue
 
-            joint_id = env.sim.model.joint_name2id(
+            joint_id = env.sim.model.get_joint_qpos_addr(
                 "{}knob_{}_joint".format(self.naming_prefix, location)
             )
 

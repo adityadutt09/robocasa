@@ -264,9 +264,30 @@ main_group:
         pos: [-1.0, 1.0]
         rotation: [0, 0]
 
+    - name: soap_dispenser
+      type: soap_dispenser
+      is_clutter: true
+      has_free_joints: true
+
+      placement:
+        fixture: counter_main_main_group
+        sample_region_kwargs:
+          ref: sink
+          loc: left_right
+        size: [0.15, 0.15]
+        # in general soap will be near back of sink no need to randomize it too much
+        pos: ["ref", 1.0]
+        rotation: [-3.14, 3.14]
+
     - name: blender
       type: blender
       enable: false
+      aux_fixture_config:
+        enable: true
+        has_free_joints: true
+        placement: anchor 
+        auxiliary_placement_args:
+          ensure_valid_placement: false
 
       placement:
         fixture: counter_main_main_group
@@ -427,8 +448,8 @@ right_group:
 
       placement:
         fixture: counter_2_right_group
-        size: [0.50, 0.40]
-        pos: [0, 1.0]
+        size: [1.0, 0.40]
+        pos: [null, 1.0]
         rotation: [0, 0]
 
     - name: coffee_machine
@@ -451,3 +472,75 @@ right_group:
         pos: [null, -0.50]
         rotation: [-1.0, 0.1]
 
+    - name: oil_bottle
+      type: oil_bottle
+      is_clutter: true
+      has_free_joints: true
+      aux_fixture_config:
+        is_clutter: true
+        has_free_joints: true
+        placement: anchor 
+
+      placement:
+        fixture: counter_1_right_group
+        size: [1.0, 0.2]
+        pos: [null, 0.9]
+        rotation: [0, 0]
+
+    - name: tiered_basket
+      type: tiered_basket
+      is_clutter: true
+
+      placement:
+        fixture: counter_2_right_group
+        size: [1.0, 0.4]
+        pos: [null, 0.9]
+        rotation: [0, 0]
+    
+    - name: jar
+      type: jar
+      is_clutter: true
+      aux_fixture_config:
+        is_clutter: true
+        placement: anchor 
+        auxiliary_placement_args:
+          ensure_valid_placement: false
+
+      placement:
+        fixture: shelves_right_group
+        size: [1.0, 0.3]
+        rotation: [0, 0]
+
+    - name: salt_shaker
+      type: salt_shaker
+      is_clutter: true
+      aux_fixture_config:
+        is_clutter: true
+        placement: anchor
+
+      placement:
+        fixture: shelves_right_group
+        size: [0.5, obj]
+        pos: [1.0, 0]
+        rotation: [0, 0]
+
+    - name: paprika
+      type: paprika
+      is_clutter: true
+
+      placement:
+        fixture: shelves_right_group  
+        size: [0.5, obj]
+        pos: [1.0, 0]
+        rotation: [0, 0]
+
+    - name: turmeric
+      type: turmeric
+      is_clutter: true
+
+      placement:
+        fixture: shelves_right_group  
+        size: [0.5, obj]
+        pos: [0.5, 0]
+        rotation: [0, 0]
+      

@@ -13,6 +13,7 @@ from robosuite.utils.mjcf_utils import (
 from robosuite.models.robots.robot_model import REGISTERED_ROBOTS
 from robosuite.utils.observables import Observable, sensor
 from robosuite.environments.base import EnvMeta
+from collections import defaultdict
 
 from robosuite.models.robots import PandaOmron
 
@@ -25,7 +26,9 @@ import robocasa.models.scenes.scene_registry as SceneRegistry
 from robocasa.models.scenes import KitchenArena
 from robocasa.models.fixtures import *
 import robocasa.models.fixtures.fixture_utils as FixtureUtils
-from robocasa.models.objects.kitchen_object_utils import sample_kitchen_object
+from robocasa.models.objects.kitchen_object_utils import (
+    sample_kitchen_object,
+)
 from robocasa.utils.texture_swap import (
     get_random_textures,
     replace_cab_textures,
@@ -35,6 +38,10 @@ from robocasa.utils.texture_swap import (
 )
 from robocasa.utils.config_utils import refactor_composite_controller_config
 from robocasa.utils.errors import PlacementError
+from robocasa.models.objects.kitchen_objects import OBJ_GROUPS, OBJ_CATEGORIES
+from robocasa.models.fixtures.fixture_utils import fixture_is_type
+from robocasa.models.fixtures import FixtureType
+import re
 
 
 REGISTERED_KITCHEN_ENVS = {}
@@ -195,6 +202,8 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
 
         randomize_cameras (bool): if True, will add gaussian noise to the position and rotation of the
             wrist and agentview cameras
+
+        clutter_mode (int): sets clutter level. default is 0.
     """
 
     EXCLUDE_LAYOUTS = []
@@ -389,6 +398,7 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
         robot_spawn_deviation_pos_x=0.15,
         robot_spawn_deviation_pos_y=0.05,
         robot_spawn_deviation_rot=0.0,
+        clutter_mode=0,
     ):
         self.init_robot_base_ref = init_robot_base_ref
 
@@ -419,6 +429,7 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
         ]
 
         self.enable_fixtures = enable_fixtures
+        self.clutter_mode = clutter_mode
         assert generative_textures in [None, False, "100p"]
         self.generative_textures = generative_textures
 
@@ -545,6 +556,7 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
             style_id=self.style_id,
             rng=self.rng,
             enable_fixtures=self.enable_fixtures,
+            clutter_mode=self.clutter_mode,
         )
         # Arena always gets set to zero origin
         self.mujoco_arena.set_origin([0, 0, 0])
@@ -589,40 +601,134 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
                     break
                 self._setup_model()
 
-        # setup fixture locations
-        try:
-            fxtr_placement_initializer = EnvUtils._get_placement_initializer(
-                self, self.fixture_cfgs, z_offset=0.0
-            )
-        except PlacementError as e:
-            if macros.VERBOSE:
-                print(
-                    "Could not create placement initializer for objects. Trying again with self._load_model()"
-                )
-            self._destroy_sim()
-            self._load_model(attempt_num=attempt_num + 1)
-            return
-        fxtr_placements = None
-        for attempt in range(3):
-            try:
-                fxtr_placements = fxtr_placement_initializer.sample()
-            except PlacementError as e:
-                if macros.VERBOSE:
-                    print("Placement error for fixtures")
+        MAX_FIXTURE_PLACEMENT_ATTEMPTS = 3
+        self.fxtr_placements = {}
+
+        """
+        step 1: identify all fixtures that involve auxiliary items
+        these have their own placement logic
+        """
+        # identify base-aux pairs
+        paired_fixtures = defaultdict(dict)
+
+        def strip_group_suffix(name):
+            if "_auxiliary_" in name:
+                prefix, _, group_suffix = name.partition("_auxiliary_")
+                return prefix
+            return name
+
+        for fxtr_name in self.fixtures:
+            matched = False
+
+            # First pass: check against known base fixture names
+            for base, aux in Fixture.BASE_TO_AUXILIARY_FIXTURES.items():
+                if fxtr_name.startswith(base) and "_auxiliary" not in fxtr_name:
+                    paired_fixtures[fxtr_name]["base"] = fxtr_name
+                    matched = True
+                elif fxtr_name.startswith(base) and "_auxiliary" in fxtr_name:
+                    canonical_base = strip_group_suffix(fxtr_name)
+                    paired_fixtures[canonical_base]["aux"] = fxtr_name
+                    matched = True
+
+            # Second pass: reverse lookup based on known auxiliary names
+            if not matched:
+                for aux in Fixture.BASE_TO_AUXILIARY_FIXTURES.values():
+                    if fxtr_name.startswith(aux):
+                        canonical_base = strip_group_suffix(fxtr_name)
+                        paired_fixtures[canonical_base]["aux"] = fxtr_name
+
+        paired_fixtures = {
+            k: v for k, v in paired_fixtures.items() if "base" in v and "aux" in v
+        }
+        paired_names = {
+            v
+            for pair in paired_fixtures.values()
+            for v in pair.values()
+            if v in self.fixtures
+        }
+
+        # sample aux fixture pairs first
+        for _, pair in paired_fixtures.items():
+            base_name = pair.get("base")
+            aux_name = pair.get("aux")
+
+            if not base_name or not aux_name:
                 continue
-            break
-        if fxtr_placements is None:
-            if macros.VERBOSE:
-                print("Could not place fixtures. Trying again with self._load_model()")
-            self._destroy_sim()
-            self._load_model(attempt_num=attempt_num + 1)
-            return
-        self.fxtr_placements = fxtr_placements
-        # Loop through all objects and reset their positions
-        for obj_pos, obj_quat, obj in fxtr_placements.values():
+
+            cfg_base = next(
+                cfg for cfg in self.fixture_cfgs if cfg["name"] == base_name
+            )
+            cfg_aux = next(cfg for cfg in self.fixture_cfgs if cfg["name"] == aux_name)
+
+            cfg_pair = [cfg_base, cfg_aux]
+            sampler_pair = EnvUtils.get_single_fixture_sampler(self, cfg_pair)
+
+            success = False
+            for _ in range(MAX_FIXTURE_PLACEMENT_ATTEMPTS * 2):
+                try:
+                    placement_pair = sampler_pair.sample(
+                        placed_objects=self.fxtr_placements
+                    )
+                    self.fxtr_placements.update(placement_pair)
+
+                    success = True
+                    break
+
+                except PlacementError as e:
+                    print(f"Placement error for auxiliary pair fixture: {e}")
+                    # retry both objects if one fails
+                    for name in [base_name, aux_name]:
+                        if name in self.fxtr_placements:
+                            del self.fxtr_placements[name]
+
+            if not success:
+                if macros.VERBOSE:
+                    print(
+                        f"Could not place {fxtr_name}. Trying again with self._load_model()"
+                    )
+                self._destroy_sim()
+                self._load_model(attempt_num=attempt_num + 1)
+                return
+
+        """
+        step 2: placement logic for all other fixtures
+
+        """
+        for fxtr_obj in self.fixtures.values():
+
+            fxtr_name = fxtr_obj.name
+            if fxtr_name in paired_names:
+                continue
+
+            fxtr_cfg = next(
+                cfg for cfg in self.fixture_cfgs if cfg["name"] == fxtr_name
+            )
+            sampler = EnvUtils.get_single_fixture_sampler(self, fxtr_cfg)
+
+            success = False
+            for _ in range(MAX_FIXTURE_PLACEMENT_ATTEMPTS):
+                try:
+                    placement = sampler.sample(placed_objects=self.fxtr_placements)
+                    self.fxtr_placements.update(placement)
+                    success = True
+                    break
+                except PlacementError as e:
+                    print(f"Placement error for fixture: {e}")
+                    continue
+
+            if not success:
+                if macros.VERBOSE:
+                    print(
+                        f"Could not place {fxtr_name}. Trying again with self._load_model()"
+                    )
+                self._destroy_sim()
+                self._load_model(attempt_num=attempt_num + 1)
+                return
+
+        # apply placements
+        for obj_pos, obj_quat, obj in self.fxtr_placements.values():
             assert isinstance(obj, Fixture)
             obj.set_pos(obj_pos)
-
             # hacky code to set orientation
             obj.set_euler(T.mat2euler(T.quat2mat(T.convert_quat(obj_quat, "xyzw"))))
 
@@ -662,6 +768,7 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
             self._destroy_sim()
             self._load_model(attempt_num=attempt_num + 1)
             return
+
         self.object_placements = object_placements
 
         (
@@ -707,7 +814,10 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
                 try_to_place_in = cfg["placement"].get("try_to_place_in", None)
                 object_ref = cfg["placement"].get("object", None)
 
-                if try_to_place_in and "in_container" in info["groups_containing_sampled_obj"]:
+                if (
+                    try_to_place_in
+                    and "in_container" in info["groups_containing_sampled_obj"]
+                ):
                     parent = try_to_place_in
                     if parent in self.objects:
                         container_name = parent
@@ -722,12 +832,16 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
                         if cfg.get("init_robot_here", False):
                             cfg["init_robot_here"] = False
                             container_cfg["init_robot_here"] = True
-                        try_to_place_in_kwargs = cfg["placement"].get("try_to_place_in_kwargs", None)
+                        try_to_place_in_kwargs = cfg["placement"].get(
+                            "try_to_place_in_kwargs", None
+                        )
                         if try_to_place_in_kwargs:
                             for k, v in try_to_place_in_kwargs.items():
                                 container_cfg[k] = v
                         all_obj_cfgs.append(container_cfg)
-                        container_model, container_info = EnvUtils.create_obj(self, container_cfg)
+                        container_model, container_info = EnvUtils.create_obj(
+                            self, container_cfg
+                        )
                         container_cfg["info"] = container_info
                         self.objects[container_model.name] = container_model
                         self.model.merge_objects([container_model])
@@ -737,7 +851,10 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
                         "ensure_object_boundary_in_range": False,
                         "sample_args": {"reference": container_name},
                     }
-                elif object_ref and "in_container" in info["groups_containing_sampled_obj"]:
+                elif (
+                    object_ref
+                    and "in_container" in info["groups_containing_sampled_obj"]
+                ):
                     parent = object_ref
                     if parent in self.objects:
                         container_name = parent
@@ -751,6 +868,7 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
                             "sample_args": {"reference": container_name},
                         }
 
+                # append the config for this object
                 all_obj_cfgs.append(cfg)
 
             # prepend the new object configs in
@@ -965,7 +1083,10 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
         ep_meta["gen_textures"] = self._curr_gen_fixtures or {}
         ep_meta["lang"] = ""
         ep_meta["fixture_refs"] = dict(
-            {k: (v[0] if isinstance(v, tuple) else v).name for (k, v) in self.fixture_refs.items()}
+            {
+                k: (v[0] if isinstance(v, tuple) else v).name
+                for (k, v) in self.fixture_refs.items()
+            }
         )
         ep_meta["cam_configs"] = deepcopy(self._cam_configs)
         ep_meta["init_robot_base_pos"] = list(self.init_robot_base_pos)
@@ -1377,7 +1498,13 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
         )
 
     def get_fixture(
-        self, id, ref=None, size=(0.2, 0.2), full_name_check=False, return_all=False, full_depth_region=False
+        self,
+        id,
+        ref=None,
+        size=(0.2, 0.2),
+        full_name_check=False,
+        return_all=False,
+        full_depth_region=False,
     ):
         """
         search fixture by id (name, object, or type)
@@ -1421,17 +1548,29 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
                     if FixtureUtils.is_fxtr_valid(self, self.fixtures[name], size)
                 ]
 
-            if len(matches) > 1 and any('island' in name for name in matches) and full_depth_region:
-                island_matches = [name for name in matches if 'island' in name]
+            if (
+                len(matches) > 1
+                and any("island" in name for name in matches)
+                and full_depth_region
+            ):
+                island_matches = [name for name in matches if "island" in name]
                 if len(island_matches) >= 3:
                     depths = [self.fixtures[name].size[1] for name in island_matches]
                     sorted_indices = sorted(range(len(depths)), key=lambda i: depths[i])
                     min_depth = depths[sorted_indices[0]]
-                    next_min_depth = depths[sorted_indices[1]] if len(depths) > 1 else min_depth
+                    next_min_depth = (
+                        depths[sorted_indices[1]] if len(depths) > 1 else min_depth
+                    )
                     if min_depth < 0.8 * next_min_depth:
-                        keep = [i for i in range(len(island_matches)) if i != sorted_indices[0]]
+                        keep = [
+                            i
+                            for i in range(len(island_matches))
+                            if i != sorted_indices[0]
+                        ]
                         filtered_islands = [island_matches[i] for i in keep]
-                        matches = [name for name in matches if name not in island_matches] + filtered_islands
+                        matches = [
+                            name for name in matches if name not in island_matches
+                        ] + filtered_islands
 
             if len(matches) == 0:
                 return None
@@ -1490,11 +1629,11 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
         Returns:
             Fixture: fixture object
         """
-        full_depth_region = fn_kwargs.pop('full_depth_region', False)
+        full_depth_region = fn_kwargs.pop("full_depth_region", False)
         if ref_name not in self.fixture_refs:
             fixture = self.get_fixture(**fn_kwargs, full_depth_region=full_depth_region)
             self.fixture_refs[ref_name] = (fixture, full_depth_region)
-        
+
         ref_value = self.fixture_refs[ref_name]
         if isinstance(ref_value, tuple):
             return ref_value[0]

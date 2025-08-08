@@ -19,7 +19,7 @@ from robocasa.models.fixtures.electric_kettle import ElectricKettle
 from robocasa.models.fixtures.coffee_machine import CoffeeMachine
 from robocasa.models.fixtures.toaster import Toaster
 from robocasa.models.fixtures.toaster_oven import ToasterOven
-from robocasa.models.fixtures.blender import Blender
+from robocasa.models.fixtures.blender import Blender, BlenderLid
 from robocasa.models.fixtures.stand_mixer import StandMixer
 from robocasa.models.fixtures.stove import Stove, Stovetop
 from robocasa.models.fixtures.oven import Oven
