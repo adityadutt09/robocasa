@@ -814,43 +814,43 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
                 try_to_place_in = cfg["placement"].get("try_to_place_in", None)
                 object_ref = cfg["placement"].get("object", None)
 
-                if (
-                    try_to_place_in
-                    and "in_container" in info["groups_containing_sampled_obj"]
+                if try_to_place_in and (
+                    "in_container" in cfg["info"]["groups_containing_sampled_obj"]
                 ):
-                    parent = try_to_place_in
-                    if parent in self.objects:
-                        container_name = parent
-                    else:
-                        container_name = f"{cfg['name']}_container"
-                        container_cfg = {
-                            "name": container_name,
-                            "obj_groups": parent,
-                            "placement": deepcopy(cfg["placement"]),
-                            "type": "object",
-                        }
-                        if cfg.get("init_robot_here", False):
-                            cfg["init_robot_here"] = False
-                            container_cfg["init_robot_here"] = True
-                        try_to_place_in_kwargs = cfg["placement"].get(
-                            "try_to_place_in_kwargs", None
-                        )
-                        if try_to_place_in_kwargs:
-                            for k, v in try_to_place_in_kwargs.items():
-                                container_cfg[k] = v
-                        all_obj_cfgs.append(container_cfg)
-                        container_model, container_info = EnvUtils.create_obj(
-                            self, container_cfg
-                        )
-                        container_cfg["info"] = container_info
-                        self.objects[container_model.name] = container_model
-                        self.model.merge_objects([container_model])
-
-                    cfg["placement"] = {
-                        "size": (0.01, 0.01),
-                        "ensure_object_boundary_in_range": False,
-                        "sample_args": {"reference": container_name},
+                    container_cfg = {
+                        "name": cfg["name"] + "_container",
+                        "obj_groups": cfg["placement"].get("try_to_place_in"),
+                        "placement": deepcopy(cfg["placement"]),
+                        "type": "object",
                     }
+
+                    init_robot_here = cfg.get("init_robot_here", False)
+                    if init_robot_here is True:
+                        cfg["init_robot_here"] = False
+                        container_cfg["init_robot_here"] = True
+
+                    try_to_place_in_kwargs = cfg["placement"].get(
+                        "try_to_place_in_kwargs", None
+                    )
+                    if try_to_place_in_kwargs is not None:
+                        for k, v in try_to_place_in_kwargs.items():
+                            container_cfg[k] = v
+
+                    # add in the new object to the model
+                    all_obj_cfgs.append(container_cfg)
+                    model, info = EnvUtils.create_obj(self, container_cfg)
+                    container_cfg["info"] = info
+                    self.objects[model.name] = model
+                    self.model.merge_objects([model])
+
+                    # modify object config to lie inside of container
+                    cfg["placement"] = dict(
+                        size=(0.01, 0.01),
+                        ensure_object_boundary_in_range=False,
+                        sample_args=dict(
+                            reference=container_cfg["name"],
+                        ),
+                    )
                 elif (
                     object_ref
                     and "in_container" in info["groups_containing_sampled_obj"]

@@ -17,7 +17,8 @@ class BreadSetupSlicing(Kitchen):
     def _setup_kitchen_references(self):
         super()._setup_kitchen_references()
         self.counter = self.register_fixture_ref(
-            "counter", dict(id=FixtureType.COUNTER, size=(1.0, 0.4), full_depth_region=True)
+            "counter",
+            dict(id=FixtureType.COUNTER, size=(0.9, 0.4), full_depth_region=True),
         )
         self.init_robot_base_ref = self.counter
         if "refs" in self._ep_meta:
@@ -49,7 +50,7 @@ class BreadSetupSlicing(Kitchen):
                 placement=dict(
                     fixture=self.counter,
                     sample_region_kwargs=dict(
-                        top_size=(1.0, 0.4),
+                        top_size=(0.9, 0.4),
                         full_depth_region=True,
                     ),
                     size=(1, 0.4),

@@ -391,7 +391,6 @@ main_group:
       type: blender
       enable: false
       aux_fixture_config:
-        enable: true
         has_free_joints: true
         placement: anchor 
         auxiliary_placement_args:

@@ -431,6 +431,11 @@ right_group:
     - name: blender
       type: blender
       enable: false
+      aux_fixture_config:
+        has_free_joints: true
+        placement: anchor
+        auxiliary_placement_args:
+          ensure_valid_placement: false
 
       placement:
         fixture: counter_1_right_group

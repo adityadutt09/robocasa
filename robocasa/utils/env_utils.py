@@ -76,17 +76,20 @@ def create_env(
     )
 
     if split == "test":
-        obj_instance_split = "B"
-        layout_ids = -1
-        style_ids = -1
+        obj_instance_split = "test"
+        layout_ids = None
+        style_ids = None
+        layout_and_style_ids = list(zip(range(1, 11), range(1, 11)))
     elif split == "train":
-        obj_instance_split = "A"
+        obj_instance_split = "train"
         layout_ids = -2
         style_ids = -2
+        layout_and_style_ids = None
     elif split == "all":
         obj_instance_split = None
         layout_ids = -3
         style_ids = -3
+        layout_and_style_ids = None
     elif split is None:
         pass
     else:

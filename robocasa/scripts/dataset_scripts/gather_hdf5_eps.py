@@ -125,19 +125,19 @@ def merge_eps(all_eps_directory):
 
     # re-process individual episodes again
     env_name = json.loads(env_info)["env_name"]
-    for ep_name in successful_episodes:
-        ep_directory = os.path.join(all_eps_directory, ep_name)
-        with open(os.path.join(ep_directory, "env_info.json")) as f:
-            this_env_info = json.loads(json.load(f))
-        assert this_env_info["env_name"] == env_name
-        # hdf5_path = gather_demonstrations_as_hdf5(
-        #     all_eps_directory,
-        #     ep_directory,
-        #     env_info,
-        #     successful_episodes=[ep_name],
-        #     out_name="ep_demo.hdf5",
-        # )
-        # convert_to_robomimic_format(hdf5_path)
+    # for ep_name in successful_episodes:
+    #     ep_directory = os.path.join(all_eps_directory, ep_name)
+    # with open(os.path.join(ep_directory, "env_info.json")) as f:
+    #     this_env_info = json.loads(json.load(f))
+    # assert this_env_info["env_name"] == env_name
+    # hdf5_path = gather_demonstrations_as_hdf5(
+    #     all_eps_directory,
+    #     ep_directory,
+    #     env_info,
+    #     successful_episodes=[ep_name],
+    #     out_name="ep_demo.hdf5",
+    # )
+    # convert_to_robomimic_format(hdf5_path)
 
     merged_hdf5_path = os.path.join(session_folder, "demo.hdf5")
     do_merge = True
@@ -146,7 +146,7 @@ def merge_eps(all_eps_directory):
             num_demos = len(f["data"])
             if num_demos == len(successful_episodes):
                 do_merge = False
-    
+
     if do_merge:
         merged_hdf5_path = gather_demonstrations_as_hdf5(
             all_eps_directory,
@@ -169,7 +169,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--directory",
         type=str,
-        default=os.path.join(robocasa.models.assets_root, "demonstrations_private"),
+        default=os.path.join(os.path.dirname(robocasa.__path__[0]), "datasets/v0.5"),
     )
     args = parser.parse_args()
 
