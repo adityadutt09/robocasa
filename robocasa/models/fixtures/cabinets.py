@@ -318,7 +318,7 @@ class Cabinet(ProcGenFixture):
                 "halfsize": region_halfsize,
             }
 
-        self.set_regions(regions)
+        self.update_regions(regions, update_elem=True)
 
     def set_door_state(self, min, max, env):
         pass
@@ -456,13 +456,14 @@ class SingleCabinet(Cabinet):
 
         self._add_levels(num_levels=self.num_levels, upper_level_indent=0.005)
         # main body region
-        self.set_regions(
+        self.update_regions(
             {
                 "main": {
                     "pos": [0.0, 0.0, 0.0],
                     "halfsize": [x, y, z],
                 },
-            }
+            },
+            update_elem=True,
         )
 
     @property
@@ -592,13 +593,14 @@ class HingeCabinet(Cabinet):
 
         self._add_levels(num_levels=self.num_levels, upper_level_indent=0.005)
         # main body region
-        self.set_regions(
+        self.update_regions(
             {
                 "main": {
                     "pos": [0.0, 0.0, 0.0],
                     "halfsize": [x, y, z],
                 },
-            }
+            },
+            update_elem=True,
         )
 
     def get_state(self, sim):
@@ -843,7 +845,7 @@ class OpenCabinet(Cabinet):
                 "halfsize": region_halfsize,
             }
 
-        self.set_regions(regions)
+        self.update_regions(regions, update_elem=True)
 
     @property
     def nat_lang(self):
@@ -985,7 +987,7 @@ class Drawer(Cabinet):
             ]
         )
 
-        self.set_regions(
+        self.update_regions(
             {
                 "main": {
                     "pos": [0.0, 0.0, 0.0],
@@ -995,7 +997,8 @@ class Drawer(Cabinet):
                     "pos": (int_p0 + int_p1) / 2,
                     "halfsize": (int_p1 - int_p0) / 2,
                 },
-            }
+            },
+            update_elem=True,
         )
 
     @property
@@ -1016,7 +1019,9 @@ class Drawer(Cabinet):
         )
         # use prev half size since this wont change
         hs = s2a(self._regions["int"]["elem"].get("size"))
-        self.set_regions({"int": {"pos": pos, "halfsize": hs}})
+        # don't update the element. the position here is with respect
+        # to the main drawer body, rather than the housing body.
+        self.update_regions({"int": {"pos": pos, "halfsize": hs}}, update_elem=False)
 
     def open_door(self, env, min=0.9, max=1, partial_open=True):
         if partial_open:
@@ -1388,7 +1393,7 @@ class HousingCabinet(Cabinet):
             ]
         )
 
-        self.set_regions(
+        self.update_regions(
             {
                 "main": {
                     "pos": [0.0, 0.0, 0.0],
@@ -1398,5 +1403,6 @@ class HousingCabinet(Cabinet):
                     "pos": (int_p0 + int_p1) / 2,
                     "halfsize": (int_p1 - int_p0) / 2,
                 },
-            }
+            },
+            update_elem=True,
         )

@@ -507,18 +507,20 @@ class Fixture(MujocoXMLObjectRobocasa):
         h = reg_pz[2] - reg_p0[2]
         return h
 
-    def set_regions(self, region_dict):
+    def update_regions(self, region_dict, update_elem=True):
         """
         Set the positions of the exterior and interior bounding box sites of the object
 
         Args:
             region_dict (dict): Dictionary of regions (containing pos, halfsize)
+            update_elem (bool): If True, will update the XML element attributes of the regions.
         """
         for (name, reg) in region_dict.items():
             pos = np.array(reg["pos"])
             halfsize = np.array(reg["halfsize"])
-            self._regions[name]["elem"].set("pos", array_to_string(pos))
-            self._regions[name]["elem"].set("size", array_to_string(halfsize))
+            if update_elem:
+                self._regions[name]["elem"].set("pos", array_to_string(pos))
+                self._regions[name]["elem"].set("size", array_to_string(halfsize))
 
             # compute boundary points for reference
             p0 = pos + np.array([-halfsize[0], -halfsize[1], -halfsize[2]])

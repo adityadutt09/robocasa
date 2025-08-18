@@ -81,7 +81,6 @@ from functools import partial
 from queue import Empty
 import shutil  # For getting terminal size
 
-import robomimic.utils.file_utils as FileUtils
 import robocasa.utils.robomimic.robomimic_env_utils as EnvUtils
 import robocasa.utils.robomimic.robomimic_tensor_utils as TensorUtils
 import robocasa.utils.robomimic.robomimic_dataset_utils as DatasetUtils
@@ -418,7 +417,7 @@ def get_gpu_allocation(num_procs, gpu_ids, procs_per_gpu=None):
 def dataset_states_to_obs_mp(args):
 
     # Get environment metadata
-    env_meta = FileUtils.get_env_metadata_from_dataset(dataset_path=args.dataset)
+    env_meta = DatasetUtils.get_env_metadata_from_dataset(dataset_path=args.dataset)
 
     # Read demonstrations and sort them
     with h5py.File(args.dataset, "r") as f:
@@ -549,7 +548,8 @@ def dataset_states_to_obs_mp(args):
 
         # Wait for all processes to complete
         for p in processes:
-            p.join()
+            if p.is_alive():
+                p.join()
 
         # Collect results
         results = []
@@ -669,6 +669,8 @@ def dataset_states_to_obs_mp(args):
 
 
 if __name__ == "__main__":
+    mp.set_start_method("spawn")
+
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--dataset",

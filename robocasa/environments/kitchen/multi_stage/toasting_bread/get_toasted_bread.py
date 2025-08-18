@@ -76,12 +76,15 @@ class GetToastedBread(Kitchen):
         toast_slot = 0
         toast_in_slot = False
         for slot_pair in range(len(self.toaster.get_state(self).keys())):
-            if self.toaster.check_slot_contact(self, "obj", slot_pair):
+            if self.toaster.check_slot_contact(self, "obj", slot_pair=slot_pair):
                 toast_slot = slot_pair
                 toast_in_slot = True
                 break
 
-        if toast_in_slot and self.toaster.get_state(self, slot_pair=toast_slot)["turned_on"]:
+        if (
+            toast_in_slot
+            and self.toaster.get_state(self, slot_pair=toast_slot)["turned_on"]
+        ):
             self.toaster_on = True
 
         return (
