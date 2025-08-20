@@ -962,7 +962,7 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
                         xml_site = find_elements(
                             self.model.worldbody,
                             "site",
-                            dict(name=f"{region}_{obj_i}"),
+                            dict(name=f"{region}_{obj_name}"),
                             return_first=True,
                         )
                         prev_pos = s2a(xml_site.get("pos", "0 0 0"))

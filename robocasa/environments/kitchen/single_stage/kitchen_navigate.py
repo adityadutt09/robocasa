@@ -8,6 +8,14 @@ class NavigateKitchen(Kitchen):
     """
 
     def __init__(self, *args, **kwargs):
+        # Enable the additional fixtures we want to use
+        enable_fixtures = kwargs.get("enable_fixtures", [])
+        enable_fixtures = list(enable_fixtures) + [
+            "electric_kettle",
+            "stand_mixer",
+            "toaster_oven",
+        ]
+        kwargs["enable_fixtures"] = enable_fixtures
         super().__init__(*args, **kwargs)
 
     def _setup_kitchen_references(self):
@@ -25,6 +33,7 @@ class NavigateKitchen(Kitchen):
             valid_src_fixture_classes = [
                 "CoffeeMachine",
                 "Toaster",
+                "ToasterOven",
                 "Stove",
                 "Stovetop",
                 "SingleCabinet",
@@ -35,8 +44,12 @@ class NavigateKitchen(Kitchen):
                 "Sink",
                 "Hood",
                 "Oven",
-                "Fridge",
+                "FridgeFrenchDoor",
+                "FridgeSideBySide",
+                "FridgeBottomFreezer",
                 "Dishwasher",
+                "ElectricKettle",
+                "StandMixer",
             ]
             # keep choosing src fixture until it is a valid fixture
             while True:
@@ -55,6 +68,7 @@ class NavigateKitchen(Kitchen):
                 in [
                     "CoffeeMachine",
                     "Toaster",
+                    "ToasterOven",
                     "Stove",
                     "Stovetop",
                     "OpenCabinet",
@@ -62,8 +76,12 @@ class NavigateKitchen(Kitchen):
                     "Sink",
                     "Hood",
                     "Oven",
-                    "Fridge",
+                    "FridgeFrenchDoor",
+                    "FridgeSideBySide",
+                    "FridgeBottomFreezer",
                     "Dishwasher",
+                    "ElectricKettle",
+                    "StandMixer",
                 ]
             ]
 
