@@ -729,6 +729,8 @@ from robocasa.environments.kitchen.single_stage.kitchen_drawer import (
     OpenDrawer,
     CloseDrawer,
     SlideDishwasherRack,
+    OpenFridgeDrawer,
+    CloseFridgeDrawer,
 )
 from robocasa.environments.kitchen.single_stage.kitchen_electric_kettle import (
     CloseElectricKettleLid,
@@ -761,6 +763,10 @@ from robocasa.environments.kitchen.single_stage.kitchen_pnp import (
     PnPCounterToToasterOven,
     PnPToasterOvenToCounter,
     PnPCounterToStandMixer,
+    PnPFridgeShelfToDrawer,
+    PnPFridgeDrawerToShelf,
+    PnPCounterToDrawer,
+    PnPDrawerToCounter,
 )
 from robocasa.environments.kitchen.single_stage.kitchen_sink import (
     TurnOnSinkFaucet,

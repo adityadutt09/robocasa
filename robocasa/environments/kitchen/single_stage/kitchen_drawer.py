@@ -343,3 +343,153 @@ class SlideDishwasherRack(Kitchen):
             return current_pos >= 0.95
         else:
             return current_pos <= 0.05
+
+
+class OpenFridgeDrawer(Kitchen):
+    """
+    Class encapsulating the atomic open fridge drawer task to pull the fridge drawer out.
+    """
+
+    # No drawer in side-by-side fridge in these styles
+    EXCLUDE_STYLES = [23, 24, 25, 27, 28, 37, 38, 40, 44, 47, 56]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def _setup_kitchen_references(self):
+        super()._setup_kitchen_references()
+        self.fridge = self.register_fixture_ref("fridge", dict(id=FixtureType.FRIDGE))
+        self.init_robot_base_ref = self.fridge
+
+    def get_ep_meta(self):
+        ep_meta = super().get_ep_meta()
+        ep_meta["lang"] = "Fully open the fridge drawer."
+        return ep_meta
+
+    def _setup_scene(self):
+        super()._setup_scene()
+        self.fridge.open_door(self, min=1.0, max=1.0)
+        self.fridge.open_door(
+            self, min=0.1, max=0.3, reg_type="drawer", drawer_rack_index=-1
+        )
+
+    def _get_obj_cfgs(self):
+        cfgs = []
+
+        cfgs.append(
+            dict(
+                name="distr_drawer",
+                fridgable=True,
+                graspable=True,
+                obj_groups=("vegetable", "fruit"),
+                placement=dict(
+                    fixture=self.fridge,
+                    sample_region_kwargs=dict(
+                        compartment="fridge",
+                        reg_type=("drawer"),
+                        rack_index=-1,
+                    ),
+                    size=(0.4, 0.2),
+                    pos=(0.0, 0.5),
+                ),
+            )
+        )
+
+        cfgs.append(
+            dict(
+                name="distr_shelf",
+                fridgable=True,
+                graspable=True,
+                placement=dict(
+                    fixture=self.fridge,
+                    sample_region_kwargs=dict(
+                        compartment="fridge",
+                        reg_type=("shelf"),
+                    ),
+                    size=(0.4, 0.2),
+                    pos=(0.0, 0),
+                ),
+            )
+        )
+
+        return cfgs
+
+    def _check_success(self):
+        return self.fridge.is_open(
+            self, compartment="fridge", reg_type="drawer", drawer_rack_index=-1, th=0.70
+        )
+
+
+class CloseFridgeDrawer(Kitchen):
+    """
+    Class encapsulating the atomic close fridge drawer task to push the fridge drawer in.
+    """
+
+    # No drawer in side-by-side fridge in these styles
+    EXCLUDE_STYLES = [23, 24, 25, 27, 28, 37, 38, 40, 44, 47, 56]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def _setup_kitchen_references(self):
+        super()._setup_kitchen_references()
+        self.fridge = self.register_fixture_ref("fridge", dict(id=FixtureType.FRIDGE))
+        self.init_robot_base_ref = self.fridge
+
+    def get_ep_meta(self):
+        ep_meta = super().get_ep_meta()
+        ep_meta["lang"] = "Fully close the fridge drawer."
+        return ep_meta
+
+    def _setup_scene(self):
+        super()._setup_scene()
+        self.fridge.open_door(self, min=1.0, max=1.0)
+        self.fridge.open_door(
+            self, min=0.8, max=1.0, reg_type="drawer", drawer_rack_index=-1
+        )
+
+    def _get_obj_cfgs(self):
+        cfgs = []
+
+        cfgs.append(
+            dict(
+                name="distr_drawer",
+                fridgable=True,
+                graspable=True,
+                obj_groups=("vegetable", "fruit"),
+                placement=dict(
+                    fixture=self.fridge,
+                    sample_region_kwargs=dict(
+                        compartment="fridge",
+                        reg_type=("drawer"),
+                        rack_index=-1,
+                    ),
+                    size=(0.4, 0.2),
+                    pos=(0.0, 0.5),
+                ),
+            )
+        )
+
+        cfgs.append(
+            dict(
+                name="distr_shelf",
+                fridgable=True,
+                graspable=True,
+                placement=dict(
+                    fixture=self.fridge,
+                    sample_region_kwargs=dict(
+                        compartment="fridge",
+                        reg_type=("shelf"),
+                    ),
+                    size=(0.4, 0.2),
+                    pos=(0.0, 0),
+                ),
+            )
+        )
+
+        return cfgs
+
+    def _check_success(self):
+        return self.fridge.is_closed(
+            self, compartment="fridge", reg_type="drawer", drawer_rack_index=-1, th=0.05
+        )

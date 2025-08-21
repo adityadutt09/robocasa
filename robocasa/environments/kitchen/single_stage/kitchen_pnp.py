@@ -1382,6 +1382,238 @@ class PnPCounterToStandMixer(PnP):
         )
 
 
+class PnPFridgeShelfToDrawer(PnP):
+    """
+    Class encapsulating the atomic task of moving an item from a fridge shelf to the fridge drawer.
+    """
+
+    # No drawer in side-by-side fridge in these styles
+    EXCLUDE_STYLES = [23, 24, 25, 27, 28, 37, 38, 40, 44, 47, 56]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def _setup_kitchen_references(self):
+        super()._setup_kitchen_references()
+        self.fridge = self.register_fixture_ref("fridge", dict(id=FixtureType.FRIDGE))
+        self.init_robot_base_ref = self.fridge
+        if "refs" in self._ep_meta:
+            self.rack_index = self._ep_meta["refs"]["rack_index"]
+        else:
+            self.rack_index = -1 if self.rng.random() < 0.5 else -2
+
+    def _setup_scene(self):
+        super()._setup_scene()
+        self.fridge.open_door(self, min=1.0, max=1.0)
+        self.fridge.open_door(
+            self, min=0.8, max=1.0, reg_type="drawer", drawer_rack_index=-1
+        )
+
+    def get_ep_meta(self):
+        ep_meta = super().get_ep_meta()
+        obj_lang = self.get_obj_lang()
+        ep_meta[
+            "lang"
+        ] = f"Pick the {obj_lang} from the fridge shelf and place it in the fridge drawer."
+        ep_meta["refs"] = ep_meta.get("refs", {})
+        ep_meta["refs"]["rack_index"] = self.rack_index
+        return ep_meta
+
+    def _get_obj_cfgs(self):
+        cfgs = []
+        cfgs.append(
+            dict(
+                name="obj",
+                obj_groups=("vegetable", "fruit"),
+                graspable=True,
+                fridgable=True,
+                placement=dict(
+                    fixture=self.fridge,
+                    sample_region_kwargs=dict(
+                        compartment="fridge",
+                        reg_type=("shelf"),
+                        rack_index=self.rack_index,
+                    ),
+                    size=(0.40, 0.15),
+                    pos=(0.0, -1.0),
+                ),
+            )
+        )
+
+        cfgs.append(
+            dict(
+                name="distr",
+                exclude_obj_groups=("vegetable", "fruit"),
+                fridgable=True,
+                placement=dict(
+                    fixture=self.fridge,
+                    sample_region_kwargs=dict(
+                        compartment="fridge",
+                        reg_type=("shelf"),
+                    ),
+                    size=(0.40, 0.15),
+                    pos=(0.0, -0.5),
+                ),
+            )
+        )
+        return cfgs
+
+    def _check_success(self):
+        obj_in_drawer = self.fridge.check_rack_contact(
+            self, "obj", compartment="fridge", reg_type=("drawer"), rack_index=-1
+        )
+        return obj_in_drawer and OU.gripper_obj_far(self, "obj", th=0.15)
+
+
+class PnPFridgeDrawerToShelf(PnP):
+    """
+    Class encapsulating the atomic task of moving an item from the fridge drawer to a fridge shelf.
+    """
+
+    # No drawer in side-by-side fridge in these layouts or hard to reach
+    EXCLUDE_LAYOUTS = [2, 7, 9, 18, 21, 24, 29, 32, 38, 41, 43, 44, 45, 47, 57]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def _setup_kitchen_references(self):
+        super()._setup_kitchen_references()
+        self.fridge = self.register_fixture_ref("fridge", dict(id=FixtureType.FRIDGE))
+        self.init_robot_base_ref = self.fridge
+
+    def _setup_scene(self):
+        super()._setup_scene()
+        self.fridge.open_door(self, min=1.0, max=1.0)
+        self.fridge.open_door(
+            self, min=0.8, max=0.8, reg_type="drawer", drawer_rack_index=-1
+        )
+
+    def get_ep_meta(self):
+        ep_meta = super().get_ep_meta()
+        obj_lang = self.get_obj_lang()
+        ep_meta[
+            "lang"
+        ] = f"Pick the {obj_lang} from the fridge drawer and place it on a fridge shelf."
+        return ep_meta
+
+    def _get_obj_cfgs(self):
+        cfgs = []
+        cfgs.append(
+            dict(
+                name="obj",
+                obj_groups=("vegetable", "fruit"),
+                graspable=True,
+                fridgable=True,
+                placement=dict(
+                    fixture=self.fridge,
+                    sample_region_kwargs=dict(
+                        compartment="fridge",
+                        reg_type=("drawer"),
+                        rack_index=-1,
+                    ),
+                    size=(0.4, 0.2),
+                    pos=(0.0, 0.25),
+                ),
+            )
+        )
+
+        cfgs.append(
+            dict(
+                name="distr",
+                exclude_obj_groups=("vegetable", "fruit"),
+                fridgable=True,
+                placement=dict(
+                    fixture=self.fridge,
+                    sample_region_kwargs=dict(
+                        compartment="fridge",
+                        reg_type=("shelf"),
+                    ),
+                    size=(0.4, 0.2),
+                    pos=(0.0, 0.5),
+                ),
+            )
+        )
+        return cfgs
+
+    def _check_success(self):
+        obj_on_rack = self.fridge.check_rack_contact(
+            self, "obj", compartment="fridge", reg_type=("shelf")
+        )
+        return obj_on_rack and OU.gripper_obj_far(self, "obj", th=0.15)
+
+
+class PnPCounterToDrawer(PnP):
+    """
+    Class encapsulating the atomic task of moving an item from the counter into the drawer.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def _setup_kitchen_references(self):
+        super()._setup_kitchen_references()
+        self.drawer = self.register_fixture_ref(
+            "drawer", dict(id=FixtureType.TOP_DRAWER)
+        )
+        self.counter = self.register_fixture_ref(
+            "counter", dict(id=FixtureType.COUNTER, ref=self.drawer)
+        )
+        self.init_robot_base_ref = self.drawer
+
+    def _setup_scene(self):
+        super()._setup_scene()
+        self.drawer.open_door(self)
+
+    def get_ep_meta(self):
+        ep_meta = super().get_ep_meta()
+        obj_lang = self.get_obj_lang()
+        ep_meta[
+            "lang"
+        ] = f"Pick the {obj_lang} from the counter and place it in the drawer."
+        return ep_meta
+
+    def _get_obj_cfgs(self):
+        cfgs = []
+        cfgs.append(
+            dict(
+                name="obj",
+                obj_groups=("tool", "utensil"),
+                exclude_obj_groups=("reamer", "strainer", "cheese_grater"),
+                graspable=True,
+                placement=dict(
+                    fixture=self.counter,
+                    sample_region_kwargs=dict(
+                        ref=self.drawer,
+                    ),
+                    size=(0.60, 0.30),
+                    pos=("ref", -1.0),
+                ),
+            )
+        )
+
+        cfgs.append(
+            dict(
+                name="distr",
+                exclude_obj_groups=("tool", "utensil"),
+                placement=dict(
+                    fixture=self.counter,
+                    sample_region_kwargs=dict(
+                        ref=self.drawer,
+                    ),
+                    size=(0.60, 0.30),
+                    pos=("ref", -0.5),
+                ),
+            )
+        )
+        return cfgs
+
+    def _check_success(self):
+        in_drawer = OU.obj_inside_of(
+            self, "obj", self.drawer
+        ) and not OU.check_obj_any_counter_contact(self, "obj")
+        return in_drawer and OU.gripper_obj_far(self, "obj")
+
+
 class PnPDrawerToCounter(PnP):
     """
     Class encapsulating the atomic task of moving an item from the drawer to the counter.

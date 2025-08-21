@@ -50,6 +50,7 @@ SLIDING_INTERIOR_FIXTURES = [
     FixtureType.DISHWASHER,
     FixtureType.OVEN,
     FixtureType.TOASTER_OVEN,
+    FixtureType.FRIDGE,
 ]
 
 
