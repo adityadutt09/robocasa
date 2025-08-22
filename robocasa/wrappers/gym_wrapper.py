@@ -184,10 +184,10 @@ class PandaOmronKeyConverter(RobotKeyConverter):
     def map_action(cls, input_action):
         output_action = type(input_action)()
         output_action = {
-            # "hand.gripper_close": (
-            #     np.int64(0) if input_action["robot0_right_gripper"] < 0 else np.int64(1)
-            # ),
-            "hand.gripper_close": input_action["robot0_right_gripper"],
+            "hand.gripper_close": (
+                np.int64(0) if input_action["robot0_right_gripper"] < 0 else np.int64(1)
+            ),
+            # "hand.gripper_close": input_action["robot0_right_gripper"],
             "body.end_effector_position": input_action["robot0_right"][..., 0:3],
             "body.end_effector_rotation": input_action["robot0_right"][..., 3:6],
             "body.base_motion": np.concatenate(
@@ -197,10 +197,10 @@ class PandaOmronKeyConverter(RobotKeyConverter):
                 ),
                 axis=-1,
             ),
-            # "body.control_mode": (
-            #     np.int64(0) if input_action["robot0_base_mode"] < 0 else np.int64(1)
-            # ),
-            "body.control_mode": input_action["robot0_base_mode"],
+            "body.control_mode": (
+                np.int64(0) if input_action["robot0_base_mode"] < 0 else np.int64(1)
+            ),
+            # "body.control_mode": input_action["robot0_base_mode"],
         }
         return output_action
 
@@ -208,9 +208,9 @@ class PandaOmronKeyConverter(RobotKeyConverter):
     def unmap_action(cls, input_action):
         output_action = type(input_action)()
         output_action = {
-            # "robot0_right_gripper": (
-            #     -1.0 if input_action["action.gripper_close"] < 0.5 else 1.0
-            # ),
+            "robot0_right_gripper": (
+                -1.0 if input_action["action.gripper_close"] < 0.5 else 1.0
+            ),
             "robot0_right_gripper": input_action["action.gripper_close"],
             "robot0_right": np.concatenate(
                 (
@@ -222,9 +222,9 @@ class PandaOmronKeyConverter(RobotKeyConverter):
             "robot0_base": input_action["action.base_motion"][..., 0:3],
             "robot0_torso": input_action["action.base_motion"][..., 3:4],
             "robot0_base_mode": input_action["action.control_mode"],
-            # "robot0_base_mode": (
-            #     -1.0 if input_action["action.control_mode"] < 0.5 else 1.0
-            # ),
+            "robot0_base_mode": (
+                -1.0 if input_action["action.control_mode"] < 0.5 else 1.0
+            ),
         }
         return output_action
 

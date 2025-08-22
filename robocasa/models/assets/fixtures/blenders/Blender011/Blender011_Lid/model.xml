@@ -1,37 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <mujoco model="model">
   <option timestep="0.002" gravity="0.0 0.0 -9.81"/>
   <compiler angle="radian"/>
   <asset>
-    <texture file="visuals/T_BC001.png" name="Lid001_material" type="2d"/>
-    <material name="Lid001_material" rgba="1 1 1 1.0" texture="Lid001_material" shininess="0.7700482308864594" specular="3"/>
-    <mesh file="visuals/Lid001.obj" name="Lid001_vis"/>
+    <mesh file="visuals/lid.obj" name="lid_vis"/>
+    <texture file="visuals/T_lid_BC001.png" name="lid_material" type="2d"/>
+    <material name="lid_material" rgba="1 1 1 1.0" texture="lid_material" shininess="0.7700482308864594" specular="0.3103448502657381"/>
   </asset>
   <default>
     <default class="visual">
       <geom conaffinity="0" contype="0" group="1" type="mesh"/>
     </default>
     <default class="collision">
-      <geom group="0" rgba="0.5 0 0 0.5"/>
+      <geom group="0" rgba="0.5 0 0 0.5" density="1000" solref="0.01 1.8" solimp="0.8 0.95 0.02" condim="3"/>
     </default>
-    <default class="spawn">
+    <default class="spawns">
       <geom group="0" rgba="1 1 1 0.5" contype="0" conaffinity="0"/>
       <site group="0" rgba="1 1 1 0.5"/>
     </default>
     <default class="region">
-      <geom group="1" conaffinity="0" contype="0" rgba="0 1 0 0"/>
+      <geom group="1" conaffinity="0" contype="0" rgba="0 1 0 0" mass="0"/>
     </default>
   </default>
   <worldbody>
     <body>
       <body name="object">
-        <geom mesh="Lid001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Lid001_material"/>
-        <geom class="collision" type="box" pos="0.0012288902204863395 0.0017952945322039539 -0.0012658961423401283" size="0.0665302500128746 0.07075388729572296 0.012819948606193066" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
-        <geom class="collision" type="box" pos="-0.03737843977951366 -0.04126415546779605 0.02231006385765985" size="0.0037440641317516565 0.004916483070701361 0.010853731073439121" quat="0.9270315766334534 0.0 0.0 0.3749832808971405" density="1000.0"/>
-        <geom class="collision" type="box" pos="-0.05557406977951366 -0.05886405546779605 0.02231006385765985" size="0.0037440641317516565 0.004916483070701361 0.010853731073439121" quat="0.9270315766334534 0.0 0.0 0.3749832808971405" density="1000.0"/>
-        <geom class="collision" type="box" pos="-0.04641870977951366 -0.05000844546779605 0.014844533857659853" size="0.008867119438946247 0.004916483070701361 0.003388203214854002" quat="0.9270315766334534 0.0 0.0 0.3749832808971405" density="1000.0"/>
-        <geom class="collision" type="box" pos="-0.04637521977951366 -0.049966375467796045 0.03733578385765987" size="0.01324789971113205 0.004916483070701361 0.003862414974719286" quat="0.9270315766334534 0.0 0.0 0.3749832808971405" density="1000.0"/>
-        <geom class="region" name="reg_main" density="0" type="box" pos="0.0015727800000000028 0.0020675199999999963 0.012916070000000002" size="0.066018 0.069943 0.029621"/>
+        <geom mesh="lid_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="lid_material"/>
+        <geom type="box" pos="1.949956640601158e-09 0.0 -0.000386284664273262" size="0.06601807475090027 0.06994271278381348 0.0035744120832532644" quat="1.0 0.0 0.0 0.0" class="collision"/>
+        <geom type="box" pos="-2.240994945168495e-09 1.862645149230957e-09 -0.011895807459950447" size="0.059 0.063 0.0096" quat="1.0 0.0 0.0 0.0" class="collision"/>
+        <geom type="cylinder" pos="0.00023671532107982785 -0.00144202820956707 0.008641226217150688" size="0.028447695076465607 0.00974310003221035" quat="1.0 0.0 0.0 0.0" class="collision"/>
+        <geom type="cylinder" name="handle_main" pos="0.00023671532107982785 -0.00144202820956707 0.019566966220736504" size="0.03817574307322502 0.0017310422845184803" quat="1.0 0.0 0.0 0.0" class="collision"/>
+        <geom class="region" name="reg_main" type="box" pos="0.0 0.0 0.0" size="0.06701807475090027 0.07094271278381348 0.02242922766506672"/>
       </body>
     </body>
   </worldbody>
+  <actuator/>
 </mujoco>

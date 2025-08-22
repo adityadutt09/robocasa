@@ -1,34 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <mujoco model="model">
   <option timestep="0.002" gravity="0.0 0.0 -9.81"/>
   <compiler angle="radian"/>
   <asset>
-    <texture file="visuals/T_BC001.png" name="Lid001_material" type="2d"/>
-    <material name="Lid001_material" rgba="1 1 1 1.0" texture="Lid001_material" shininess="0.5" specular="0.3103448502657381"/>
-    <mesh file="visuals/Lid001.obj" name="Lid001_vis"/>
+    <mesh file="visuals/lid.obj" name="lid_vis"/>
+    <texture file="visuals/T_BC001.png" name="lid_material" type="2d"/>
+    <material name="lid_material" rgba="1 1 1 1.0" texture="lid_material" shininess="0.5" specular="0.3103448502657381"/>
   </asset>
   <default>
     <default class="visual">
       <geom conaffinity="0" contype="0" group="1" type="mesh"/>
     </default>
     <default class="collision">
-      <geom group="0" rgba="0.5 0 0 0.5"/>
+      <geom group="0" rgba="0.5 0 0 0.5" density="1000" solref="0.01 1.8" solimp="0.8 0.95 0.02" condim="3"/>
     </default>
     <default class="spawn">
       <geom group="0" rgba="1 1 1 0.5" contype="0" conaffinity="0"/>
       <site group="0" rgba="1 1 1 0.5"/>
     </default>
     <default class="region">
-      <geom group="1" conaffinity="0" contype="0" rgba="0 1 0 0"/>
+      <geom group="1" conaffinity="0" contype="0" rgba="0 1 0 0" mass="0"/>
     </default>
   </default>
   <worldbody>
     <body>
       <body name="object">
-        <geom mesh="Lid001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Lid001_material"/>
-        <geom class="collision" type="cylinder" pos="-0.0038064499866182332 -0.00020108828214129154 0.010240687593627701" size="0.09406635165214539 0.01148100383579731" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
-        <geom class="collision" type="cylinder" pos="0.00018651001338176702 -0.00020108828214129154 0.027288627593627712" size="0.03719872981309891 0.007537921890616417" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
-        <geom class="region" name="reg_main" density="0" type="box" pos="0.008357799999999999 0.0004120700000000005 -0.0005684799999999997" size="0.1207415 0.0917195 0.035402"/>
+        <geom mesh="lid_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="lid_material"/>
+        <geom type="cylinder" pos="-0.001431995420716703 -0.0002450098982080817 0.001906774123199284" size="0.037832166999578476 0.004617499187588692" quat="1.0 0.0 0.0 0.0" class="collision"/>
+        <geom type="cylinder" pos="5.3883450163993984e-06 -4.156519025855232e-06 0.009565717540681362" size="0.013270551338791847 0.002689134096726775" quat="1.0 0.0 0.0 0.0" class="collision"/>
+        <geom type="cylinder" pos="-0.0015163180651143193 7.978671783348545e-05 -0.004426531959325075" size="0.04061230272054672 0.00906763132661581" quat="1.0 0.0 0.0 0.0" class="collision"/>
+        <geom type="cylinder" name="handle_main" pos="5.3883450163993984e-06 -4.156519025855232e-06 0.012320984154939651" size="0.01683618500828743 0.0013016912853345275" quat="1.0 0.0 0.0 0.0" class="collision"/>
+        <geom type="cylinder" pos="2.461862180780372e-08 -2.059011805499722e-08 0.0029025408439338207" size="0.044937875121831894 0.00399757968261838" quat="1.0 0.0 0.0 0.0" class="collision"/>
+        <geom class="region" name="reg_main" type="box" pos="9.313225746154785e-10 0.0 0.0" size="0.05 0.05 0.014625295832753182"/>
       </body>
     </body>
   </worldbody>
+  <actuator/>
 </mujoco>

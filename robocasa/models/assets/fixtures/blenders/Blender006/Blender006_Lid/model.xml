@@ -2,9 +2,9 @@
   <option timestep="0.002" gravity="0.0 0.0 -9.81"/>
   <compiler angle="radian"/>
   <asset>
-    <texture file="visuals/T_BC001.png" name="Lid001_material" type="2d"/>
-    <material name="Lid001_material" rgba="1 1 1 1.0" texture="Lid001_material" shininess="0.4472135901451111" specular="0.3103448502657381"/>
-    <mesh file="visuals/Lid001.obj" name="Lid001_vis"/>
+    <texture file="visuals/T_BC001.png" name="lid_material" type="2d"/>
+    <material name="lid_material" rgba="1 1 1 1.0" texture="lid_material" shininess="0.4472135901451111" specular="0.3103448502657381"/>
+    <mesh file="visuals/lid.obj" name="lid_vis"/>
   </asset>
   <default>
     <default class="visual">
@@ -24,9 +24,10 @@
   <worldbody>
     <body>
       <body name="object">
-        <geom mesh="Lid001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Lid001_material"/>
+        <geom mesh="lid_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="lid_material"/>
         <geom class="collision" type="cylinder" pos="-0.004855678318701508 -7.242525191526739e-05 0.0070772560343172475" size="0.06867838650941849 0.005201192107051611" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
-        <geom class="collision" type="cylinder" pos="-0.004855682043991807 -7.242804588299123e-05 0.017411270926895372" size="0.02612263336777687 0.005131117068231106" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
+        <geom class="collision" type="cylinder" pos="-0.004855678318701508 -7.242525191526739e-05 -0.0068" size="0.0614 0.009" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
+        <geom class="collision" name="handle_main" type="cylinder" pos="-0.004855682043991807 -7.242804588299123e-05 0.017411270926895372" size="0.02612263336777687 0.005131117068231106" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
         <geom class="collision" type="box" pos="0.0625184933704512 0.0004950659143783537 0.006737420152130358" size="0.022866295650601387 0.01229377556592226 0.003732527606189251" quat="0.9993242025375366 -1.5204171522996543e-15 0.036758556962013245 4.9388284573126384e-09" density="1000.0"/>
         <geom class="region" name="reg_main" density="0" type="box" pos="0.0058908999999999975 -7.799999999988372e-07 0.0028235299999999994" size="0.080367 0.07210549999999999 0.018659500000000002"/>
       </body>

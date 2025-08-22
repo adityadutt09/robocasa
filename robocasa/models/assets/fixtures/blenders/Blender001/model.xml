@@ -3,110 +3,99 @@
   <option timestep="0.002" gravity="0.0 0.0 -9.81"/>
   <compiler angle="radian"/>
   <asset>
-    <mesh file="visuals/Blade001.obj" name="Blade001_vis"/>
+    <mesh file="visuals/blade.obj" name="blade_vis"/>
     <mesh file="visuals/Body001.obj" name="Body001_vis"/>
-    <mesh file="visuals/Button001.obj" name="Button001_vis"/>
-    <mesh file="visuals/Jug001.obj" name="Jug001_vis"/>
-    <mesh file="visuals/Jug001_Clear.obj" name="Jug001_Clear_vis"/>
-    <mesh file="visuals/Knob001.obj" name="Knob001_vis"/>
+    <mesh file="visuals/power_button.obj" name="power_button_vis"/>
+    <mesh file="visuals/pitcher.obj" name="pitcher_vis"/>
+    <mesh file="visuals/pitcher_main.obj" name="pitcher_main_vis"/>
+    <mesh file="visuals/knob_speed.obj" name="knob_speed_vis"/>
     <texture file="visuals/T_BC001.png" name="Body001_material" type="2d"/>
-    <material name="Body001_material" rgba="1 1 1 1.0" texture="Body001_material" shininess="0.1" specular="1"/>
-    <texture file="visuals/T_BC001.png" name="Button001_material" type="2d"/>
-    <material name="Button001_material" rgba="1 1 1 1.0" texture="Button001_material" shininess="0.4472135901451111" specular="0.3103448502657381"/>
-    <texture file="visuals/T_BC001.png" name="Jug001_material" type="2d"/>
-    <material name="Jug001_material" rgba="1 1 1 1.0" texture="Jug001_material" shininess="0.4472135901451111" specular="0.3103448502657381"/>
-    <texture file="visuals/T_BC001.png" name="Blade001_material" type="2d"/>
-    <material name="Blade001_material" rgba="1 1 1 1.0" texture="Blade001_material" shininess="0.4472135901451111" specular="0.3103448502657381"/>
-    <texture file="visuals/T_BC001.png" name="Jug001_Clear_material" type="2d"/>
-    <material name="Jug001_Clear_material" rgba="1 1 1 0.800000011920929" texture="Jug001_Clear_material" shininess="0.4472135901451111" specular="0.3103448502657381"/>
-    <texture file="visuals/T_BC001.png" name="Lid001_material" type="2d"/>
-    <material name="Lid001_material" rgba="1 1 1 1.0" texture="Lid001_material" shininess="0.4472135901451111" specular="0.3103448502657381"/>
-    <texture file="visuals/T_BC001.png" name="Knob001_material" type="2d"/>
-    <material name="Knob001_material" rgba="1 1 1 1.0" texture="Knob001_material" shininess="0.4472135901451111" specular="0.3103448502657381"/>
+    <material name="Body001_material" rgba="1 1 1 1.0" texture="Body001_material" shininess="0.4472135901451111" specular="1"/>
+    <texture file="visuals/T_BC001.png" name="power_button_material" type="2d"/>
+    <material name="power_button_material" rgba="1 1 1 1.0" texture="power_button_material" shininess="0.4472135901451111" specular="1"/>
+    <texture file="visuals/T_BC001.png" name="pitcher_material" type="2d"/>
+    <material name="pitcher_material" rgba="1 1 1 1.0" texture="pitcher_material" shininess="0.4472135901451111" specular="1"/>
+    <texture file="visuals/T_BC001.png" name="blade_material" type="2d"/>
+    <material name="blade_material" rgba="1 1 1 1.0" texture="blade_material" shininess="0.4472135901451111" specular="1"/>
+    <texture file="visuals/T_BC001.png" name="pitcher_main_material" type="2d"/>
+    <material name="pitcher_main_material" rgba="1 1 1 0.800000011920929" texture="pitcher_main_material" shininess="0.4472135901451111" specular="0.3103448502657381"/>
+    <texture file="visuals/T_BC001.png" name="knob_speed_material" type="2d"/>
+    <material name="knob_speed_material" rgba="1 1 1 1.0" texture="knob_speed_material" shininess="0.4472135901451111" specular="1"/>
   </asset>
   <default>
     <default class="visual">
       <geom conaffinity="0" contype="0" group="1" type="mesh"/>
     </default>
     <default class="collision">
-      <geom group="0" rgba="0.5 0 0 0.5"/>
+      <geom group="0" rgba="0.5 0 0 0.5" density="1.0" solref="0.004 1" solimp="0.998 0.998 0.001"/>
     </default>
     <default class="spawn">
       <geom group="0" rgba="1 1 1 0.5" contype="0" conaffinity="0"/>
       <site group="0" rgba="1 1 1 0.5"/>
     </default>
     <default class="region">
-      <geom group="1" conaffinity="0" contype="0" rgba="0 1 0 0"/>
+      <geom group="1" conaffinity="0" contype="0" rgba="0 1 0 0" mass="0"/>
     </default>
   </default>
   <worldbody>
     <body>
       <body name="object">
         <geom mesh="Body001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Body001_material"/>
-        <geom class="collision" type="cylinder" pos="-0.01387144 0.00759112 -0.22227697" size="0.10469318181276321 0.028516290709376335" quat="1.0 0.0 0.0 0.0"/>
-        <geom class="collision" type="cylinder" pos="-0.01387144 0.00759112 -0.16607638" size="0.10001954436302185 0.02724328637123108" quat="1.0 0.0 0.0 0.0"/>
-        <geom class="collision" type="cylinder" pos="-0.01387144 0.00759112 -0.11230748" size="0.09488319605588913 0.02584424987435341" quat="1.0 0.0 0.0 0.0"/>
-        <geom class="collision" type="cylinder" pos="-0.01387144 0.00759112 -0.07100878" size="0.08281132578849792 0.015388729982078075" quat="1.0 0.0 0.0 0.0"/>
+        <geom type="cylinder" pos="-0.01387144 0.00759112 -0.22227697" size="0.10469318181276321 0.028516290709376335" quat="1.0 0.0 0.0 0.0" class="collision"/>
+        <geom type="cylinder" pos="-0.01387144 0.00759112 -0.16607638" size="0.10001954436302185 0.02724328637123108" quat="1.0 0.0 0.0 0.0" class="collision"/>
+        <geom type="cylinder" pos="-0.01387144 0.00759112 -0.11230748" size="0.09488319605588913 0.02584424987435341" quat="1.0 0.0 0.0 0.0" class="collision"/>
+        <geom type="cylinder" pos="-0.01387144 0.00759112 -0.07100878" size="0.08281132578849792 0.015388729982078075" quat="1.0 0.0 0.0 0.0" class="collision"/>
         <body name="power_button">
-          <joint axis="0.0 1.0 0.0" pos="-0.01595779 -0.08291703 -0.07724272" limited="true" name="power_button_joint" range="0.0 0.005" type="slide" damping="1" frictionloss="1" armature=".01" stiffness="0.05"/>
-          <geom mesh="Button001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Button001_material"/>
-          <geom class="collision" type="cylinder" pos="-0.01595779 -0.08434111 -0.07724272" size="0.007227575872093439 0.00347500410862267" quat="0.7071068286895752 0.7071067690849304 0.0 0.0"/>
+          <joint axis="0.0 1.0 0.0" pos="-0.01595779 -0.08291703 -0.07724272" limited="true" name="power_button_joint" range="0.0 0.002" type="slide" damping="1" frictionloss="1" armature=".01" stiffness="0.2" springref="-0.5"/>
+          <geom mesh="power_button_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="power_button_material"/>
+          <geom class="collision" type="cylinder" pos="-0.01595779 -0.08434111 -0.07724272" size="0.007227575872093439 0.00347500410862267" quat="0.7071068286895752 0.7071067690849304 0.0 0.0" name="power_button_main"/>
         </body>
         <body name="pitcher">
           <!-- <joint axis="0.0 0.0 1.0" pos="0.01402409 0.00780655 0.06737188" limited="true" name="pitcher_joint" range="0.0 0.1" type="slide" damping="1" frictionloss="1" armature=".01" stiffness="0.05"/> -->
-          <geom mesh="Jug001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Jug001_material"/>
-          <geom class="collision" type="cylinder" pos="-0.01387144 0.00759112 -0.02343743" size="0.0755901038646698 0.031190989539027214" quat="1.0 0.0 0.0 0.0"/>
-          <geom class="collision" type="box" pos="0.06034970 0.00758336 0.06784143" size="0.011583236046135426 0.027263129130005836 0.12090808898210526" quat="1.0 0.0 0.0 0.0"/>
-          <geom name="pitcher_handle_0" class="collision" type="box" pos="0.09159835 0.00748012 0.17227817" size="0.021328119561076164 0.015841878950595856 0.01625138334929943" quat="1.0 0.0 0.0 0.0"/>
-          <geom name="pitcher_handle_1" class="collision" type="box" pos="0.10630482 0.00791430 0.15362938" size="0.03252037614583969 0.01542231347411871 0.011712320148944855" quat="0.7547217607498169 0.0 0.6560450196266174 0.0"/>
-          <geom name="pitcher_handle_2" class="collision" type="box" pos="0.10537517 0.00791430 0.09766448" size="0.03252037614583969 0.01542231161147356 0.011712320148944855" quat="0.6293348073959351 0.0 0.7771342992782593 0.0"/>
-          <geom name="pitcher_handle_3" class="collision" type="box" pos="0.08100685 0.00791430 0.05260452" size="0.030332840979099274 0.01542231161147356 0.01171231921762228" quat="0.34662744402885437 0.0 0.93800288438797 0.0"/>
-          <geom class="collision" type="box" pos="0.05442135 0.00758336 0.09247573" size="0.008866118267178535 0.027263129130005836 0.0962737575173378" quat="1.0 0.0 0.0 0.0"/>
-          <geom class="collision" type="box" pos="0.03891332 -0.03551471 0.09247573" size="0.005154433660209179 0.027263129130005836 0.09614638984203339" quat="0.9419527649879456 0.006479029078036547 0.018207471817731857 -0.33518874645233154"/>
-          <geom class="collision" type="box" pos="-0.04634138 -0.05228703 0.09247573" size="0.005154434125870466 0.027263129130005836 0.09614638984203339" quat="0.5137460827827454 0.016579383984208107 0.009930452331900597 -0.8577246069908142"/>
-          <geom class="collision" type="box" pos="-0.00107414 -0.05927414 0.09247573" size="0.005154433660209179 0.027263129130005836 0.09614638984203339" quat="0.771568238735199 0.012290717102587223 0.01491402555257082 -0.6358529329299927"/>
-          <geom class="collision" type="box" pos="-0.05083842 0.06528205 0.09247573" size="0.005154433660209179 0.027263129130005836 0.09614638984203339" quat="0.4774850010871887 -0.016979556530714035 0.00922954361885786 0.8784273266792297"/>
-          <geom class="collision" type="box" pos="-0.00432211 0.07546330 0.09247573" size="0.005154433660209179 0.027263129130005836 0.09614638984203339" quat="0.7537038326263428 -0.01269812323153019 0.014568712562322617 0.6569300293922424"/>
-          <geom class="collision" type="box" pos="-0.07905889 0.02830759 0.09247573" size="0.005154433660209179 0.027263129130005836 0.09614638984203339" quat="0.14990121126174927 -0.019107436761260033 0.002897514495998621 0.9885120987892151"/>
-          <geom class="collision" type="box" pos="-0.07734878 -0.01746379 0.09247573" size="0.005154433660209179 0.027263129130005836 0.09614638984203339" quat="0.1901738941669464 0.018973061814904213 0.0036759646609425545 -0.9815601706504822"/>
-          <geom class="collision" type="box" pos="0.03788485 0.05238785 0.09247573" size="0.005154434125870466 0.027263129130005836 0.09614638984203339" quat="0.9367375373840332 -0.006755633745342493 0.018106667324900627 0.3494986593723297"/>
+          <geom mesh="pitcher_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="pitcher_material"/>
+          <geom type="cylinder" pos="-0.01387144 0.00759112 -0.02343743" size="0.0755901038646698 0.031190989539027214" quat="1.0 0.0 0.0 0.0" class="collision"/>
+          <geom type="box" pos="0.06034970 0.00758336 0.06784143" size="0.011583236046135426 0.027263129130005836 0.12090808898210526" quat="1.0 0.0 0.0 0.0" class="collision"/>
+          <geom class="collision" type="box" pos="0.09159835 0.00748012 0.17227817" size="0.021328119561076164 0.015841878950595856 0.01625138334929943" quat="1.0 0.0 0.0 0.0" name="pitcher_handle_3"/>
+          <geom class="collision" type="box" pos="0.10630482 0.00791430 0.15362938" size="0.03252037614583969 0.01542231347411871 0.011712320148944855" quat="0.7547217607498169 0.0 0.6560450196266174 0.0" name="pitcher_handle_2"/>
+          <geom class="collision" type="box" pos="0.10537517 0.00791430 0.09766448" size="0.03252037614583969 0.01542231161147356 0.011712320148944855" quat="0.6293348073959351 0.0 0.7771342992782593 0.0" name="pitcher_handle_1"/>
+          <geom class="collision" type="box" pos="0.08100685 0.00791430 0.05260452" size="0.030332840979099274 0.01542231161147356 0.01171231921762228" quat="0.34662744402885437 0.0 0.93800288438797 0.0" name="pitcher_handle_0"/>
           <body name="blade">
             <joint axis="0.0 0.0 1.0" pos="-0.01390748 0.00780855 0.02079049" limited="false" name="blade_joint" range="0 360" type="hinge" damping="1" frictionloss="1" armature=".01" stiffness="0.05"/>
-            <geom mesh="Blade001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Blade001_material"/>
-            <geom class="collision" type="box" pos="-0.01365844 0.00634319 0.01533413" size="0.014491913840174675 0.017638348042964935 0.0007777351420372725" quat="1.0 0.0 0.0 0.0"/>
-            <geom class="collision" type="box" pos="-0.01384328 0.03973202 0.01533413" size="0.0050698015838861465 0.016161534935235977 0.0007777351420372725" quat="1.0 0.0 0.0 0.0"/>
-            <geom class="collision" type="box" pos="-0.01384328 -0.02448858 0.01533413" size="0.0050698015838861465 0.016161534935235977 0.0007777351420372725" quat="1.0 0.0 0.0 0.0"/>
-            <geom class="collision" type="box" pos="-0.04553313 0.00760271 0.02032603" size="0.0050698015838861465 0.01778339222073555 0.0007777351420372725" quat="0.6976118087768555 -0.11548939347267151 0.1154894009232521 -0.6976117491722107"/>
-            <geom class="collision" type="box" pos="0.01769215 0.00760271 0.02042771" size="0.0050698015838861465 0.01746790111064911 0.0007777351420372725" quat="0.6976118087768555 -0.11548939347267151 -0.1154894009232521 0.6976117491722107"/>
+            <geom mesh="blade_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="blade_material"/>
+            <geom type="box" pos="-0.01365844 0.00634319 0.01533413" size="0.014491913840174675 0.017638348042964935 0.0007777351420372725" quat="1.0 0.0 0.0 0.0" class="collision"/>
+            <geom type="box" pos="-0.01384328 0.03973202 0.01533413" size="0.0050698015838861465 0.016161534935235977 0.0007777351420372725" quat="1.0 0.0 0.0 0.0" class="collision"/>
+            <geom type="box" pos="-0.01384328 -0.02448858 0.01533413" size="0.0050698015838861465 0.016161534935235977 0.0007777351420372725" quat="1.0 0.0 0.0 0.0" class="collision"/>
+            <geom type="box" pos="-0.04553313 0.00760271 0.02032603" size="0.0050698015838861465 0.01778339222073555 0.0007777351420372725" quat="0.6976118087768555 -0.11548939347267151 0.1154894009232521 -0.6976117491722107" class="collision"/>
+            <geom type="box" pos="0.01769215 0.00760271 0.02042771" size="0.0050698015838861465 0.01746790111064911 0.0007777351420372725" quat="0.6976118087768555 -0.11548939347267151 -0.1154894009232521 0.6976117491722107" class="collision"/>
           </body>
           <body name="pitcher_main">
-            <geom class="region" name="reg_int" type="cylinder" pos="-0.014116954999999999 0.007731690000000001 0.09428043500000001" size="0.05 0.064287145"/>
-            <geom mesh="Jug001_Clear_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Jug001_Clear_material"/>
-            <geom class="collision" type="box" pos="0.05442135 0.00758336 0.09247573" size="0.008866118267178535 0.027263129130005836 0.0962737575173378" quat="1.0 0.0 0.0 0.0"/>
-            <geom class="collision" type="box" pos="0.03891332 -0.03551471 0.09247573" size="0.005154433660209179 0.027263129130005836 0.09614638984203339" quat="0.9419527649879456 0.006479029078036547 0.018207471817731857 -0.33518874645233154"/>
-            <geom class="collision" type="box" pos="-0.04634138 -0.05228703 0.09247573" size="0.005154434125870466 0.027263129130005836 0.09614638984203339" quat="0.5137460827827454 0.016579383984208107 0.009930452331900597 -0.8577246069908142"/>
-            <geom class="collision" type="box" pos="-0.00107414 -0.05927414 0.09247573" size="0.005154433660209179 0.027263129130005836 0.09614638984203339" quat="0.771568238735199 0.012290717102587223 0.01491402555257082 -0.6358529329299927"/>
-            <geom class="collision" type="box" pos="-0.05083842 0.06528205 0.09247573" size="0.005154433660209179 0.027263129130005836 0.09614638984203339" quat="0.4774850010871887 -0.016979556530714035 0.00922954361885786 0.8784273266792297"/>
-            <geom class="collision" type="box" pos="-0.00432211 0.07546330 0.09247573" size="0.005154433660209179 0.027263129130005836 0.09614638984203339" quat="0.7537038326263428 -0.01269812323153019 0.014568712562322617 0.6569300293922424"/>
-            <geom class="collision" type="box" pos="-0.07905889 0.02830759 0.09247573" size="0.005154433660209179 0.027263129130005836 0.09614638984203339" quat="0.14990121126174927 -0.019107436761260033 0.002897514495998621 0.9885120987892151"/>
-            <geom class="collision" type="box" pos="-0.07734878 -0.01746379 0.09247573" size="0.005154433660209179 0.027263129130005836 0.09614638984203339" quat="0.1901738941669464 0.018973061814904213 0.0036759646609425545 -0.9815601706504822"/>
-            <geom class="collision" type="box" pos="0.03788485 0.05238785 0.09247573" size="0.005154434125870466 0.027263129130005836 0.09614638984203339" quat="0.9367375373840332 -0.006755633745342493 0.018106667324900627 0.3494986593723297"/>
+            <geom class="region" type="cylinder" size="0.05459639057517052 0.06547840684652328" pos="-0.01375501 0.00755227 0.08109854" rgba="0 0 1 0.5" name="reg_int"/>
+            <geom mesh="pitcher_main_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="pitcher_main_material"/>
+            <geom type="box" pos="0.05442135 0.00758336 0.09247573" size="0.008866118267178535 0.027263129130005836 0.0962737575173378" quat="1.0 0.0 0.0 0.0" class="collision"/>
+            <geom type="box" pos="0.03891332 -0.03551471 0.09247573" size="0.005154433660209179 0.027263129130005836 0.09614638984203339" quat="0.9419527649879456 0.006479029078036547 0.018207471817731857 -0.33518874645233154" class="collision"/>
+            <geom type="box" pos="-0.04634138 -0.05228703 0.09247573" size="0.005154434125870466 0.027263129130005836 0.09614638984203339" quat="0.5137460827827454 0.016579383984208107 0.009930452331900597 -0.8577246069908142" class="collision"/>
+            <geom type="box" pos="-0.00107414 -0.05927414 0.09247573" size="0.005154433660209179 0.027263129130005836 0.09614638984203339" quat="0.771568238735199 0.012290717102587223 0.01491402555257082 -0.6358529329299927" class="collision"/>
+            <geom type="box" pos="-0.05083842 0.06528205 0.09247573" size="0.005154433660209179 0.027263129130005836 0.09614638984203339" quat="0.4774850010871887 -0.016979556530714035 0.00922954361885786 0.8784273266792297" class="collision"/>
+            <geom type="box" pos="-0.00432211 0.07546330 0.09247573" size="0.005154433660209179 0.027263129130005836 0.09614638984203339" quat="0.7537038326263428 -0.01269812323153019 0.014568712562322617 0.6569300293922424" class="collision"/>
+            <geom type="box" pos="-0.07905889 0.02830759 0.09247573" size="0.005154433660209179 0.027263129130005836 0.09614638984203339" quat="0.14990121126174927 -0.019107436761260033 0.002897514495998621 0.9885120987892151" class="collision"/>
+            <geom type="box" pos="-0.07734878 -0.01746379 0.09247573" size="0.005154433660209179 0.027263129130005836 0.09614638984203339" quat="0.1901738941669464 0.018973061814904213 0.0036759646609425545 -0.9815601706504822" class="collision"/>
+            <geom type="box" pos="0.03788485 0.05238785 0.09247573" size="0.005154434125870466 0.027263129130005836 0.09614638984203339" quat="0.9367375373840332 -0.006755633745342493 0.018106667324900627 0.3494986593723297" class="collision"/>
           </body>
         </body>
         <body name="knob_speed">
-          <joint axis="0.0 1.0 0.0" pos="-0.01392435 -0.09473100 -0.16594788" limited="true" name="knob_speed_joint" range="0.0 4.014257279586958" type="hinge" damping="0.05" armature="0.001"/>
-          <geom mesh="Knob001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Knob001_material"/>
-          <geom class="collision" type="cylinder" pos="-0.01396523 -0.09503022 -0.16604793" size="0.018516525626182556 0.0010534262983128428" quat="0.7071068286895752 0.7071067690849304 0.0 0.0"/>
-          <geom class="collision" name="knob_speed_main" type="box" pos="-0.01392435 -0.10493317 -0.16594788" size="0.01824144460260868 0.00815507210791111 0.004754546098411083" quat="0.9741969108581543 1.0069801903875796e-15 -0.2256997674703598 7.725376782730109e-09"/>
+          <joint axis="0.0 1.0 0.0" pos="-0.01392435 -0.09473100 -0.16594788" limited="true" name="knob_speed_joint" range="0.0 4.014257279586958" type="hinge" damping="0.05" frictionloss="0.1" armature="0.001"/>
+          <geom mesh="knob_speed_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="knob_speed_material"/>
+          <geom type="cylinder" pos="-0.01396523 -0.09503022 -0.16604793" size="0.018516525626182556 0.0010534262983128428" quat="0.7071068286895752 0.7071067690849304 0.0 0.0" class="collision" density="0.001"/>
+          <geom class="collision" type="box" pos="-0.01392435 -0.10493317 -0.16594788" size="0.01824144460260868 0.00815507210791111 0.004754546098411083" quat="0.9741969108581543 1.0069801903875796e-15 -0.2256997674703598 7.725376782730109e-09" name="knob_speed_main" density="0.001"/>
         </body>
         <geom class="region" name="reg_main" type="box" pos="-0.013871435000000001 0.0075911150000000024 0.001150994999999988" size="0.106338895 0.10634711499999999 0.252751275"/>
       </body>
-      <site rgba="0 1 0 0" size="0.005" pos="-0.01045485 0.00780499 0.20547592" name="anchor_site"/>
+      <site rgba="0 1 0 0" size="0.005" pos="-0.005045485 0.00780499 0.20547592" name="anchor_site"/>
     </body>
   </worldbody>
   <actuator>
-    <motor name="power_button_joint_actuator" joint="power_button_joint" gear="0.1"/>
-    <!-- <motor name="pitcher_joint_actuator" joint="pitcher_joint" gear="200"/> -->
+    <motor name="power_button_joint_actuator" joint="power_button_joint" gear="0.5"/>
+    <!-- <motor name="pitcher_joint_actuator" joint="pitcher_joint" gear="100"/> -->
     <motor name="knob_speed_joint_actuator" joint="knob_speed_joint" gear="10"/>
     <motor name="blade_joint_actuator" joint="blade_joint" gear="10"/>
     <!-- <motor name="lid_joint_actuator" joint="lid_joint" gear="50"/> -->

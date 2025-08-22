@@ -2,9 +2,9 @@
   <option timestep="0.002" gravity="0.0 0.0 -9.81"/>
   <compiler angle="radian"/>
   <asset>
-    <texture file="visuals/T_BC001.png" name="Lid001_material" type="2d"/>
-    <material name="Lid001_material" rgba="1 1 1 1.0" texture="Lid001_material" shininess="-1.0" specular="0.3103448502657381"/>
-    <mesh file="visuals/Lid001.obj" name="Lid001_vis"/>
+    <texture file="visuals/T_BC001.png" name="lid_material" type="2d"/>
+    <material name="lid_material" rgba="1 1 1 1.0" texture="lid_material" shininess="-1.0" specular="0.3103448502657381"/>
+    <mesh file="visuals/lid.obj" name="lid_vis"/>
   </asset>
   <default>
     <default class="visual">
@@ -24,9 +24,10 @@
   <worldbody>
     <body>
       <body name="object">
-        <geom mesh="Lid001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Lid001_material"/>
-        <geom class="collision" type="cylinder" pos="0.001975574941177248 0.00010283934387791613 0.01486716144798192" size="0.029718130826950073 0.006432304158806801" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
+        <geom mesh="lid_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="lid_material"/>
+        <geom class="collision"  name="handle_main" type="cylinder" pos="0.001975574941177248 0.00010283934387791613 0.01486716144798192" size="0.029718130826950073 0.006432304158806801" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
         <geom class="collision" type="cylinder" pos="0.001975574941177248 0.00010283934387791613 0.0036506114479819274" size="0.09667138755321503 0.007239523343741894" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
+        <geom class="collision" type="cylinder" pos="0.001975574941177248 0.00010283934387791613 -0.0149506114479819274" size="0.0890000755321503 0.011239523343741894" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
         <geom class="region" name="reg_main" density="0" type="box" pos="-0.0061988600000000005 7.800000000057761e-07 -0.0026955700000000013" size="0.1039625 0.0959705 0.024149"/>
       </body>
     </body>

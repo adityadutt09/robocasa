@@ -11,7 +11,7 @@ from scipy.spatial.transform import Rotation as R
 import mujoco
 
 
-def obj_inside_of(env, obj_name, fixture_id, partial_check=False):
+def obj_inside_of(env, obj_name, fixture_id, partial_check=False, th=0.05):
     """
     whether an object (another mujoco object) is inside of fixture. applies for most fixtures
     """
@@ -41,8 +41,6 @@ def obj_inside_of(env, obj_name, fixture_id, partial_check=False):
         else:
             # calculate 8 boundary points of object
             obj_points_to_check = obj.get_bbox_points(trans=obj_pos, rot=obj_quat)
-            # threshold to mitigate false negatives: even if the bounding box point is out of bounds,
-            th = 0.05
 
         inside_of = True
         for obj_p in obj_points_to_check:
@@ -611,6 +609,17 @@ def check_obj_upright(env, obj_name, th=15):
     return obj_upright
 
 
+def check_fxtr_upright(env, fixture_name, th=15):
+    """
+    Check if the fixture is upright based on its rotation.
+    """
+    fixture_rot = env.sim.data.get_body_xquat(fixture_name)
+    r = R.from_quat([fixture_rot[1], fixture_rot[2], fixture_rot[3], fixture_rot[0]])
+    fixture_rot_euler = r.as_euler("xyz", degrees=True)
+    fixture_upright = abs(fixture_rot_euler[1]) < th and abs(fixture_rot_euler[0]) < th
+    return fixture_upright
+
+
 def check_obj_fixture_contact(env, obj_name, fixture_name):
     """
     check if object is in contact with fixture
@@ -641,6 +650,16 @@ def gripper_obj_far(env, obj_name="obj", th=0.25):
     gripper_site_pos = env.sim.data.site_xpos[env.robots[0].eef_site_id["right"]]
     gripper_obj_far = np.linalg.norm(gripper_site_pos - obj_pos) > th
     return gripper_obj_far
+
+
+def gripper_fxtr_far(env, fixture_name, th=0.25):
+    """
+    check if gripper is far from fixture based on distance defined by threshold
+    """
+    fixture_pos = env.sim.data.get_body_xpos(fixture_name)
+    gripper_site_pos = env.sim.data.site_xpos[env.robots[0].eef_site_id["right"]]
+    gripper_fxtr_far = np.linalg.norm(gripper_site_pos - fixture_pos) > th
+    return gripper_fxtr_far
 
 
 def check_obj_grasped(env, obj_name, threshold=0.035):

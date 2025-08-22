@@ -21,6 +21,9 @@ from robocasa.models.scenes.scene_registry import (
     get_style_path,
     LAYOUT_GROUPS_TO_IDS,
 )
+import re
+
+NUM_DONE = 0
 
 
 def get_all_style_configs():
@@ -152,13 +155,13 @@ FIXTURE_TO_TEST_ENVS = dict(
         dict(env_name="OpenElectricKettleLid"),
         dict(env_name="TurnOnElectricKettle"),
     ],
-    # blender=[
-    #     dict(
-    #         env_name="Kitchen",
-    #         init_robot_base_ref=FixtureType.BLENDER,
-    #         enable_fixtures=["blender"],
-    #     ),
-    # ],
+    blender=[
+        dict(
+            env_name="Kitchen",
+            init_robot_base_ref=FixtureType.BLENDER,
+            enable_fixtures=["blender"],
+        ),
+    ],
 )
 
 if __name__ == "__main__":
@@ -247,11 +250,19 @@ if __name__ == "__main__":
         )
         fixture_list = all_fixtures_dict[fixture_type]
         device = None
-        for fixture_name in fixture_list:
+        for i, fixture_name in enumerate(fixture_list):
+            if i < NUM_DONE:
+                num_tests_completed += 1
+                continue
             error_dict[fixture_type][fixture_name] = dict()
             style_configs = get_all_style_configs()
             for cfg in style_configs:
                 cfg[fixture_type] = fixture_name
+                if fixture_type == "blender":
+                    # since the blender fixture has a correspnding lid that goes with it
+                    # we need to update the style to include that too, this regex helps with that
+                    # BlenderLid001 -> BlenderLid001 BlenderLid002 -> BlenderLid002, etc
+                    cfg["blender_lid"] = re.sub(r"(\D+)(\d+)", r"\1Lid\2", fixture_name)
 
             fxtr_log_folder = f"/tmp/robocasa_test_fixtures/{current_date_time}/{fixture_type}/{fixture_name}"
             if not os.path.exists(fxtr_log_folder):

@@ -171,6 +171,10 @@ class UniformRandomSampler(ObjectPositionSampler):
 
         ensure_valid_placement (bool): If True, will check for correct (valid) object placements
 
+        ensure_valid_auxiliary_placement (bool or None): If True, will check for valid auxiliary object placements.
+            This is needed to maintain backward compatibility with older code which always assumed auxiliary ensure_valid_placement
+            would not be checked with auxiliary objects
+
         reference_pos (3-array): global (x,y,z) position relative to which sampling will occur
 
         z_offset (float): Add a small z-offset to placements. This is useful for fixed objects
@@ -187,6 +191,7 @@ class UniformRandomSampler(ObjectPositionSampler):
         rotation_axis="z",
         ensure_object_boundary_in_range=True,
         ensure_valid_placement=True,
+        ensure_valid_auxiliary_placement=None,
         reference_object=None,
         reference_pos=(0, 0, 0),
         reference_rot=0,
@@ -198,6 +203,7 @@ class UniformRandomSampler(ObjectPositionSampler):
         self.y_range = y_range
         self.rotation = rotation
         self.rotation_axis = rotation_axis
+        self.ensure_valid_auxiliary_placement = ensure_valid_auxiliary_placement
 
         if side not in self.valid_sides:
             raise ValueError(
@@ -455,7 +461,10 @@ class UniformRandomSampler(ObjectPositionSampler):
                     ) in placed_objects.items():
                         if placed_obj_name == self.reference_object:
                             continue
-                        if not is_auxiliary_pair(obj.name, other_obj.name):
+                        if (
+                            not is_auxiliary_pair(obj.name, other_obj.name)
+                            or self.ensure_valid_auxiliary_placement
+                        ):
                             if objs_intersect(
                                 obj=obj,
                                 obj_pos=[object_x, object_y, object_z],

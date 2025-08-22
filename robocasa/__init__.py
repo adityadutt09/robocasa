@@ -704,6 +704,12 @@ from robocasa.environments.kitchen.multi_stage.washing_fruits_and_vegetables.pre
     PrewashFoodSorting,
 )
 
+from robocasa.environments.kitchen.single_stage.kitchen_blender import (
+    CloseBlenderLid,
+    OpenBlenderLid,
+    TurnOnBlender,
+)
+
 from robocasa.environments.kitchen.single_stage.kitchen_coffee import (
     StartCoffeeMachine,
     CoffeeServeMug,
@@ -763,6 +769,7 @@ from robocasa.environments.kitchen.single_stage.kitchen_pnp import (
     PnPCounterToToasterOven,
     PnPToasterOvenToCounter,
     PnPCounterToStandMixer,
+    PnPCounterToBlender,
     PnPFridgeShelfToDrawer,
     PnPFridgeDrawerToShelf,
     PnPCounterToDrawer,

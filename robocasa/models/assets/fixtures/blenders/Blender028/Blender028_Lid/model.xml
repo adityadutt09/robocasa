@@ -2,9 +2,9 @@
   <option timestep="0.002" gravity="0.0 0.0 -9.81"/>
   <compiler angle="radian"/>
   <asset>
-    <texture file="visuals/T_BC001.png" name="Lid001_material" type="2d"/>
-    <material name="Lid001_material" rgba="1 1 1 1.0" texture="Lid001_material" shininess="0.4472135901451111" specular="0.3103448502657381"/>
-    <mesh file="visuals/Lid001.obj" name="Lid001_vis"/>
+    <texture file="visuals/T_BC001.png" name="lid_material" type="2d"/>
+    <material name="lid_material" rgba="1 1 1 1.0" texture="lid_material" shininess="0.4472135901451111" specular="0.3103448502657381"/>
+    <mesh file="visuals/lid.obj" name="lid_vis"/>
   </asset>
   <default>
     <default class="visual">
@@ -24,11 +24,12 @@
   <worldbody>
     <body>
       <body name="object">
-        <geom mesh="Lid001_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="Lid001_material"/>
+        <geom mesh="lid_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="lid_material"/>
         <geom class="collision" type="cylinder" pos="-0.0022767619560481664 0.0007704792812118413 0.011889447212581394" size="0.08047248423099518 0.00426448555663228" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
+        <geom class="collision" type="cylinder" pos="-0.0022767619560481664 0.0007704792812118413 -0.006089447212581394" size="0.06847248423099518 0.0139448555663228" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
         <geom class="collision" type="cylinder" pos="-0.0022767419560481665 0.0007704692812118405 0.017051587212581404" size="0.021449467167258263 0.009426616132259369" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
         <geom class="collision" type="box" pos="0.08167954804395183 0.0001653592812118406 0.010466117212581394" size="0.0071110534481704235 0.028332218527793884 0.0028181890957057476" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
-        <geom class="collision" type="cylinder" pos="-0.0022767419560481665 0.0007704692812118405 0.023753767212581406" size="0.026944704353809357 0.002491123741492629" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
+        <geom class="collision" name="handle_main" type="cylinder" pos="-0.0022767419560481665 0.0007704692812118405 0.023753767212581406" size="0.026944704353809357 0.002491123741492629" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
         <geom class="collision" type="box" pos="-0.0025479619560481656 -0.07967454071878816 0.010466117212581394" size="0.016500504687428474 0.0049792188219726086 0.0028181872330605984" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
         <geom class="collision" type="box" pos="-0.0025479619560481656 0.07956678928121184 0.010466117212581394" size="0.016500504687428474 0.0049792188219726086 0.002818188164383173" quat="1.0 0.0 0.0 0.0" density="1000.0"/>
         <geom class="collision" type="box" pos="-0.07979020195604816 0.00937416928121184 0.009007897212581384" size="0.0071110534481704235 0.013324333354830742 0.0028181890957057476" quat="0.978147566318512 0.0 -0.0 -0.20791172981262207" density="1000.0"/>

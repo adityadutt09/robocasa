@@ -108,6 +108,9 @@ def read_model(
         # reg_geoms = {}
         for geom in find_elements(root, tags="geom", return_first=False):
             name = geom.get("name", None)
+            if name == "handle_main":
+                geom.set("rgba", "0 0 1 0.6")
+
             if name is None:
                 continue
             if not name.startswith("reg_"):
@@ -275,7 +278,7 @@ if __name__ == "__main__":
         mjcf_path_list = []
         for root, dirs, files in os.walk(args.mjcf):
             for file in files:
-                if file.endswith(".xml"):
+                if file.endswith(".xml") and "Lid" in root:
                     mjcf_path_list.append(os.path.join(root, file))
     else:
         mjcf_path_list = [args.mjcf]

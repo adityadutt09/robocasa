@@ -65,7 +65,7 @@ Blender021:
 
 Blender022:
   xml: fixtures/blenders/Blender022
-  size: [0.225, null, null]
+  size: [0.18, null, null]
 
 Blender023:
   xml: fixtures/blenders/Blender023

@@ -141,6 +141,10 @@ def create_fixtures(layout_config, style_config, rng=None):
     # contains all fixtures with updated configs
     arena = list()
 
+    # maps instances of base fixture names to auxiliary fixture names
+    # e.g. {"bleneder_main_group": "blender_main_group_auxiliary"}
+    base_to_auxiliary_instance_map = {}
+
     # Update each fixture config. First iterate through groups: subparts of the arena that can be
     # rotated and displaced together. example: island group, right group, room group, etc
     for group_name, group_config in layout_config.items():
@@ -183,6 +187,10 @@ def create_fixtures(layout_config, style_config, rng=None):
                     auxiliary_fxtr_cfg["type"] = Fixture.BASE_TO_AUXILIARY_FIXTURES[
                         fxtr_config["type"]
                     ]
+                    # add to the base to auxiliary instance map
+                    base_to_auxiliary_instance_map[fxtr_config["name"]] = (
+                        auxiliary_fxtr_cfg["name"] + "_" + group_name
+                    )
                     if auxiliary_fxtr_cfg["placement"] == "parent_region":
                         # place the aux object in the same region as the main (parent) object's region
                         auxiliary_fxtr_cfg["placement"] = deepcopy(
@@ -192,7 +200,13 @@ def create_fixtures(layout_config, style_config, rng=None):
                             ref=fxtr_config["name"]
                         )
                         auxiliary_fxtr_cfg["placement"]["pos"][0] = "ref"
-
+                        auxiliary_fxtr_cfg["placement"][
+                            "reuse_region_from"
+                        ] = fxtr_config["name"]
+                        # flag that is set to make sure the auxiliary object is placed without intersecting the main object
+                        auxiliary_fxtr_cfg["placement"][
+                            "ensure_valid_auxiliary_placement"
+                        ] = True
                     elif auxiliary_fxtr_cfg["placement"] == "anchor":
                         # place the aux object at the anchor site of the main (parent) object
                         auxiliary_fxtr_cfg["placement"] = dict(
@@ -369,5 +383,14 @@ def create_fixtures(layout_config, style_config, rng=None):
             else:
                 rot_new = [0, 0, z_rot]
             fixture._obj.set("euler", a2s(rot_new))
+
+    # add auxiliary fixture references to the main fixture
+    for base_name, auxiliary_name in base_to_auxiliary_instance_map.items():
+        assert base_name in fixtures, f"Base fixture {base_name} not found"
+        assert (
+            auxiliary_name in fixtures
+        ), f"Auxiliary fixture {auxiliary_name} not found"
+        if hasattr(fixtures[base_name], "add_auxiliary_fixture"):
+            fixtures[base_name].add_auxiliary_fixture(fixtures[auxiliary_name])
 
     return fixtures

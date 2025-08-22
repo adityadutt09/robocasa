@@ -785,6 +785,7 @@ def _check_cfg_is_valid(cfg):
             "rotation",
             "ensure_object_boundary_in_range",
             "ensure_valid_placement",
+            "ensure_valid_auxiliary_placement",
             "sample_args",
             "sample_region_kwargs",
             "reuse_region_from",
@@ -922,6 +923,9 @@ def _get_placement_initializer(env, cfg_list, z_offset=0.01):
             "ensure_object_boundary_in_range", True
         )
         ensure_valid_placement = placement.get("ensure_valid_placement", True)
+        ensure_valid_auxiliary_placement = placement.get(
+            "ensure_valid_auxiliary_placement"
+        )
         rotation_axis = placement.get("rotation_axis", "z")
         sampler_kwargs = dict(
             name="{}_Sampler".format(cfg["name"]),
@@ -929,6 +933,7 @@ def _get_placement_initializer(env, cfg_list, z_offset=0.01):
             rng=env.rng,
             ensure_object_boundary_in_range=ensure_object_boundary_in_range,
             ensure_valid_placement=ensure_valid_placement,
+            ensure_valid_auxiliary_placement=ensure_valid_auxiliary_placement,
             rotation_axis=rotation_axis,
             rotation=rotation,
         )

@@ -1679,3 +1679,104 @@ class PnPDrawerToCounter(PnP):
     def _check_success(self):
         on_counter = OU.check_obj_any_counter_contact(self, "obj")
         return on_counter and OU.gripper_obj_far(self, "obj")
+
+
+class PnPCounterToBlender(PnP):
+    """
+    Class encapsulating the atomic counter to blender pick and place task.
+    """
+
+    EXCLUDE_LAYOUTS = [49]
+
+    # update yaml to disable the lid since we are placing object in blender
+    _BLENDER_PLACEMENT_UPDATE_DICT = {"aux_fixture_config": {"enable": False}}
+
+    def __init__(
+        self, enable_fixtures=None, update_fxtr_cfg_dict=None, *args, **kwargs
+    ):
+        enable_fixtures = enable_fixtures or []
+        enable_fixtures = list(enable_fixtures) + ["blender"]
+
+        update_fxtr_cfg_dict = update_fxtr_cfg_dict or {}
+        update_fxtr_cfg_dict["blender"] = self._BLENDER_PLACEMENT_UPDATE_DICT
+        super().__init__(
+            enable_fixtures=enable_fixtures,
+            update_fxtr_cfg_dict=update_fxtr_cfg_dict,
+            *args,
+            **kwargs,
+        )
+
+    def _setup_kitchen_references(self):
+        """
+        Setup the kitchen references for the counter to blender pick and place task:
+        The blender to place object in and the counter to initialize it on
+        """
+        super()._setup_kitchen_references()
+        self.blender = self.get_fixture(FixtureType.BLENDER)
+        self.counter = self.register_fixture_ref(
+            "counter", dict(id=FixtureType.COUNTER, ref=self.blender)
+        )
+        self.init_robot_base_ref = self.blender
+
+    def get_ep_meta(self):
+        """
+        Get the episode metadata for the counter to blender pick and place task.
+        This includes the language description of the task.
+        """
+        ep_meta = super().get_ep_meta()
+        obj_lang = self.get_obj_lang()
+        ep_meta[
+            "lang"
+        ] = f"Pick the {obj_lang} from the counter and place it in the blender."
+        return ep_meta
+
+    def _get_obj_cfgs(self):
+
+        cfgs = []
+        cfgs.append(
+            dict(
+                name="obj",
+                obj_groups=("fruit"),
+                graspable=True,
+                placement=dict(
+                    fixture=self.counter,
+                    sample_region_kwargs=dict(
+                        ref=self.blender,
+                        loc="left_right",
+                    ),
+                    size=(0.50, 0.25),
+                    pos=("ref", -1.0),
+                ),
+                object_scale=0.80,
+            )
+        )
+
+        # distractor
+        cfgs.append(
+            dict(
+                name="distr_counter",
+                obj_groups="all",
+                exclude_obj_groups=("fruit", "vegetable"),
+                placement=dict(
+                    fixture=self.counter,
+                    sample_region_kwargs=dict(
+                        ref=self.blender,
+                    ),
+                    size=(0.5, 0.30),
+                    pos=("ref", -0.50),
+                ),
+            )
+        )
+        return cfgs
+
+    def _check_success(self):
+        """
+        Check if the counter to blender pick and place task is successful.
+        Checks if the object is inside the blender and the gripper is far from the object.
+
+        Returns:
+            bool: True if the task is successful, False otherwise
+        """
+        obj_in_blender = OU.obj_inside_of(self, "obj", self.blender, th=0.01)
+        gripper_obj_far = OU.gripper_obj_far(self)
+        return obj_in_blender and gripper_obj_far

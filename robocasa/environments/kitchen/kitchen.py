@@ -186,6 +186,8 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
 
         enable_fixtures (list of str): a list of fixtures to enable in the scene (some fixtures are disabled by default)
 
+        update_fxtr_cfg_dict (dict): a dictionary which maps fixture names to dictionaries to update the fixture config specified in the layout yaml.
+
         style_ids ((list of) StyleType or int or dict): style id(s) to use for the kitchen. -1 and None specify all styles.
 
         generative_textures (str): if set to "100p", will use AI generated textures
@@ -400,6 +402,7 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
         robot_spawn_deviation_pos_y=0.05,
         robot_spawn_deviation_rot=0.0,
         clutter_mode=0,
+        update_fxtr_cfg_dict=None,
     ):
         self.init_robot_base_ref = init_robot_base_ref
 
@@ -430,6 +433,7 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
         ]
 
         self.enable_fixtures = enable_fixtures
+        self.update_fxtr_cfg_dict = update_fxtr_cfg_dict
         self.clutter_mode = clutter_mode
         assert generative_textures in [None, False, "100p"]
         self.generative_textures = generative_textures
@@ -558,6 +562,7 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
             rng=self.rng,
             enable_fixtures=self.enable_fixtures,
             clutter_mode=self.clutter_mode,
+            update_fxtr_cfg_dict=self.update_fxtr_cfg_dict,
         )
         # Arena always gets set to zero origin
         self.mujoco_arena.set_origin([0, 0, 0])

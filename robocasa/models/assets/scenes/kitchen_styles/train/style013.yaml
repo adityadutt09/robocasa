@@ -1,5 +1,5 @@
-blender: Blender008
-blender_lid: BlenderLid008
+blender: Blender013
+blender_lid: BlenderLid013
 cabinet:
   default:
   - gentex025

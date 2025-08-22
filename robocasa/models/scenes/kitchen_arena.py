@@ -8,6 +8,7 @@ from robocasa.models.scenes.scene_builder import (
     get_layout_path,
     get_style_path,
 )
+from copy import deepcopy
 
 
 def enable_fixtures_in_config(config, names):
@@ -24,6 +25,35 @@ def enable_fixtures_in_config(config, names):
             if "name" in d and d["name"] in names:
                 d["enable"] = True
             enable_fixtures_in_config(d, names)
+
+
+def update_fixtures_in_config(config, update_dict):
+    """
+    Update the config of fixtures from what is given in the yaml file.
+    Mostly helpful if we want to change the placement of auxiliary fixtures. For
+    example, if we want the lid of a blender to not be on the blender, but next to it
+
+    Args:
+        config (dict): the config to update
+        update_dict (dict): a dictionary with keys as fixture names and values as the
+            new configuration for that fixture. The keys should match the names in the config."""
+    # scan config and update as needed #
+    names = update_dict.keys()
+    for key, value in config.items():
+        inner_dicts = []
+        if isinstance(value, dict):
+            inner_dicts.append(value)
+        elif isinstance(value, list):
+            for elem in value:
+                if isinstance(elem, dict):
+                    inner_dicts.append(elem)
+        for d in inner_dicts:
+            if "name" in d and d["name"] in names:
+                cfg_update = update_dict[d["name"]]
+                # cfg may get modified later in scene builder, so dont want to mutate original
+                cfg_update = deepcopy(cfg_update)
+                d.update(cfg_update)
+            update_fixtures_in_config(d, update_dict)
 
 
 def disable_clutter_in_config(config):
@@ -61,7 +91,13 @@ class KitchenArena(Arena):
     """
 
     def __init__(
-        self, layout_id, style_id, rng=None, enable_fixtures=None, clutter_mode=0
+        self,
+        layout_id,
+        style_id,
+        rng=None,
+        enable_fixtures=None,
+        clutter_mode=0,
+        update_fxtr_cfg_dict=None,
     ):
         super().__init__(
             xml_path_completion(
@@ -79,6 +115,9 @@ class KitchenArena(Arena):
 
         if enable_fixtures is not None:
             enable_fixtures_in_config(layout_config, enable_fixtures)
+
+        if update_fxtr_cfg_dict is not None:
+            update_fixtures_in_config(layout_config, update_fxtr_cfg_dict)
 
         # disable clutter fixtures unless enable_clutter is True
         if clutter_mode == 0:
