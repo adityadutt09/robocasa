@@ -8,507 +8,1963 @@ import robocasa.macros as macros
 
 SINGLE_STAGE_TASK_DATASETS = OrderedDict(
     AdjustToasterOvenTemperature=dict(
-        horizon=600,
-        human_path="v0.5/train/atomic/AdjustToasterOvenTemperature/20250714",
-        mg_path="v0.5/train/atomic/AdjustToasterOvenTemperature/mg/demo/2025-07-16-18-16-56",
+        train=dict(
+            mg_path="v0.5/train/atomic/AdjustToasterOvenTemperature/20250820/mg/demo/2025-08-20-21-21-37",
+            human_path="v0.5/train/atomic/AdjustToasterOvenTemperature/20250820",
+        ),
+        horizon=300,
     ),
     AdjustWaterTemperature=dict(
+        train=dict(
+            mg_path="v0.5/train/atomic/AdjustWaterTemperature/20250820/mg/demo/2025-08-20-21-21-50",
+            human_path="v0.5/train/atomic/AdjustWaterTemperature/20250820",
+        ),
+        horizon=300,
+    ),
+    CloseBlenderLid=dict(
+        train=dict(
+            mg_path="v0.5/train/atomic/CloseBlenderLid/20250822/mg/demo/2025-08-22-14-45-29",
+            human_path="v0.5/train/atomic/CloseBlenderLid/20250822",
+        ),
+        test=dict(
+            human_path="v0.5/test/atomic/CloseBlenderLid/20250822",
+        ),
         horizon=600,
-        human_path="v0.5/train/atomic/AdjustWaterTemperature/20250718",
     ),
     CloseCabinet=dict(
-        horizon=1000,
-        human_path="v0.5/train/atomic/CloseCabinet/20250711",
-        mg_path="v0.5/train/atomic/CloseCabinet/mg/demo/2025-07-18-18-52-41",
+        train=dict(
+            mg_path="v0.5/train/atomic/CloseCabinet/20250819/mg/demo/2025-08-20-21-30-42",
+            human_path="v0.5/train/atomic/CloseCabinet/20250819",
+        ),
+        horizon=500,
     ),
     CloseDishwasher=dict(
-        horizon=800,
-        human_path="v0.5/train/atomic/CloseDishwasher/20250711",
-        mg_path="v0.5/train/atomic/CloseDishwasher/mg/demo/2025-07-14-21-13-52",
+        train=dict(
+            mg_path="v0.5/train/atomic/CloseDishwasher/20250820/mg/demo/2025-08-20-21-53-08",
+            human_path="v0.5/train/atomic/CloseDishwasher/20250820",
+        ),
+        horizon=200,
     ),
     CloseDrawer=dict(
-        horizon=600,
-        human_path="v0.5/train/atomic/CloseDrawer/20250714",
-        mg_path="v0.5/train/atomic/CloseDrawer/mg/demo/2025-07-15-23-08-21",
+        train=dict(
+            mg_path="v0.5/train/atomic/CloseDrawer/20250819/mg/demo/2025-08-20-21-53-15",
+            human_path="v0.5/train/atomic/CloseDrawer/20250819",
+        ),
+        horizon=300,
     ),
     CloseElectricKettleLid=dict(
+        train=dict(
+            mg_path="v0.5/train/atomic/CloseElectricKettleLid/20250820/mg/demo/2025-08-20-21-53-23",
+            human_path="v0.5/train/atomic/CloseElectricKettleLid/20250820",
+        ),
         horizon=200,
-        human_path="v0.5/train/atomic/CloseElectricKettleLid/20250712",
-        mg_path="v0.5/train/atomic/CloseElectricKettleLid/mg/demo/2025-07-17-00-58-24",
     ),
     CloseFridge=dict(
-        horizon=1400,
-        human_path="v0.5/train/atomic/CloseFridge/20250711",
+        train=dict(
+            mg_path="v0.5/train/atomic/CloseFridge/20250819/mg/demo/2025-08-20-21-53-31",
+            human_path="v0.5/train/atomic/CloseFridge/20250819",
+        ),
+        test=dict(
+            human_path="v0.5/test/atomic/CloseFridge/20250816",
+        ),
+        horizon=600,
+    ),
+    CloseFridgeDrawer=dict(
+        train=dict(
+            mg_path="v0.5/train/atomic/CloseFridgeDrawer/20250821/mg/demo/2025-08-21-16-23-57",
+            human_path="v0.5/train/atomic/CloseFridgeDrawer/20250821",
+        ),
+        horizon=300,
     ),
     CloseMicrowave=dict(
-        horizon=700,
-        human_path="v0.5/train/atomic/CloseMicrowave/20250712",
-        mg_path="v0.5/train/atomic/CloseMicrowave/mg/demo/2025-07-15-14-37-52",
+        train=dict(
+            mg_path="v0.5/train/atomic/CloseMicrowave/20250819/mg/demo/2025-08-20-21-54-00",
+            human_path="v0.5/train/atomic/CloseMicrowave/20250819",
+        ),
+        horizon=300,
     ),
     CloseOven=dict(
-        horizon=500,
-        human_path="v0.5/train/atomic/CloseOven/20250711",
-        mg_path="v0.5/train/atomic/CloseOven/mg/demo/2025-07-16-01-04-44",
+        train=dict(
+            mg_path="v0.5/train/atomic/CloseOven/20250820/mg/demo/2025-08-20-21-54-06",
+            human_path="v0.5/train/atomic/CloseOven/20250820",
+        ),
+        horizon=300,
     ),
     CloseStandMixerHead=dict(
-        horizon=500,
-        human_path="v0.5/train/atomic/CloseStandMixerHead/20250711",
-        mg_path="v0.5/train/atomic/CloseStandMixerHead/mg/demo/2025-07-12-14-59-28",
+        train=dict(
+            mg_path="v0.5/train/atomic/CloseStandMixerHead/20250820/mg/demo/2025-08-20-21-54-11",
+            human_path="v0.5/train/atomic/CloseStandMixerHead/20250820",
+        ),
+        horizon=300,
     ),
     CloseToasterOvenDoor=dict(
-        horizon=400,
-        human_path="v0.5/train/atomic/CloseToasterOvenDoor/20250714",
+        train=dict(
+            mg_path="v0.5/train/atomic/CloseToasterOvenDoor/20250820/mg/demo/2025-08-20-21-54-20",
+            human_path="v0.5/train/atomic/CloseToasterOvenDoor/20250820",
+        ),
+        test=dict(
+            human_path="v0.5/test/atomic/CloseToasterOvenDoor/20250818",
+        ),
+        horizon=300,
     ),
     CoffeeServeMug=dict(
-        horizon=900,
-        human_path="v0.5/train/atomic/CoffeeServeMug/20250711",
-        mg_path="v0.5/train/atomic/CoffeeServeMug/mg/demo/2025-07-17-01-00-52",
+        train=dict(
+            mg_path="v0.5/train/atomic/CoffeeServeMug/20250819/mg/demo/2025-08-20-21-54-30",
+            human_path="v0.5/train/atomic/CoffeeServeMug/20250819",
+        ),
+        horizon=300,
     ),
     CoffeeSetupMug=dict(
-        horizon=900,
-        human_path="v0.5/train/atomic/CoffeeSetupMug/20250711",
-        mg_path="v0.5/train/atomic/CoffeeSetupMug/mg/demo/2025-07-15-19-25-48",
+        train=dict(
+            mg_path="v0.5/train/atomic/CoffeeSetupMug/20250819/mg/demo/2025-08-20-21-54-35",
+            human_path="v0.5/train/atomic/CoffeeSetupMug/20250819",
+        ),
+        test=dict(
+            human_path="v0.5/test/atomic/CoffeeSetupMug/20250813",
+        ),
+        horizon=400,
+    ),
+    NavigateKitchen=dict(
+        train=dict(
+            human_path="v0.5/train/atomic/NavigateKitchen/20250821",
+        ),
+        test=dict(
+            human_path="v0.5/test/atomic/NavigateKitchen/20250821",
+        ),
+        horizon=300,
+    ),
+    OpenBlenderLid=dict(
+        train=dict(
+            mg_path="v0.5/train/atomic/OpenBlenderLid/20250822/mg/demo/2025-08-22-13-33-18",
+            human_path="v0.5/train/atomic/OpenBlenderLid/20250822",
+        ),
+        horizon=300,
     ),
     OpenCabinet=dict(
-        horizon=1400,
-        human_path="v0.5/train/atomic/OpenCabinet/20250711",
-        mg_path="v0.5/train/atomic/OpenCabinet/mg/demo/2025-07-19-18-32-04",
+        train=dict(
+            mg_path="v0.5/train/atomic/OpenCabinet/20250819/mg/demo/2025-08-20-21-54-43",
+            human_path="v0.5/train/atomic/OpenCabinet/20250819",
+        ),
+        test=dict(
+            human_path="v0.5/test/atomic/OpenCabinet/20250813",
+        ),
+        horizon=700,
     ),
     OpenDishwasher=dict(
-        horizon=800,
-        human_path="v0.5/train/atomic/OpenDishwasher/20250711",
-        mg_path="v0.5/train/atomic/OpenDishwasher/mg/demo/2025-07-12-15-00-12",
+        train=dict(
+            mg_path="v0.5/train/atomic/OpenDishwasher/20250820/mg/demo/2025-08-20-21-54-51",
+            human_path="v0.5/train/atomic/OpenDishwasher/20250820",
+        ),
+        horizon=300,
     ),
     OpenDrawer=dict(
-        horizon=700,
-        human_path="v0.5/train/atomic/OpenDrawer/20250714",
-        mg_path="v0.5/train/atomic/OpenDrawer/mg/demo/2025-07-16-09-53-11",
+        train=dict(
+            mg_path="v0.5/train/atomic/OpenDrawer/20250819/mg/demo/2025-08-20-21-55-00",
+            human_path="v0.5/train/atomic/OpenDrawer/20250819",
+        ),
+        test=dict(
+            human_path="v0.5/test/atomic/OpenDrawer/20250816",
+        ),
+        horizon=500,
     ),
     OpenElectricKettleLid=dict(
-        horizon=300,
-        human_path="v0.5/train/atomic/OpenElectricKettleLid/20250712",
-        mg_path="v0.5/train/atomic/OpenElectricKettleLid/mg/demo/2025-07-16-17-57-23",
+        train=dict(
+            mg_path="v0.5/train/atomic/OpenElectricKettleLid/20250820/mg/demo/2025-08-20-21-55-09",
+            human_path="v0.5/train/atomic/OpenElectricKettleLid/20250820",
+        ),
+        horizon=200,
     ),
     OpenFridge=dict(
-        horizon=1400,
-        human_path="v0.5/train/atomic/OpenFridge/20250711",
+        train=dict(
+            mg_path="v0.5/train/atomic/OpenFridge/20250819/mg/demo/2025-08-20-21-55-16",
+            human_path="v0.5/train/atomic/OpenFridge/20250819",
+        ),
+        horizon=600,
+    ),
+    OpenFridgeDrawer=dict(
+        train=dict(
+            mg_path="v0.5/train/atomic/OpenFridgeDrawer/20250821/mg/demo/2025-08-21-15-35-16",
+            human_path="v0.5/train/atomic/OpenFridgeDrawer/20250821",
+        ),
+        horizon=300,
     ),
     OpenMicrowave=dict(
-        horizon=800,
-        human_path="v0.5/train/atomic/OpenMicrowave/20250711",
-        mg_path="v0.5/train/atomic/OpenMicrowave/mg/demo/2025-07-15-12-07-46",
+        train=dict(
+            mg_path="v0.5/train/atomic/OpenMicrowave/20250819/mg/demo/2025-08-20-21-55-16",
+            human_path="v0.5/train/atomic/OpenMicrowave/20250819",
+        ),
+        horizon=400,
     ),
     OpenOven=dict(
-        horizon=400,
-        human_path="v0.5/train/atomic/OpenOven/20250711",
-        mg_path="v0.5/train/atomic/OpenOven/mg/demo/2025-07-13-19-13-07",
+        train=dict(
+            mg_path="v0.5/train/atomic/OpenOven/20250820/mg/demo/2025-08-20-21-55-18",
+            human_path="v0.5/train/atomic/OpenOven/20250820",
+        ),
+        horizon=200,
     ),
     OpenStandMixerHead=dict(
-        horizon=700,
-        human_path="v0.5/train/atomic/OpenStandMixerHead/20250711",
-        mg_path="v0.5/train/atomic/OpenStandMixerHead/mg/demo/2025-07-14-21-14-03",
+        train=dict(
+            mg_path="v0.5/train/atomic/OpenStandMixerHead/20250820/mg/demo/2025-08-20-21-55-26",
+            human_path="v0.5/train/atomic/OpenStandMixerHead/20250820",
+        ),
+        test=dict(
+            human_path="v0.5/test/atomic/OpenStandMixerHead/20250818",
+        ),
+        horizon=300,
     ),
     OpenToasterOvenDoor=dict(
-        horizon=400,
-        human_path="v0.5/train/atomic/OpenToasterOvenDoor/20250714",
-        mg_path="v0.5/train/atomic/OpenToasterOvenDoor/mg/demo/2025-07-16-06-43-12",
+        train=dict(
+            mg_path="v0.5/train/atomic/OpenToasterOvenDoor/mg/demo/2025-08-02-08-07-17",
+            human_path="v0.5/train/atomic/OpenToasterOvenDoor/20250820",
+        ),
+        horizon=300,
     ),
     PnPCabinetToCounter=dict(
-        horizon=800,
-        human_path="v0.5/train/atomic/PnPCabinetToCounter/20250711",
-        mg_path="v0.5/train/atomic/PnPCabinetToCounter/mg/demo/2025-07-16-10-47-20",
+        train=dict(
+            mg_path="v0.5/train/atomic/PnPCabinetToCounter/20250819/mg/demo/2025-08-20-21-56-18",
+            human_path="v0.5/train/atomic/PnPCabinetToCounter/20250819",
+        ),
+        horizon=300,
+    ),
+    PnPCounterToBlender=dict(
+        train=dict(
+            mg_path="v0.5/train/atomic/PnPCounterToBlender/20250822/mg/demo/2025-08-22-14-46-12",
+            human_path="v0.5/train/atomic/PnPCounterToBlender/20250822",
+        ),
+        horizon=500,
     ),
     PnPCounterToCabinet=dict(
-        horizon=800,
-        human_path="v0.5/train/atomic/PnPCounterToCabinet/20250712",
-        mg_path="v0.5/train/atomic/PnPCounterToCabinet/mg/demo/2025-07-15-19-24-59",
+        train=dict(
+            mg_path="v0.5/train/atomic/PnPCounterToCabinet/20250819/mg/demo/2025-08-20-21-56-25",
+            human_path="v0.5/train/atomic/PnPCounterToCabinet/20250819",
+        ),
+        test=dict(
+            human_path="v0.5/test/atomic/PnPCounterToCabinet/20250811",
+        ),
+        horizon=500,
+    ),
+    PnPCounterToDrawer=dict(
+        train=dict(
+            mg_path="v0.5/train/atomic/PnPCounterToDrawer/20250821/mg/demo/2025-08-21-15-44-03",
+            human_path="v0.5/train/atomic/PnPCounterToDrawer/20250821",
+        ),
+        horizon=500,
     ),
     PnPCounterToMicrowave=dict(
-        horizon=1500,
-        human_path="v0.5/train/atomic/PnPCounterToMicrowave/20250712",
-        mg_path="v0.5/train/atomic/PnPCounterToMicrowave/mg/demo/2025-07-15-19-14-49",
+        train=dict(
+            mg_path="v0.5/train/atomic/PnPCounterToMicrowave/20250819/mg/demo/2025-08-20-21-56-32",
+            human_path="v0.5/train/atomic/PnPCounterToMicrowave/20250819",
+        ),
+        horizon=700,
     ),
     PnPCounterToOven=dict(
-        horizon=1000,
-        human_path="v0.5/train/atomic/PnPCounterToOven/20250714",
-        mg_path="v0.5/train/atomic/PnPCounterToOven/mg/demo/2025-07-16-10-40-51",
+        train=dict(
+            mg_path="v0.5/train/atomic/PnPCounterToOven/20250819/mg/demo/2025-08-20-21-56-41",
+            human_path="v0.5/train/atomic/PnPCounterToOven/20250819",
+        ),
+        horizon=400,
     ),
     PnPCounterToSink=dict(
-        horizon=900,
-        human_path="v0.5/train/atomic/PnPCounterToSink/20250711",
-        mg_path="v0.5/train/atomic/PnPCounterToSink/mg/demo/2025-07-12-15-02-36",
+        train=dict(
+            mg_path="v0.5/train/atomic/PnPCounterToSink/20250819/mg/demo/2025-08-20-22-32-27",
+            human_path="v0.5/train/atomic/PnPCounterToSink/20250819",
+        ),
+        horizon=400,
     ),
     PnPCounterToStandMixer=dict(
-        horizon=1100,
-        human_path="v0.5/train/atomic/PnPCounterToStandMixer/20250711",
-        mg_path="v0.5/train/atomic/PnPCounterToStandMixer/mg/demo/2025-07-13-19-10-48",
+        train=dict(
+            mg_path="v0.5/train/atomic/PnPCounterToStandMixer/20250820/mg/demo/2025-08-20-22-33-43",
+            human_path="v0.5/train/atomic/PnPCounterToStandMixer/20250820",
+        ),
+        horizon=400,
     ),
     PnPCounterToStove=dict(
-        horizon=900,
-        human_path="v0.5/train/atomic/PnPCounterToStove/20250711",
-        mg_path="v0.5/train/atomic/PnPCounterToStove/mg/demo/2025-07-13-19-12-04",
+        train=dict(
+            mg_path="v0.5/train/atomic/PnPCounterToStove/20250819/mg/demo/2025-08-20-22-33-04",
+            human_path="v0.5/train/atomic/PnPCounterToStove/20250819",
+        ),
+        test=dict(
+            human_path="v0.5/test/atomic/PnPCounterToStove/20250818",
+        ),
+        horizon=400,
     ),
     PnPCounterToToasterOven=dict(
-        horizon=900,
-        human_path="v0.5/train/atomic/PnPCounterToToasterOven/20250714",
-        mg_path="v0.5/train/atomic/PnPCounterToToasterOven/mg/demo/2025-07-16-10-01-13",
+        train=dict(
+            mg_path="v0.5/train/atomic/PnPCounterToToasterOven/20250819/mg/demo/2025-08-20-22-33-52",
+            human_path="v0.5/train/atomic/PnPCounterToToasterOven/20250819",
+        ),
+        horizon=300,
+    ),
+    PnPDrawerToCounter=dict(
+        train=dict(
+            mg_path="v0.5/train/atomic/PnPDrawerToCounter/20250820/mg/demo/2025-08-20-21-57-07",
+            human_path="v0.5/train/atomic/PnPDrawerToCounter/20250820",
+        ),
+        test=dict(
+            human_path="v0.5/test/atomic/PnPDrawerToCounter/20250820",
+        ),
+        horizon=500,
+    ),
+    PnPFridgeDrawerToShelf=dict(
+        train=dict(
+            mg_path="v0.5/train/atomic/PnPFridgeDrawerToShelf/20250821/mg/demo/2025-08-21-15-16-21",
+            human_path="v0.5/train/atomic/PnPFridgeDrawerToShelf/20250821",
+        ),
+        horizon=400,
+    ),
+    PnPFridgeShelfToDrawer=dict(
+        train=dict(
+            mg_path="v0.5/train/atomic/PnPFridgeShelfToDrawer/20250821/mg/demo/2025-08-21-15-17-53",
+            human_path="v0.5/train/atomic/PnPFridgeShelfToDrawer/20250821",
+        ),
+        horizon=400,
     ),
     PnPMicrowaveToCounter=dict(
-        horizon=1500,
-        human_path="v0.5/train/atomic/PnPMicrowaveToCounter/20250711",
-        mg_path="v0.5/train/atomic/PnPMicrowaveToCounter/mg/demo/2025-07-16-23-41-43",
+        train=dict(
+            mg_path="v0.5/train/atomic/PnPMicrowaveToCounter/20250819/mg/demo/2025-08-20-22-33-47",
+            human_path="v0.5/train/atomic/PnPMicrowaveToCounter/20250819",
+        ),
+        horizon=500,
     ),
     PnPSinkToCounter=dict(
-        horizon=1000,
-        human_path="v0.5/train/atomic/PnPSinkToCounter/20250711",
-        mg_path="v0.5/train/atomic/PnPSinkToCounter/mg/demo/2025-07-17-16-13-25",
+        train=dict(
+            mg_path="v0.5/train/atomic/PnPSinkToCounter/20250819/mg/demo/2025-08-20-22-34-07",
+            human_path="v0.5/train/atomic/PnPSinkToCounter/20250819",
+        ),
+        test=dict(
+            human_path="v0.5/test/atomic/PnPSinkToCounter/20250813",
+        ),
+        horizon=600,
     ),
     PnPStoveToCounter=dict(
-        horizon=1100,
-        human_path="v0.5/train/atomic/PnPStoveToCounter/20250711",
-        mg_path="v0.5/train/atomic/PnPStoveToCounter/mg/demo/2025-07-15-12-20-34",
+        train=dict(
+            mg_path="v0.5/train/atomic/PnPStoveToCounter/20250819/mg/demo/2025-08-21-09-59-52",
+            human_path="v0.5/train/atomic/PnPStoveToCounter/20250819",
+        ),
+        horizon=300,
     ),
     PnPToasterOvenToCounter=dict(
-        horizon=600,
-        human_path="v0.5/train/atomic/PnPToasterOvenToCounter/20250714",
-        mg_path="v0.5/train/atomic/PnPToasterOvenToCounter/mg/demo/2025-07-17-01-00-50",
+        train=dict(
+            mg_path="v0.5/train/atomic/PnPToasterOvenToCounter/20250819/mg/demo/2025-08-21-10-00-21",
+            human_path="v0.5/train/atomic/PnPToasterOvenToCounter/20250819",
+        ),
+        horizon=300,
     ),
     PnPToasterToCounter=dict(
-        horizon=1000,
-        human_path="v0.5/train/atomic/PnPToasterToCounter/20250714",
-        mg_path="v0.5/train/atomic/PnPToasterToCounter/mg/demo/2025-07-25-01-29-30",
+        train=dict(
+            mg_path="v0.5/train/atomic/PnPToasterToCounter/20250819/mg/demo/2025-08-21-09-48-26",
+            human_path="v0.5/train/atomic/PnPToasterToCounter/20250819",
+        ),
+        test=dict(
+            human_path="v0.5/test/atomic/PnPToasterToCounter/20250817",
+        ),
+        horizon=400,
+    ),
+    SlideDishwasherRack=dict(
+        train=dict(
+            mg_path="v0.5/train/atomic/SlideDishwasherRack/20250820/mg/demo/2025-08-20-21-57-11",
+            human_path="v0.5/train/atomic/SlideDishwasherRack/20250820",
+        ),
+        test=dict(
+            human_path="v0.5/test/atomic/SlideDishwasherRack/20250820",
+        ),
+        horizon=300,
+    ),
+    SlideOvenRack=dict(
+        train=dict(
+            mg_path="v0.5/train/atomic/SlideOvenRack/20250820/mg/demo/2025-08-20-21-57-16",
+            human_path="v0.5/train/atomic/SlideOvenRack/20250820",
+        ),
+        horizon=300,
+    ),
+    SlideToasterOvenRack=dict(
+        train=dict(
+            mg_path="v0.5/train/atomic/SlideToasterOvenRack/20250820/mg/demo/2025-08-20-21-57-23",
+            human_path="v0.5/train/atomic/SlideToasterOvenRack/20250820",
+        ),
+        horizon=200,
     ),
     StartCoffeeMachine=dict(
-        horizon=300,
-        human_path="v0.5/train/atomic/StartCoffeeMachine/20250711",
-        mg_path="v0.5/train/atomic/StartCoffeeMachine/mg/demo/2025-07-11-18-31-31",
+        train=dict(
+            mg_path="v0.5/train/atomic/StartCoffeeMachine/20250819/mg/demo/2025-08-21-09-42-00",
+            human_path="v0.5/train/atomic/StartCoffeeMachine/20250819",
+        ),
+        horizon=200,
     ),
     TurnOffMicrowave=dict(
-        horizon=800,
-        human_path="v0.5/train/atomic/TurnOffMicrowave/20250711",
-        mg_path="v0.5/train/atomic/TurnOffMicrowave/mg/demo/2025-07-16-01-02-52",
+        train=dict(
+            mg_path="v0.5/train/atomic/TurnOffMicrowave/20250819/mg/demo/2025-08-21-09-46-12",
+            human_path="v0.5/train/atomic/TurnOffMicrowave/20250819",
+        ),
+        horizon=200,
     ),
     TurnOffSinkFaucet=dict(
-        horizon=800,
-        human_path="v0.5/train/atomic/TurnOffSinkFaucet/20250711",
-        mg_path="v0.5/train/atomic/TurnOffSinkFaucet/mg/demo/2025-07-14-16-38-56",
+        train=dict(
+            mg_path="v0.5/train/atomic/TurnOffSinkFaucet/20250819/mg/demo/2025-08-21-10-27-00",
+            human_path="v0.5/train/atomic/TurnOffSinkFaucet/20250819",
+        ),
+        horizon=200,
     ),
     TurnOffStove=dict(
-        horizon=700,
-        human_path="v0.5/train/atomic/TurnOffStove/20250711",
-        mg_path="v0.5/train/atomic/TurnOffStove/mg/demo/2025-07-11-18-29-00",
+        train=dict(
+            mg_path="v0.5/train/atomic/TurnOffStove/20250819/mg/demo/2025-08-21-10-12-48",
+            human_path="v0.5/train/atomic/TurnOffStove/20250819",
+        ),
+        test=dict(
+            human_path="v0.5/test/atomic/TurnOffStove/20250812",
+        ),
+        horizon=500,
+    ),
+    TurnOnBlender=dict(
+        train=dict(
+            mg_path="v0.5/train/atomic/TurnOnBlender/20250822/mg/demo/2025-08-22-13-37-52",
+            human_path="v0.5/train/atomic/TurnOnBlender/20250822",
+        ),
+        horizon=200,
     ),
     TurnOnElectricKettle=dict(
-        horizon=400,
-        human_path="v0.5/train/atomic/TurnOnElectricKettle/20250712",
-        mg_path="v0.5/train/atomic/TurnOnElectricKettle/mg/demo/2025-07-16-18-16-21",
+        train=dict(
+            mg_path="v0.5/train/atomic/TurnOnElectricKettle/20250820/mg/demo/2025-08-21-09-59-45",
+            human_path="v0.5/train/atomic/TurnOnElectricKettle/20250820",
+        ),
+        test=dict(
+            human_path="v0.5/test/atomic/TurnOnElectricKettle/20250817",
+        ),
+        horizon=300,
     ),
     TurnOnMicrowave=dict(
-        horizon=700,
-        human_path="v0.5/train/atomic/TurnOnMicrowave/20250711",
-        mg_path="v0.5/train/atomic/TurnOnMicrowave/mg/demo/2025-07-14-14-45-53",
+        train=dict(
+            mg_path="v0.5/train/atomic/TurnOnMicrowave/20250819/mg/demo/2025-08-21-12-09-53",
+            human_path="v0.5/train/atomic/TurnOnMicrowave/20250819",
+        ),
+        test=dict(
+            human_path="v0.5/test/atomic/TurnOnMicrowave/20250813",
+        ),
+        horizon=300,
     ),
     TurnOnSinkFaucet=dict(
-        horizon=1100,
-        human_path="v0.5/train/atomic/TurnOnSinkFaucet/20250711",
-        mg_path="v0.5/train/atomic/TurnOnSinkFaucet/mg/demo/2025-07-14-15-30-37",
+        train=dict(
+            mg_path="v0.5/train/atomic/TurnOnSinkFaucet/20250819/mg/demo/2025-08-21-12-24-03",
+            human_path="v0.5/train/atomic/TurnOnSinkFaucet/20250819",
+        ),
+        test=dict(
+            human_path="v0.5/test/atomic/TurnOnSinkFaucet/20250812",
+        ),
+        horizon=400,
     ),
     TurnOnStove=dict(
-        horizon=600,
-        human_path="v0.5/train/atomic/TurnOnStove/20250712",
-        mg_path="v0.5/train/atomic/TurnOnStove/mg/demo/2025-07-17-10-34-55",
+        train=dict(
+            mg_path="v0.5/train/atomic/TurnOnStove/20250819/mg/demo/2025-08-21-12-08-41",
+            human_path="v0.5/train/atomic/TurnOnStove/20250819",
+        ),
+        horizon=300,
     ),
     TurnOnToaster=dict(
+        train=dict(
+            mg_path="v0.5/train/atomic/TurnOnToaster/20250820/mg/demo/2025-08-21-12-08-30",
+            human_path="v0.5/train/atomic/TurnOnToaster/20250820",
+        ),
         horizon=200,
-        human_path="v0.5/train/atomic/TurnOnToaster/20250714",
-        mg_path="v0.5/train/atomic/TurnOnToaster/mg/demo/2025-07-24-23-09-11",
     ),
     TurnOnToasterOven=dict(
-        horizon=700,
-        human_path="v0.5/train/atomic/TurnOnToasterOven/20250714",
-        mg_path="v0.5/train/atomic/TurnOnToasterOven/mg/demo/2025-07-17-00-47-20",
+        train=dict(
+            mg_path="v0.5/train/atomic/TurnOnToasterOven/20250820/mg/demo/2025-08-21-12-35-58",
+            human_path="v0.5/train/atomic/TurnOnToasterOven/20250820",
+        ),
+        horizon=300,
     ),
     TurnSinkSpout=dict(
-        horizon=300,
-        human_path="v0.5/train/atomic/TurnSinkSpout/20250711",
-        mg_path="v0.5/train/atomic/TurnSinkSpout/mg/demo/2025-07-14-16-38-26",
+        train=dict(
+            mg_path="v0.5/train/atomic/TurnSinkSpout/20250820/mg/demo/2025-08-21-12-27-22",
+            human_path="v0.5/train/atomic/TurnSinkSpout/20250820",
+        ),
+        horizon=200,
     ),
 )
 
 
 MULTI_STAGE_TASK_DATASETS = OrderedDict(
+    AddLemonToFish=dict(
+        train=dict(
+            human_path="v0.5/train/composite/AddLemonToFish/20250804",
+        ),
+        horizon=1400,
+    ),
+    AddMarshmallow=dict(
+        train=dict(
+            human_path="v0.5/train/composite/AddMarshmallow/20250805",
+        ),
+        horizon=800,
+    ),
+    AddSugarCubes=dict(
+        train=dict(
+            human_path="v0.5/train/composite/AddSugarCubes/20250804",
+        ),
+        horizon=600,
+    ),
+    AdjustHeat=dict(
+        train=dict(
+            human_path="v0.5/train/composite/AdjustHeat/20250724",
+        ),
+        horizon=1500,
+    ),
+    AfterwashSorting=dict(
+        train=dict(
+            human_path="v0.5/train/composite/AfterwashSorting/20250723",
+        ),
+        horizon=2000,
+    ),
     AirDryFruit=dict(
+        train=dict(
+            human_path="v0.5/train/composite/AirDryFruit/20250718",
+        ),
         horizon=1900,
-        human_path="v0.5/train/composite/AirDryFruit/20250718",
+    ),
+    AlcoholServingPrep=dict(
+        train=dict(
+            human_path="v0.5/train/composite/AlcoholServingPrep/20250724",
+        ),
+        horizon=3100,
+    ),
+    AlignSilverware=dict(
+        train=dict(
+            human_path="v0.5/train/composite/AlignSilverware/20250801",
+        ),
+        horizon=1700,
     ),
     ArrangeBreadBasket=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ArrangeBreadBasket/20250716",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/ArrangeBreadBasket/20250809",
+        ),
         horizon=2900,
-        human_path="v0.5/train/composite/ArrangeBreadBasket/20250716",
+    ),
+    ArrangeBuffetDessert=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ArrangeBuffetDessert/20250730",
+        ),
+        horizon=2700,
     ),
     ArrangeTea=dict(
-        horizon=3200,
-        human_path="v0.5/train/composite/ArrangeTea/20250714",
+        train=dict(
+            human_path="v0.5/train/composite/ArrangeTea/20250725",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/ArrangeTea/20250812",
+        ),
+        horizon=1500,
+    ),
+    ArrangeTeaAccompaniments=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ArrangeTeaAccompaniments/20250805",
+        ),
+        horizon=1100,
+    ),
+    ArrangeUtensilsByType=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ArrangeUtensilsByType/20250805",
+        ),
+        horizon=3400,
     ),
     ArrangeVegetables=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ArrangeVegetables/20250714",
+        ),
         horizon=1100,
-        human_path="v0.5/train/composite/ArrangeVegetables/20250714",
+    ),
+    AssembleCookingArray=dict(
+        train=dict(
+            human_path="v0.5/train/composite/AssembleCookingArray/20250721",
+        ),
+        horizon=2200,
+    ),
+    BalancedMealPrep=dict(
+        train=dict(
+            human_path="v0.5/train/composite/BalancedMealPrep/20250729",
+        ),
+        horizon=1000,
+    ),
+    BeverageOrganization=dict(
+        train=dict(
+            human_path="v0.5/train/composite/BeverageOrganization/20250725",
+        ),
+        horizon=3000,
     ),
     BeverageSorting=dict(
+        train=dict(
+            human_path="v0.5/train/composite/BeverageSorting/20250718",
+        ),
         horizon=3500,
-        human_path="v0.5/train/composite/BeverageSorting/20250718",
     ),
     BowlAndCup=dict(
+        train=dict(
+            human_path="v0.5/train/composite/BowlAndCup/20250715",
+        ),
         horizon=1600,
-        human_path="v0.5/train/composite/BowlAndCup/20250715",
+    ),
+    BreadAndCheese=dict(
+        train=dict(
+            human_path="v0.5/train/composite/BreadAndCheese/20250723",
+        ),
+        horizon=600,
+    ),
+    BreadSelection=dict(
+        train=dict(
+            human_path="v0.5/train/composite/BreadSelection/20250721",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/BreadSelection/20250815",
+        ),
+        horizon=1300,
     ),
     BreadSetupSlicing=dict(
+        train=dict(
+            human_path="v0.5/train/composite/BreadSetupSlicing/20250719",
+        ),
         horizon=800,
-        human_path="v0.5/train/composite/BreadSetupSlicing/20250719",
+    ),
+    BuildAppetizerPlate=dict(
+        train=dict(
+            human_path="v0.5/train/composite/BuildAppetizerPlate/20250804",
+        ),
+        horizon=2700,
+    ),
+    ButterOnPan=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ButterOnPan/20250724",
+        ),
+        horizon=900,
+    ),
+    CandleCleanup=dict(
+        train=dict(
+            human_path="v0.5/train/composite/CandleCleanup/20250721",
+        ),
+        horizon=3000,
+    ),
+    CategorizeCondiments=dict(
+        train=dict(
+            human_path="v0.5/train/composite/CategorizeCondiments/20250729",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/CategorizeCondiments/20250814",
+        ),
+        horizon=1100,
+    ),
+    CerealAndBowl=dict(
+        train=dict(
+            human_path="v0.5/train/composite/CerealAndBowl/20250725",
+        ),
+        horizon=2900,
     ),
     CheesyBread=dict(
+        train=dict(
+            human_path="v0.5/train/composite/CheesyBread/20250714",
+        ),
         horizon=500,
-        human_path="v0.5/train/composite/CheesyBread/20250714",
     ),
     ChooseMeasuringCup=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ChooseMeasuringCup/20250718",
+        ),
         horizon=1200,
-        human_path="v0.5/train/composite/ChooseMeasuringCup/20250718",
+    ),
+    CleanBoard=dict(
+        train=dict(
+            human_path="v0.5/train/composite/CleanBoard/20250729",
+        ),
+        horizon=3200,
+    ),
+    CleanMicrowave=dict(
+        train=dict(
+            human_path="v0.5/train/composite/CleanMicrowave/20250724",
+        ),
+        horizon=1400,
+    ),
+    ClearClutter=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ClearClutter/20250723",
+        ),
+        horizon=2200,
     ),
     ClearCuttingBoard=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ClearCuttingBoard/20250719",
+        ),
         horizon=1200,
-        human_path="v0.5/train/composite/ClearCuttingBoard/20250719",
+    ),
+    ClearFoodWaste=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ClearFoodWaste/20250728",
+        ),
+        horizon=1100,
+    ),
+    ClearFreezer=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ClearFreezer/20250807",
+        ),
+        horizon=2400,
+    ),
+    ClearReceptaclesForCleaning=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ClearReceptaclesForCleaning/20250721",
+        ),
+        horizon=2600,
     ),
     ClearSink=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ClearSink/20250717",
+        ),
         horizon=3300,
-        human_path="v0.5/train/composite/ClearSink/20250717",
+    ),
+    ClearSinkArea=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ClearSinkArea/20250728",
+        ),
+        horizon=2200,
     ),
     ClearSinkSpace=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ClearSinkSpace/20250718",
+        ),
         horizon=1200,
-        human_path="v0.5/train/composite/ClearSinkSpace/20250718",
     ),
     CollectWashingSupplies=dict(
+        train=dict(
+            human_path="v0.5/train/composite/CollectWashingSupplies/20250717",
+        ),
         horizon=1800,
-        human_path="v0.5/train/composite/CollectWashingSupplies/20250717",
     ),
     ColorfulSalsa=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ColorfulSalsa/20250719",
+        ),
         horizon=1600,
-        human_path="v0.5/train/composite/ColorfulSalsa/20250719",
     ),
     CondimentCollection=dict(
+        train=dict(
+            human_path="v0.5/train/composite/CondimentCollection/20250721",
+        ),
         horizon=1400,
-        human_path="v0.5/train/composite/CondimentCollection/20250721",
+    ),
+    CookieDoughPrep=dict(
+        train=dict(
+            human_path="v0.5/train/composite/CookieDoughPrep/20250728",
+        ),
+        horizon=1900,
+    ),
+    CoolBakedCake=dict(
+        train=dict(
+            human_path="v0.5/train/composite/CoolBakedCake/20250729",
+        ),
+        horizon=2400,
+    ),
+    CoolKettle=dict(
+        train=dict(
+            human_path="v0.5/train/composite/CoolKettle/20250717",
+        ),
+        horizon=1600,
     ),
     CupcakeCleanup=dict(
+        train=dict(
+            human_path="v0.5/train/composite/CupcakeCleanup/20250716",
+        ),
         horizon=700,
-        human_path="v0.5/train/composite/CupcakeCleanup/20250716",
+    ),
+    CutBuffetPizza=dict(
+        train=dict(
+            human_path="v0.5/train/composite/CutBuffetPizza/20250730",
+        ),
+        horizon=1300,
+    ),
+    CuttingToolSelection=dict(
+        train=dict(
+            human_path="v0.5/train/composite/CuttingToolSelection/20250730",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/CuttingToolSelection/20250814",
+        ),
+        horizon=800,
+    ),
+    DateNight=dict(
+        train=dict(
+            human_path="v0.5/train/composite/DateNight/20250725",
+        ),
+        horizon=3200,
     ),
     DefrostByCategory=dict(
+        train=dict(
+            human_path="v0.5/train/composite/DefrostByCategory/20250716",
+        ),
         horizon=2200,
-        human_path="v0.5/train/composite/DefrostByCategory/20250716",
+    ),
+    DeliverStraw=dict(
+        train=dict(
+            human_path="v0.5/train/composite/DeliverStraw/20250723",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/DeliverStraw/20250813",
+        ),
+        horizon=1700,
     ),
     DessertAssembly=dict(
+        train=dict(
+            human_path="v0.5/train/composite/DessertAssembly/20250719",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/DessertAssembly/20250809",
+        ),
         horizon=900,
-        human_path="v0.5/train/composite/DessertAssembly/20250719",
+    ),
+    DessertUpgrade=dict(
+        train=dict(
+            human_path="v0.5/train/composite/DessertUpgrade/20250724",
+        ),
+        horizon=800,
+    ),
+    DisplayMeatVariety=dict(
+        train=dict(
+            human_path="v0.5/train/composite/DisplayMeatVariety/20250804",
+        ),
+        horizon=2900,
+    ),
+    DistributeChicken=dict(
+        train=dict(
+            human_path="v0.5/train/composite/DistributeChicken/20250807",
+        ),
+        horizon=1600,
     ),
     DivideBasins=dict(
+        train=dict(
+            human_path="v0.5/train/composite/DivideBasins/20250718",
+        ),
         horizon=1400,
-        human_path="v0.5/train/composite/DivideBasins/20250718",
+    ),
+    DivideBuffetTrays=dict(
+        train=dict(
+            human_path="v0.5/train/composite/DivideBuffetTrays/20250730",
+        ),
+        horizon=4800,
+    ),
+    DrainVeggies=dict(
+        train=dict(
+            human_path="v0.5/train/composite/DrainVeggies/20250723",
+        ),
+        horizon=1600,
+    ),
+    DrinkwareConsolidation=dict(
+        train=dict(
+            human_path="v0.5/train/composite/DrinkwareConsolidation/20250723",
+        ),
+        horizon=2400,
     ),
     DryDishes=dict(
+        train=dict(
+            human_path="v0.5/train/composite/DryDishes/20250714",
+        ),
         horizon=1100,
-        human_path="v0.5/train/composite/DryDishes/20250714",
     ),
     DryDrinkware=dict(
+        train=dict(
+            human_path="v0.5/train/composite/DryDrinkware/20250714",
+        ),
         horizon=900,
-        human_path="v0.5/train/composite/DryDrinkware/20250714",
+    ),
+    FillKettle=dict(
+        train=dict(
+            human_path="v0.5/train/composite/FillKettle/20250721",
+        ),
+        horizon=2200,
     ),
     FoodCleanup=dict(
-        horizon=2200,
-        human_path="v0.5/train/composite/FoodCleanup/20250715",
+        train=dict(
+            human_path="v0.5/train/composite/FoodCleanup/20250725",
+        ),
+        horizon=800,
+    ),
+    FreezeBottledWaters=dict(
+        train=dict(
+            human_path="v0.5/train/composite/FreezeBottledWaters/20250807",
+        ),
+        horizon=2600,
+    ),
+    FreezeCookedFood=dict(
+        train=dict(
+            human_path="v0.5/train/composite/FreezeCookedFood/20250804",
+        ),
+        horizon=1300,
+    ),
+    FreezeIceTray=dict(
+        train=dict(
+            human_path="v0.5/train/composite/FreezeIceTray/20250807",
+        ),
+        horizon=1600,
     ),
     FryingPanAdjustment=dict(
+        train=dict(
+            human_path="v0.5/train/composite/FryingPanAdjustment/20250714",
+        ),
         horizon=800,
-        human_path="v0.5/train/composite/FryingPanAdjustment/20250714",
+    ),
+    GarnishCupcake=dict(
+        train=dict(
+            human_path="v0.5/train/composite/GarnishCupcake/20250804",
+        ),
+        horizon=1200,
+    ),
+    GarnishPancake=dict(
+        train=dict(
+            human_path="v0.5/train/composite/GarnishPancake/20250804",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/GarnishPancake/20250815",
+        ),
+        horizon=1800,
+    ),
+    GatherCuttingTools=dict(
+        train=dict(
+            human_path="v0.5/train/composite/GatherCuttingTools/20250730",
+        ),
+        horizon=1600,
+    ),
+    GatherMarinadeIngredients=dict(
+        train=dict(
+            human_path="v0.5/train/composite/GatherMarinadeIngredients/20250729",
+        ),
+        horizon=2200,
+    ),
+    GatherTableware=dict(
+        train=dict(
+            human_path="v0.5/train/composite/GatherTableware/20250730",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/GatherTableware/20250815",
+        ),
+        horizon=1500,
+    ),
+    GatherVegetables=dict(
+        train=dict(
+            human_path="v0.5/train/composite/GatherVegetables/20250805",
+        ),
+        horizon=900,
+    ),
+    GetToastedBread=dict(
+        train=dict(
+            human_path="v0.5/train/composite/GetToastedBread/20250731",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/GetToastedBread/20250812",
+        ),
+        horizon=2000,
+    ),
+    HeatKebabSandwich=dict(
+        train=dict(
+            human_path="v0.5/train/composite/HeatKebabSandwich/20250805",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/HeatKebabSandwich/20250813",
+        ),
+        horizon=1800,
+    ),
+    HeatMug=dict(
+        train=dict(
+            human_path="v0.5/train/composite/HeatMug/20250725",
+        ),
+        horizon=1200,
     ),
     HeatMultipleWater=dict(
+        train=dict(
+            human_path="v0.5/train/composite/HeatMultipleWater/20250714",
+        ),
         horizon=2800,
-        human_path="v0.5/train/composite/HeatMultipleWater/20250714",
+    ),
+    HotDogSetup=dict(
+        train=dict(
+            human_path="v0.5/train/composite/HotDogSetup/20250805",
+        ),
+        horizon=2800,
+    ),
+    KettleBoiling=dict(
+        train=dict(
+            human_path="v0.5/train/composite/KettleBoiling/20250725",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/KettleBoiling/20250814",
+        ),
+        horizon=1000,
+    ),
+    LemonSeasoningFish=dict(
+        train=dict(
+            human_path="v0.5/train/composite/LemonSeasoningFish/20250731",
+        ),
+        horizon=1500,
+    ),
+    LineUpCondiments=dict(
+        train=dict(
+            human_path="v0.5/train/composite/LineUpCondiments/20250731",
+        ),
+        horizon=2000,
     ),
     LoadDishwasher=dict(
+        train=dict(
+            human_path="v0.5/train/composite/LoadDishwasher/20250717",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/LoadDishwasher/20250811",
+        ),
         horizon=1200,
-        human_path="v0.5/train/composite/LoadDishwasher/20250717",
+    ),
+    LowerHeat=dict(
+        train=dict(
+            human_path="v0.5/train/composite/LowerHeat/20250805",
+        ),
+        horizon=500,
+    ),
+    MakeFruitBowl=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MakeFruitBowl/20250723",
+        ),
+        horizon=2300,
+    ),
+    MakeIceLemonade=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MakeIceLemonade/20250801",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/MakeIceLemonade/20250813",
+        ),
+        horizon=2000,
+    ),
+    MakeIcedCoffee=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MakeIcedCoffee/20250801",
+        ),
+        horizon=500,
+    ),
+    MakeLoadedPotato=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MakeLoadedPotato/20250724",
+        ),
+        horizon=2000,
+    ),
+    MatchCupAndDrink=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MatchCupAndDrink/20250723",
+        ),
+        horizon=2500,
+    ),
+    MaximizeFreezerSpace=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MaximizeFreezerSpace/20250807",
+        ),
+        horizon=1100,
     ),
     MealPrepStaging=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MealPrepStaging/20250718",
+        ),
         horizon=2000,
-        human_path="v0.5/train/composite/MealPrepStaging/20250718",
+    ),
+    MeatSkewerAssembly=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MeatSkewerAssembly/20250804",
+        ),
+        horizon=800,
+    ),
+    MeatTransfer=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MeatTransfer/20250721",
+        ),
+        horizon=2300,
     ),
     MicrowaveThawing=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MicrowaveThawing/20250715",
+        ),
         horizon=3100,
-        human_path="v0.5/train/composite/MicrowaveThawing/20250715",
+    ),
+    MicrowaveThawingFridge=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MicrowaveThawingFridge/20250730",
+        ),
+        horizon=1800,
+    ),
+    MixCakeFrosting=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MixCakeFrosting/20250728",
+        ),
+        horizon=1700,
+    ),
+    MixedFruitPlatter=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MixedFruitPlatter/20250804",
+        ),
+        horizon=1700,
+    ),
+    MoveFridgeToFreezer=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MoveFridgeToFreezer/20250807",
+        ),
+        horizon=1100,
+    ),
+    MoveToCounter=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MoveToCounter/20250729",
+        ),
+        horizon=800,
+    ),
+    MultistepSteaming=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MultistepSteaming/20250724",
+        ),
+        horizon=2300,
+    ),
+    OrganizeBakingIngredients=dict(
+        train=dict(
+            human_path="v0.5/train/composite/OrganizeBakingIngredients/20250725",
+        ),
+        horizon=1600,
+    ),
+    OrganizeCleaningSupplies=dict(
+        train=dict(
+            human_path="v0.5/train/composite/OrganizeCleaningSupplies/20250723",
+        ),
+        horizon=2700,
+    ),
+    OrganizeCoffeeCondiments=dict(
+        train=dict(
+            human_path="v0.5/train/composite/OrganizeCoffeeCondiments/20250731",
+        ),
+        horizon=1300,
+    ),
+    OrganizeCondiments=dict(
+        train=dict(
+            human_path="v0.5/train/composite/OrganizeCondiments/20250731",
+        ),
+        horizon=1500,
+    ),
+    OrganizeMetallicUtensils=dict(
+        train=dict(
+            human_path="v0.5/train/composite/OrganizeMetallicUtensils/20250806",
+        ),
+        horizon=2100,
     ),
     OrganizeMugsByHandle=dict(
+        train=dict(
+            human_path="v0.5/train/composite/OrganizeMugsByHandle/20250718",
+        ),
         horizon=900,
-        human_path="v0.5/train/composite/OrganizeMugsByHandle/20250718",
     ),
     OrganizeVegetables=dict(
+        train=dict(
+            human_path="v0.5/train/composite/OrganizeVegetables/20250719",
+        ),
         horizon=600,
-        human_path="v0.5/train/composite/OrganizeVegetables/20250719",
+    ),
+    OvenBroilFish=dict(
+        train=dict(
+            human_path="v0.5/train/composite/OvenBroilFish/20250805",
+        ),
+        horizon=1000,
+    ),
+    PackDessert=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PackDessert/20250806",
+        ),
+        horizon=400,
+    ),
+    PackFoodByTemp=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PackFoodByTemp/20250805",
+        ),
+        horizon=3300,
+    ),
+    PackFruitContainer=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PackFruitContainer/20250806",
+        ),
+        horizon=1300,
+    ),
+    PackIdenticalLunches=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PackIdenticalLunches/20250805",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/PackIdenticalLunches/20250815",
+        ),
+        horizon=2600,
     ),
     PanTransfer=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PanTransfer/20250714",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/PanTransfer/20250817",
+        ),
         horizon=1200,
-        human_path="v0.5/train/composite/PanTransfer/20250714",
+    ),
+    PastryDisplay=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PastryDisplay/20250724",
+        ),
+        horizon=700,
+    ),
+    PlaceBeveragesTogether=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PlaceBeveragesTogether/20250730",
+        ),
+        horizon=2600,
     ),
     PlaceDishesBySink=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PlaceDishesBySink/20250717",
+        ),
         horizon=1600,
-        human_path="v0.5/train/composite/PlaceDishesBySink/20250717",
+    ),
+    PlaceEqualIceCubes=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PlaceEqualIceCubes/20250801",
+        ),
+        horizon=1900,
+    ),
+    PlaceFoodInBowls=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PlaceFoodInBowls/20250725",
+        ),
+        horizon=1700,
+    ),
+    PlaceIceInCup=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PlaceIceInCup/20250801",
+        ),
+        horizon=800,
+    ),
+    PlaceMeatInMarinade=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PlaceMeatInMarinade/20250728",
+        ),
+        horizon=2200,
+    ),
+    PlaceVegetablesEvenly=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PlaceVegetablesEvenly/20250724",
+        ),
+        horizon=1000,
+    ),
+    PlateStoreDinner=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PlateStoreDinner/20250730",
+        ),
+        horizon=2600,
+    ),
+    PortionFruitBowl=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PortionFruitBowl/20250807",
+        ),
+        horizon=1400,
+    ),
+    PortionHotDogs=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PortionHotDogs/20250807",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/PortionHotDogs/20250816",
+        ),
+        horizon=1500,
+    ),
+    PortionInTupperware=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PortionInTupperware/20250807",
+        ),
+        horizon=1300,
+    ),
+    PortionOnSize=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PortionOnSize/20250806",
+        ),
+        horizon=1800,
+    ),
+    PortionYogurt=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PortionYogurt/20250806",
+        ),
+        horizon=1400,
     ),
     PreRinseStation=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PreRinseStation/20250717",
+        ),
         horizon=1500,
-        human_path="v0.5/train/composite/PreRinseStation/20250717",
     ),
     PreSoakPan=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PreSoakPan/20250715",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/PreSoakPan/20250809",
+        ),
         horizon=1600,
-        human_path="v0.5/train/composite/PreSoakPan/20250715",
+    ),
+    PreheatPot=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PreheatPot/20250724",
+        ),
+        horizon=1800,
     ),
     PrepForSanitizing=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PrepForSanitizing/20250715",
+        ),
         horizon=2500,
-        human_path="v0.5/train/composite/PrepForSanitizing/20250715",
+    ),
+    PrepForTenderizing=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PrepForTenderizing/20250721",
+        ),
+        horizon=1600,
+    ),
+    PrepFridgeForCleaning=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PrepFridgeForCleaning/20250805",
+        ),
+        horizon=2400,
     ),
     PrepMarinatingMeat=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PrepMarinatingMeat/20250714",
+        ),
         horizon=1900,
-        human_path="v0.5/train/composite/PrepMarinatingMeat/20250714",
+    ),
+    PrepSinkForCleaning=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PrepSinkForCleaning/20250806",
+        ),
+        horizon=1200,
+    ),
+    PrepareBroilingStation=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PrepareBroilingStation/20250804",
+        ),
+        horizon=600,
+    ),
+    PrepareCheeseStation=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PrepareCheeseStation/20250728",
+        ),
+        horizon=1600,
+    ),
+    PrepareCocktailStation=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PrepareCocktailStation/20250801",
+        ),
+        horizon=3500,
     ),
     PrepareCoffee=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PrepareCoffee/20250716",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/PrepareCoffee/20250812",
+        ),
         horizon=1200,
-        human_path="v0.5/train/composite/PrepareCoffee/20250716",
     ),
     PrepareDishwasher=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PrepareDishwasher/20250717",
+        ),
         horizon=900,
-        human_path="v0.5/train/composite/PrepareDishwasher/20250717",
+    ),
+    PrepareDrinkStation=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PrepareDrinkStation/20250723",
+        ),
+        horizon=3900,
+    ),
+    PrepareSausageCheese=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PrepareSausageCheese/20250805",
+        ),
+        horizon=2400,
+    ),
+    PrepareSoupServing=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PrepareSoupServing/20250724",
+        ),
+        horizon=2300,
     ),
     PrepareToast=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PrepareToast/20250714",
+        ),
         horizon=2500,
-        human_path="v0.5/train/composite/PrepareToast/20250714",
     ),
     PressChicken=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PressChicken/20250717",
+        ),
         horizon=1000,
-        human_path="v0.5/train/composite/PressChicken/20250717",
     ),
     PrewashFoodAssembly=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PrewashFoodAssembly/20250714",
+        ),
         horizon=1100,
-        human_path="v0.5/train/composite/PrewashFoodAssembly/20250714",
     ),
     PrewashFoodSorting=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PrewashFoodSorting/20250718",
+        ),
         horizon=2400,
-        human_path="v0.5/train/composite/PrewashFoodSorting/20250718",
+    ),
+    QuickThaw=dict(
+        train=dict(
+            human_path="v0.5/train/composite/QuickThaw/20250725",
+        ),
+        horizon=1100,
     ),
     RecycleBottlesBySize=dict(
+        train=dict(
+            human_path="v0.5/train/composite/RecycleBottlesBySize/20250717",
+        ),
         horizon=2500,
-        human_path="v0.5/train/composite/RecycleBottlesBySize/20250717",
     ),
     RecycleBottlesByType=dict(
+        train=dict(
+            human_path="v0.5/train/composite/RecycleBottlesByType/20250717",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/RecycleBottlesByType/20250812",
+        ),
         horizon=1900,
-        human_path="v0.5/train/composite/RecycleBottlesByType/20250717",
     ),
     RecycleSodaCans=dict(
+        train=dict(
+            human_path="v0.5/train/composite/RecycleSodaCans/20250719",
+        ),
         horizon=4500,
-        human_path="v0.5/train/composite/RecycleSodaCans/20250719",
     ),
     RecycleStackedYogurt=dict(
+        train=dict(
+            human_path="v0.5/train/composite/RecycleStackedYogurt/20250717",
+        ),
         horizon=1400,
-        human_path="v0.5/train/composite/RecycleStackedYogurt/20250717",
+    ),
+    RemoveBroiledFish=dict(
+        train=dict(
+            human_path="v0.5/train/composite/RemoveBroiledFish/20250805",
+        ),
+        horizon=1400,
+    ),
+    RemoveCuttingBoardItems=dict(
+        train=dict(
+            human_path="v0.5/train/composite/RemoveCuttingBoardItems/20250805",
+        ),
+        horizon=500,
+    ),
+    ReorganizeFrozenVegetables=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ReorganizeFrozenVegetables/20250807",
+        ),
+        horizon=1800,
+    ),
+    ResetCabinetDoors=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ResetCabinetDoors/20250731",
+        ),
+        horizon=2200,
+    ),
+    RestockBowls=dict(
+        train=dict(
+            human_path="v0.5/train/composite/RestockBowls/20250725",
+        ),
+        horizon=2400,
     ),
     RestockPantry=dict(
+        train=dict(
+            human_path="v0.5/train/composite/RestockPantry/20250714",
+        ),
         horizon=1700,
-        human_path="v0.5/train/composite/RestockPantry/20250714",
+    ),
+    RetrieveIceTray=dict(
+        train=dict(
+            human_path="v0.5/train/composite/RetrieveIceTray/20250801",
+        ),
+        horizon=1700,
+    ),
+    RetrieveMeat=dict(
+        train=dict(
+            human_path="v0.5/train/composite/RetrieveMeat/20250728",
+        ),
+        horizon=700,
+    ),
+    ReturnWashingSupplies=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ReturnWashingSupplies/20250717",
+        ),
+        horizon=3400,
     ),
     RinseBowls=dict(
+        train=dict(
+            human_path="v0.5/train/composite/RinseBowls/20250718",
+        ),
         horizon=1900,
-        human_path="v0.5/train/composite/RinseBowls/20250718",
+    ),
+    RinseCuttingBoard=dict(
+        train=dict(
+            human_path="v0.5/train/composite/RinseCuttingBoard/20250805",
+        ),
+        horizon=1500,
+    ),
+    RinseSinkBasin=dict(
+        train=dict(
+            human_path="v0.5/train/composite/RinseSinkBasin/20250728",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/RinseSinkBasin/20250816",
+        ),
+        horizon=900,
     ),
     RotatePan=dict(
+        train=dict(
+            human_path="v0.5/train/composite/RotatePan/20250717",
+        ),
         horizon=400,
-        human_path="v0.5/train/composite/RotatePan/20250717",
+    ),
+    SanitizePrepCuttingBoard=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SanitizePrepCuttingBoard/20250806",
+        ),
+        horizon=1400,
+    ),
+    ScalePortioning=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ScalePortioning/20250807",
+        ),
+        horizon=1400,
     ),
     ScrubBowl=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ScrubBowl/20250717",
+        ),
         horizon=900,
-        human_path="v0.5/train/composite/ScrubBowl/20250717",
+    ),
+    ScrubCuttingBoard=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ScrubCuttingBoard/20250805",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/ScrubCuttingBoard/20250816",
+        ),
+        horizon=800,
     ),
     SearingMeat=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SearingMeat/20250716",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/SearingMeat/20250812",
+        ),
         horizon=2900,
-        human_path="v0.5/train/composite/SearingMeat/20250716",
+    ),
+    SeasoningSpiceSetup=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SeasoningSpiceSetup/20250728",
+        ),
+        horizon=2800,
+    ),
+    SeasoningSteak=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SeasoningSteak/20250731",
+        ),
+        horizon=900,
+    ),
+    SeparateFreezerRack=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SeparateFreezerRack/20250807",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/SeparateFreezerRack/20250815",
+        ),
+        horizon=1600,
     ),
     ServeSteak=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ServeSteak/20250718",
+        ),
         horizon=1400,
-        human_path="v0.5/train/composite/ServeSteak/20250718",
+    ),
+    ServeTea=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ServeTea/20250805",
+        ),
+        horizon=900,
+    ),
+    ServeWarmCroissant=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ServeWarmCroissant/20250731",
+        ),
+        horizon=1200,
     ),
     SetBowlsForSoup=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SetBowlsForSoup/20250716",
+        ),
         horizon=3600,
-        human_path="v0.5/train/composite/SetBowlsForSoup/20250716",
+    ),
+    SetUpCuttingStation=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SetUpCuttingStation/20250729",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/SetUpCuttingStation/20250817",
+        ),
+        horizon=1600,
+    ),
+    SetUpSpiceStation=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SetUpSpiceStation/20250731",
+        ),
+        horizon=2700,
+    ),
+    SetupBowls=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SetupBowls/20250801",
+        ),
+        horizon=1800,
+    ),
+    SetupButterPlate=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SetupButterPlate/20250801",
+        ),
+        horizon=2700,
+    ),
+    SetupFruitBowl=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SetupFruitBowl/20250801",
+        ),
+        horizon=2500,
+    ),
+    SetupFrying=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SetupFrying/20250724",
+        ),
+        horizon=2100,
+    ),
+    SetupSodaBowl=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SetupSodaBowl/20250801",
+        ),
+        horizon=2400,
+    ),
+    SetupWineGlasses=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SetupWineGlasses/20250801",
+        ),
+        horizon=2100,
+    ),
+    ShakePan=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ShakePan/20250724",
+        ),
+        horizon=400,
     ),
     SimmeringSauce=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SimmeringSauce/20250715",
+        ),
         horizon=2300,
-        human_path="v0.5/train/composite/SimmeringSauce/20250715",
     ),
     SizeSorting=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SizeSorting/20250714",
+        ),
         horizon=1000,
-        human_path="v0.5/train/composite/SizeSorting/20250714",
     ),
     SnackSorting=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SnackSorting/20250718",
+        ),
         horizon=1300,
-        human_path="v0.5/train/composite/SnackSorting/20250718",
     ),
     SoakSponge=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SoakSponge/20250718",
+        ),
         horizon=1700,
-        human_path="v0.5/train/composite/SoakSponge/20250718",
+    ),
+    SortingCleanup=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SortingCleanup/20250723",
+        ),
+        horizon=2000,
+    ),
+    SpicyMarinade=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SpicyMarinade/20250715",
+        ),
+        horizon=3600,
     ),
     StackBowlsCabinet=dict(
+        train=dict(
+            human_path="v0.5/train/composite/StackBowlsCabinet/20250717",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/StackBowlsCabinet/20250815",
+        ),
         horizon=1400,
-        human_path="v0.5/train/composite/StackBowlsCabinet/20250717",
     ),
     StackBowlsInSink=dict(
+        train=dict(
+            human_path="v0.5/train/composite/StackBowlsInSink/20250714",
+        ),
         horizon=900,
-        human_path="v0.5/train/composite/StackBowlsInSink/20250714",
+    ),
+    StackCans=dict(
+        train=dict(
+            human_path="v0.5/train/composite/StackCans/20250731",
+        ),
+        horizon=1200,
     ),
     StartElectricKettle=dict(
+        train=dict(
+            human_path="v0.5/train/composite/StartElectricKettle/20250717",
+        ),
         horizon=700,
-        human_path="v0.5/train/composite/StartElectricKettle/20250717",
     ),
     SteamInMicrowave=dict(
-        horizon=1200,
-        human_path="v0.5/train/composite/SteamInMicrowave/20250714",
+        train=dict(
+            human_path="v0.5/train/composite/SteamInMicrowave/20250714",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/SteamInMicrowave/20250814",
+        ),
+        horizon=1400,
+    ),
+    StirVegetables=dict(
+        train=dict(
+            human_path="v0.5/train/composite/StirVegetables/20250807",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/StirVegetables/20250814",
+        ),
+        horizon=1600,
     ),
     StockingBreakfastFoods=dict(
+        train=dict(
+            human_path="v0.5/train/composite/StockingBreakfastFoods/20250715",
+        ),
         horizon=1600,
-        human_path="v0.5/train/composite/StockingBreakfastFoods/20250715",
+    ),
+    StoreDumplings=dict(
+        train=dict(
+            human_path="v0.5/train/composite/StoreDumplings/20250804",
+        ),
+        horizon=2500,
+    ),
+    StoreLeftoversByType=dict(
+        train=dict(
+            human_path="v0.5/train/composite/StoreLeftoversByType/20250804",
+        ),
+        horizon=1700,
+    ),
+    StoreLeftoversInBowl=dict(
+        train=dict(
+            human_path="v0.5/train/composite/StoreLeftoversInBowl/20250804",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/StoreLeftoversInBowl/20250813",
+        ),
+        horizon=1700,
+    ),
+    StrainerSetup=dict(
+        train=dict(
+            human_path="v0.5/train/composite/StrainerSetup/20250805",
+        ),
+        horizon=1500,
+    ),
+    SweetSavoryToastSetup=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SweetSavoryToastSetup/20250721",
+        ),
+        horizon=2700,
+    ),
+    SweetenHotChocolate=dict(
+        train=dict(
+            human_path="v0.5/train/composite/SweetenHotChocolate/20250805",
+        ),
+        horizon=1400,
     ),
     ThawInSink=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ThawInSink/20250721",
+        ),
         horizon=1000,
-        human_path="v0.5/train/composite/ThawInSink/20250721",
+    ),
+    TiltPan=dict(
+        train=dict(
+            human_path="v0.5/train/composite/TiltPan/20250808",
+        ),
+        horizon=400,
+    ),
+    ToastBagel=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ToastBagel/20250731",
+        ),
+        horizon=1500,
+    ),
+    ToastBaguette=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ToastBaguette/20250731",
+        ),
+        horizon=2600,
+    ),
+    ToastOnCorrectRack=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ToastOnCorrectRack/20250731",
+        ),
+        horizon=2600,
+    ),
+    TongBuffetSetup=dict(
+        train=dict(
+            human_path="v0.5/train/composite/TongBuffetSetup/20250730",
+        ),
+        horizon=1600,
     ),
     TransportCookware=dict(
+        train=dict(
+            human_path="v0.5/train/composite/TransportCookware/20250717",
+        ),
         horizon=1900,
-        human_path="v0.5/train/composite/TransportCookware/20250717",
+    ),
+    TurnOffSimmeredSauceHeat=dict(
+        train=dict(
+            human_path="v0.5/train/composite/TurnOffSimmeredSauceHeat/20250728",
+        ),
+        horizon=1000,
     ),
     VeggieDipPrep=dict(
+        train=dict(
+            human_path="v0.5/train/composite/VeggieDipPrep/20250718",
+        ),
         horizon=2100,
-        human_path="v0.5/train/composite/VeggieDipPrep/20250718",
     ),
     WaffleReheat=dict(
+        train=dict(
+            human_path="v0.5/train/composite/WaffleReheat/20250715",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/WaffleReheat/20250817",
+        ),
         horizon=2700,
-        human_path="v0.5/train/composite/WaffleReheat/20250715",
+    ),
+    WarmCroissant=dict(
+        train=dict(
+            human_path="v0.5/train/composite/WarmCroissant/20250724",
+        ),
+        horizon=1100,
+    ),
+    WashFish=dict(
+        train=dict(
+            human_path="v0.5/train/composite/WashFish/20250805",
+        ),
+        horizon=900,
     ),
     WashFruitColander=dict(
+        train=dict(
+            human_path="v0.5/train/composite/WashFruitColander/20250717",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/WashFruitColander/20250811",
+        ),
         horizon=2100,
-        human_path="v0.5/train/composite/WashFruitColander/20250717",
+    ),
+    WashLettuce=dict(
+        train=dict(
+            human_path="v0.5/train/composite/WashLettuce/20250723",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/WashLettuce/20250814",
+        ),
+        horizon=1100,
     ),
     WeighIngredients=dict(
+        train=dict(
+            human_path="v0.5/train/composite/WeighIngredients/20250718",
+        ),
+        test=dict(
+            human_path="v0.5/test/composite/WeighIngredients/20250812",
+        ),
         horizon=2000,
-        human_path="v0.5/train/composite/WeighIngredients/20250718",
+    ),
+    YogurtDelightPrep=dict(
+        train=dict(
+            human_path="v0.5/train/composite/YogurtDelightPrep/20250725",
+        ),
+        horizon=1500,
     ),
 )
 
+POST_TRAINING_TASKS = dict(
+    atomic=[
+        "CloseBlenderLid",
+        "CloseFridge",
+        "CloseToasterOvenDoor",
+        "CoffeeSetupMug",
+        "NavigateKitchen",
+        "OpenCabinet",
+        "OpenDrawer",
+        "OpenStandMixerHead",
+        "PnPCounterToCabinet",
+        "PnPCounterToStove",
+        "PnPDrawerToCounter",
+        "PnPSinkToCounter",
+        "PnPToasterToCounter",
+        "SlideDishwasherRack",
+        "TurnOffStove",
+        "TurnOnElectricKettle",
+        "TurnOnMicrowave",
+        "TurnOnSinkFaucet",
+    ],
+    composite=[
+        "ArrangeBreadBasket",
+        "ArrangeTea",
+        "BreadSelection",
+        "CategorizeCondiments",
+        "CuttingToolSelection",
+        "DeliverStraw",
+        "DessertAssembly",
+        "GarnishPancake",
+        "GatherTableware",
+        "GetToastedBread",
+        "HeatKebabSandwich",
+        "KettleBoiling",
+        "LoadDishwasher",
+        "MakeIceLemonade",
+        "PackIdenticalLunches",
+        "PanTransfer",
+        "PortionHotDogs",
+        "PreSoakPan",
+        "PrepareCoffee",
+        "RecycleBottlesByType",
+        "RinseSinkBasin",
+        "ScrubCuttingBoard",
+        "SearingMeat",
+        "SeparateFreezerRack",
+        "SetUpCuttingStation",
+        "StackBowlsCabinet",
+        "SteamInMicrowave",
+        "StirVegetables",
+        "StoreLeftoversInBowl",
+        "WaffleReheat",
+        "WashFruitColander",
+        "WashLettuce",
+        "WeighIngredients",
+    ],
+)
 
-def get_ds_path(task, ds_type, return_info=False):
+
+def get_ds_path(task, ds_type, split="train", return_info=False):
     if task in SINGLE_STAGE_TASK_DATASETS:
         ds_config = SINGLE_STAGE_TASK_DATASETS[task]
     elif task in MULTI_STAGE_TASK_DATASETS:
@@ -516,19 +1972,20 @@ def get_ds_path(task, ds_type, return_info=False):
     else:
         raise ValueError
 
-    if ds_type == "human_raw":
-        folder = ds_config["human_path"]
-        fname = "demo.hdf5"
-    elif ds_type == "human_im":
-        folder = ds_config["human_path"]
-        if task in SINGLE_STAGE_TASK_DATASETS:
-            fname = "demo_im128.hdf5"
-        elif task in MULTI_STAGE_TASK_DATASETS:
-            fname = "demo_im128.hdf5"
-    elif ds_type == "mg_im":
+    if ds_type in ["human_raw", "human_im"]:
+        # folder = ds_config["human_path"]
+        folder = ds_config.get(split, {}).get("human_path")
+    elif ds_type in ["mg_raw", "mg_im"]:
         # mg dataset is not available for all tasks
-        folder = ds_config.get("mg_path", None)
-        fname = "demo_im128.hdf5"
+        # folder = ds_config.get("mg_path", None)
+        folder = ds_config.get(split, {}).get("mg_path")
+    else:
+        raise ValueError
+
+    if ds_type.endswith("_raw"):
+        fname = "demo.hdf5"
+    elif ds_type.endswith("_im"):
+        fname = "groot"
     else:
         raise ValueError
 

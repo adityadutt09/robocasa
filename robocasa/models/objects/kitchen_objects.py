@@ -2587,7 +2587,7 @@ OBJ_CATEGORIES = dict(
     ),
     turkey_slice=dict(
         types=(),
-        graspable=True,
+        graspable=False,
         washable=False,
         microwavable=False,
         cookable=False,

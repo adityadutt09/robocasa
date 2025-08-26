@@ -226,6 +226,30 @@ from robocasa.environments.kitchen.multi_stage.garnishing_dishes.garnish_cupcake
 from robocasa.environments.kitchen.multi_stage.garnishing_dishes.garnish_pancake import (
     GarnishPancake,
 )
+from robocasa.environments.kitchen.multi_stage.loading_fridge.create_child_friendly_fridge import (
+    CreateChildFriendlyFridge,
+)
+from robocasa.environments.kitchen.multi_stage.loading_fridge.load_condiments_in_fridge import (
+    LoadCondimentsInFridge,
+)
+from robocasa.environments.kitchen.multi_stage.loading_fridge.load_fridge_by_type import (
+    LoadFridgeByType,
+)
+from robocasa.environments.kitchen.multi_stage.loading_fridge.load_fridge_fifo import (
+    LoadFridgeFifo,
+)
+from robocasa.environments.kitchen.multi_stage.loading_fridge.load_prepared_food import (
+    LoadPreparedFood,
+)
+from robocasa.environments.kitchen.multi_stage.loading_fridge.move_freezer_to_fridge import (
+    MoveFreezerToFridge,
+)
+from robocasa.environments.kitchen.multi_stage.loading_fridge.place_vegies_in_drawer import (
+    PlaceVeggiesInDrawer,
+)
+from robocasa.environments.kitchen.multi_stage.loading_fridge.rearrange_fridge_items import (
+    RearrangeFridgeItems,
+)
 from robocasa.environments.kitchen.multi_stage.making_salads.prepare_cheese_station import (
     PrepareCheeseStation,
 )

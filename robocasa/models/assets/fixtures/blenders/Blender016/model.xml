@@ -102,7 +102,7 @@
           <geom type="box" pos="0.03424450 -0.02957520 0.04826499" size="0.014315856620669365 0.002906263107433915 0.1112467423081398" quat="0.3690517544746399 0.0 -0.0 -0.929408848285675" class="collision"/>
           <geom type="box" pos="0.04554580 -0.00499799 0.04826499" size="0.002822357229888439 0.011789822019636631 0.1130545437335968" quat="0.9956033229827881 0.0 -0.0 -0.09366945177316666" class="collision"/>
           <body name="blade">
-            <joint axis="0.0 0.0 1.0" pos="0.00073800 0.02242401 -0.00733677" limited="false" name="blade_joint" range="0 360" type="hinge" damping="1" frictionloss="1" armature=".01" stiffness="0.05"/>
+            <!-- <joint axis="0.0 0.0 1.0" pos="0.00073800 0.02242401 -0.00733677" limited="false" name="blade_joint" range="0 360" type="hinge" damping="1" frictionloss="1" armature=".01" stiffness="0.05"/> -->
             <geom mesh="blade_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="blade_material"/>
             <geom type="cylinder" pos="0.00075971 0.02246093 -0.01266881" size="0.005605807062238455 0.010063519701361656" quat="1.0 0.0 0.0 0.0" class="collision"/>
             <geom type="box" pos="0.00069256 0.02240113 -0.00142611" size="0.004780033137649298 0.008097464218735695 0.00041572406189516187" quat="1.0 0.0 0.0 0.0" class="collision"/>
@@ -133,6 +133,6 @@
     <motor name="knob_speed_joint_actuator" joint="knob_speed_joint" gear="10"/>
     <!--<motor name="pitcher_joint_actuator" joint="pitcher_joint" gear="10"/>
 --><motor name="power_button_joint_actuator" joint="power_button_joint" gear="0.5"/>
-    <motor name="blade_joint_actuator" joint="blade_joint" gear="0.5"/>
+    <!-- <motor name="blade_joint_actuator" joint="blade_joint" gear="0.5"/> -->
   </actuator>
 </mujoco>

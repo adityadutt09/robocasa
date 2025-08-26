@@ -81,7 +81,7 @@
           <geom class="collision" type="box" pos="0.10848565 0.00453653 0.05852125" size="0.008588218130171299 0.007043835241347551 0.014595777727663517" quat="0.9985536336898804 3.814504545562869e-10 0.05376478657126427 -1.2425408257854542e-08" name="pitcher_handle_6"/>
           <geom class="collision" type="box" pos="0.06625793 0.00453653 0.02041277" size="0.008588218130171299 0.007043835241347551 0.014595777727663517" quat="0.503902018070221 -1.1074689609813504e-08 -0.8637608289718628 1.0884013335044074e-07" name="pitcher_handle_7"/>
           <body name="blade">
-            <joint axis="0.0 0.0 1.0" pos="-0.01946550 0.00422550 0.01874050" limited="false" name="blade_joint" range="0 360" type="hinge" damping="1" frictionloss="1" armature=".01" stiffness="0.05"/>
+            <!-- <joint axis="0.0 0.0 1.0" pos="-0.01946550 0.00422550 0.01874050" limited="false" name="blade_joint" range="0 360" type="hinge" damping="1" frictionloss="1" armature=".01" stiffness="0.05"/> -->
             <geom mesh="blade_vis" type="mesh" solimp="0.998 0.998 0.001" solref="0.001 1" friction="0.95 0.3 0.1" class="visual" material="blade_material"/>
             <geom type="box" pos="-0.00143279 0.02232428 0.02188554" size="0.01079723984003067 0.005815119948238134 0.000714024412445724" quat="0.9160147905349731 0.0469263419508934 -0.11247249692678452 0.3821842074394226" class="collision"/>
             <geom type="box" pos="-0.01261811 0.01105387 0.01896857" size="0.005312731955200434 0.005815119948238134 0.0007140241796150804" quat="0.9225776791572571 0.01007954590022564 -0.024158546701073647 0.3849223256111145" class="collision"/>
@@ -171,7 +171,7 @@
     <motor name="knob_speed_joint_actuator" joint="knob_speed_joint" gear="10"/>
     <!-- <motor name="pitcher_joint_actuator" joint="pitcher_joint" gear="100"/> -->
     <motor name="power_button_joint_actuator" joint="power_button_joint" gear="0.2"/>
-    <motor name="blade_joint_actuator" joint="blade_joint" gear="10"/>
+    <!-- <motor name="blade_joint_actuator" joint="blade_joint" gear="10"/> -->
     <!-- <motor name="lid_joint_actuator" joint="lid_joint" gear="20"/> -->
   </actuator>
 </mujoco>

@@ -299,29 +299,55 @@ def get_combined_counters_2d_bbox_corners(env, counter_names):
     """
     Used to get bounding box combo of multiple counters - useful for dining counters with multiple defined counters.
     """
+    # Collect fixtures and their absolute ext sites
+    fixtures = [env.get_fixture(name) for name in counter_names]
     all_pts = []
-    for name in counter_names:
-        fx = env.get_fixture(name)
+    for fx in fixtures:
         all_pts.extend(fx.get_ext_sites(all_points=False, relative=False))
-    all_pts = np.asarray(all_pts)
+    all_pts = np.asarray(all_pts, dtype=float)
 
-    abs_sites = all_pts[:4].copy()
+    # Anchor = first fixture's local frame
+    anchor = fixtures[0]
+    a_p0, a_px, a_py, a_pz = anchor.get_ext_sites(all_points=False, relative=False)
 
-    min_x, max_x = all_pts[:, 0].min(), all_pts[:, 0].max()
-    min_y, max_y = all_pts[:, 1].min(), all_pts[:, 1].max()
+    # Build anchor axes (u along p0->px, v along p0->py)
+    u_axis = a_px[:2] - a_p0[:2]
+    v_axis = a_py[:2] - a_p0[:2]
+    u_norm = np.linalg.norm(u_axis) or 1.0
+    v_norm = np.linalg.norm(v_axis) or 1.0
+    u_axis = u_axis / u_norm
+    v_axis = v_axis / v_norm
 
-    xs = abs_sites[:, 0]
-    ys = abs_sites[:, 1]
+    # Project all points into anchor frame (origin at anchor p0)
+    rel_xy = all_pts[:, :2] - a_p0[:2]
+    proj_u = rel_xy @ u_axis
+    proj_v = rel_xy @ v_axis
 
-    i_min_x = np.argmin(xs)
-    i_max_x = np.argmax(xs)
-    i_min_y = np.argmin(ys)
-    i_max_y = np.argmax(ys)
+    min_u = float(np.min(proj_u))
+    max_u = float(np.max(proj_u))
+    min_v = float(np.min(proj_v))
+    max_v = float(np.max(proj_v))
 
-    abs_sites[i_min_x, 0] = min_x
-    abs_sites[i_max_x, 0] = max_x
-    abs_sites[i_min_y, 1] = min_y
-    abs_sites[i_max_y, 1] = max_y
+    z_min = float(np.min(all_pts[:, 2]))
+    z_max = float(np.max(all_pts[:, 2]))
+
+    # Reconstruct corners in world coords using anchor frame
+    p0_world = a_p0.copy()
+    p0_world[:2] = a_p0[:2] + u_axis * min_u + v_axis * min_v
+    p0_world[2] = z_min
+
+    px_world = a_px.copy()
+    px_world[:2] = a_p0[:2] + u_axis * max_u + v_axis * min_v
+    px_world[2] = z_min
+
+    py_world = a_py.copy()
+    py_world[:2] = a_p0[:2] + u_axis * min_u + v_axis * max_v
+    py_world[2] = z_min
+
+    pz_world = p0_world.copy()
+    pz_world[2] = z_max
+
+    abs_sites = np.array([p0_world, px_world, py_world, pz_world], dtype=float)
 
     return abs_sites
 
@@ -438,6 +464,16 @@ def compute_robot_base_placement_pose(env, ref_fixture, ref_object=None, offset=
     ):
         island_group_counter_names = get_island_group_counter_names(env)
         if len(island_group_counter_names) > 1:
+            # Ensure the ground fixture is the anchor by putting it first
+            if ground_fixture.name in island_group_counter_names:
+                island_group_counter_names = [
+                    ground_fixture.name,
+                    *[
+                        n
+                        for n in island_group_counter_names
+                        if n != ground_fixture.name
+                    ],
+                ]
             abs_sites = get_combined_counters_2d_bbox_corners(
                 env, island_group_counter_names
             )
@@ -524,6 +560,16 @@ def compute_robot_base_placement_pose(env, ref_fixture, ref_object=None, offset=
         else:
             island_group_counter_names = get_island_group_counter_names(env)
             if len(island_group_counter_names) > 1:
+                # Ensure the ground fixture is the anchor by putting it first
+                if ground_fixture.name in island_group_counter_names:
+                    island_group_counter_names = [
+                        ground_fixture.name,
+                        *[
+                            n
+                            for n in island_group_counter_names
+                            if n != ground_fixture.name
+                        ],
+                    ]
                 abs_sites = get_combined_counters_2d_bbox_corners(
                     env, island_group_counter_names
                 )
