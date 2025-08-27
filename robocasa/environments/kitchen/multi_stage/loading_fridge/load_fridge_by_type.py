@@ -6,11 +6,10 @@ class LoadFridgeByType(Kitchen):
     Load Fridge By Type: composite task for Loading Fridge.
 
     Simulates the task of placing vegetables and meat items from the counter into
-    specific shelves of the fridge based on food type.
+    specific shelves of the fridge based on food type, organized in bowls.
 
     Steps:
-        Place one type of food on the top shelf and the other on the second highest
-        shelf of the fridge.
+        Place a bowl of vegetables and a bowl of meat on different shelves of the fridge.
     """
 
     # certain fridge-side-by-side fridges only have 1 shelf
@@ -68,8 +67,8 @@ class LoadFridgeByType(Kitchen):
             veg_shelf = "top shelf"
 
         ep_meta["lang"] = (
-            f"Place the {veg_text} on the {veg_shelf} of the fridge. "
-            f"Place the {meat_text} on the {meat_shelf} of the fridge."
+            f"Place the bowl with the {veg_text} on the {veg_shelf} of the fridge. "
+            f"Place the bowl with the {meat_text} on the {meat_shelf} of the fridge."
         )
         ep_meta["refs"] = ep_meta.get("refs", {})
         ep_meta["refs"]["meat_rack_index"] = self.meat_rack_index
@@ -81,11 +80,10 @@ class LoadFridgeByType(Kitchen):
 
         cfgs.append(
             dict(
-                name="vegetable1",
-                obj_groups="vegetable",
-                init_robot_here=True,
+                name="veg_bowl",
+                obj_groups="bowl",
                 graspable=True,
-                fridgable=True,
+                init_robot_here=True,
                 placement=dict(
                     fixture=self.counter,
                     sample_region_kwargs=dict(
@@ -99,15 +97,40 @@ class LoadFridgeByType(Kitchen):
 
         cfgs.append(
             dict(
+                name="meat_bowl",
+                obj_groups="bowl",
+                graspable=True,
+                placement=dict(
+                    fixture=self.counter,
+                    reuse_region_from="veg_bowl",
+                    size=(1.0, 0.40),
+                    pos=(0.25, -1.0),
+                ),
+            )
+        )
+
+        cfgs.append(
+            dict(
+                name="vegetable1",
+                obj_groups="vegetable",
+                graspable=True,
+                fridgable=True,
+                placement=dict(
+                    object="veg_bowl",
+                    size=(1.0, 1.0),
+                ),
+            )
+        )
+
+        cfgs.append(
+            dict(
                 name="vegetable2",
                 obj_groups="vegetable",
                 graspable=True,
                 fridgable=True,
                 placement=dict(
-                    fixture=self.counter,
-                    reuse_region_from="vegetable1",
-                    size=(1.0, 0.40),
-                    pos=(0.25, -1.0),
+                    object="veg_bowl",
+                    size=(1.0, 1.0),
                 ),
             )
         )
@@ -120,10 +143,8 @@ class LoadFridgeByType(Kitchen):
                 graspable=True,
                 fridgable=True,
                 placement=dict(
-                    fixture=self.counter,
-                    reuse_region_from="vegetable1",
-                    size=(1.0, 0.40),
-                    pos=(-0.5, -1.0),
+                    object="meat_bowl",
+                    size=(1.0, 1.0),
                 ),
             )
         )
@@ -136,10 +157,8 @@ class LoadFridgeByType(Kitchen):
                 graspable=True,
                 fridgable=True,
                 placement=dict(
-                    fixture=self.counter,
-                    reuse_region_from="vegetable1",
-                    size=(1.0, 0.40),
-                    pos=(0.5, -1.0),
+                    object="meat_bowl",
+                    size=(1.0, 1.0),
                 ),
             )
         )
@@ -147,23 +166,34 @@ class LoadFridgeByType(Kitchen):
         return cfgs
 
     def _check_success(self):
-        veg_on_correct_shelf = all(
-            self.fridge.check_rack_contact(
-                self, veg, rack_index=self.veg_rack_index, compartment="fridge"
-            )
-            for veg in ["vegetable1", "vegetable2"]
+        # Check that vegetables are in the veg_bowl
+        veg1_in_bowl = OU.check_obj_in_receptacle(self, "vegetable1", "veg_bowl")
+        veg2_in_bowl = OU.check_obj_in_receptacle(self, "vegetable2", "veg_bowl")
+
+        # Check that meat is in the meat_bowl
+        meat1_in_bowl = OU.check_obj_in_receptacle(self, "meat1", "meat_bowl")
+        meat2_in_bowl = OU.check_obj_in_receptacle(self, "meat2", "meat_bowl")
+
+        # Check that veg_bowl is on the correct shelf
+        veg_bowl_on_correct_shelf = self.fridge.check_rack_contact(
+            self, "veg_bowl", rack_index=self.veg_rack_index, compartment="fridge"
         )
 
-        meat_on_correct_shelf = all(
-            self.fridge.check_rack_contact(
-                self, meat, rack_index=self.meat_rack_index, compartment="fridge"
-            )
-            for meat in ["meat1", "meat2"]
+        # Check that meat_bowl is on the correct shelf
+        meat_bowl_on_correct_shelf = self.fridge.check_rack_contact(
+            self, "meat_bowl", rack_index=self.meat_rack_index, compartment="fridge"
         )
 
         gripper_far = all(
-            OU.gripper_obj_far(self, obj)
-            for obj in ["vegetable1", "vegetable2", "meat1", "meat2"]
+            OU.gripper_obj_far(self, obj) for obj in ["veg_bowl", "meat_bowl"]
         )
 
-        return veg_on_correct_shelf and meat_on_correct_shelf and gripper_far
+        return (
+            veg1_in_bowl
+            and veg2_in_bowl
+            and meat1_in_bowl
+            and meat2_in_bowl
+            and veg_bowl_on_correct_shelf
+            and meat_bowl_on_correct_shelf
+            and gripper_far
+        )

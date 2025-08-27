@@ -432,11 +432,23 @@ from robocasa.environments.kitchen.multi_stage.reheating_food.warm_croissant imp
 from robocasa.environments.kitchen.multi_stage.restocking_supplies.beverage_sorting import (
     BeverageSorting,
 )
+from robocasa.environments.kitchen.multi_stage.restocking_supplies.fresh_produce_organization import (
+    FreshProduceOrganization,
+)
+from robocasa.environments.kitchen.multi_stage.restocking_supplies.refill_condiment_station import (
+    RefillCondimentStation,
+)
 from robocasa.environments.kitchen.multi_stage.restocking_supplies.restock_bowls import (
     RestockBowls,
 )
+from robocasa.environments.kitchen.multi_stage.restocking_supplies.restock_canned_food import (
+    RestockCannedFood,
+)
 from robocasa.environments.kitchen.multi_stage.restocking_supplies.restock_pantry import (
     RestockPantry,
+)
+from robocasa.environments.kitchen.multi_stage.restocking_supplies.restock_sink_supplies import (
+    RestockSinkSupplies,
 )
 from robocasa.environments.kitchen.multi_stage.restocking_supplies.stocking_breakfast_foods import (
     StockingBreakfastFoods,
