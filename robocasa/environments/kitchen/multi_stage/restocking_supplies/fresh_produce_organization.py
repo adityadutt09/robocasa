@@ -45,7 +45,7 @@ class FreshProduceOrganization(Kitchen):
 
         ep_meta[
             "lang"
-        ] = f"Place the {food_lang} in the correct fridge rack based on whether it is a fruit or vegetable. "
+        ] = f"Place the {food_lang} in the correct fridge rack based on whether it is a fruit or vegetable. Finally, close the fridge door."
         ep_meta["refs"] = ep_meta.get("refs", {})
         ep_meta["refs"]["fruit_rack_index"] = self.fruit_rack_index
         ep_meta["refs"]["veg_rack_index"] = self.veg_rack_index
@@ -129,7 +129,7 @@ class FreshProduceOrganization(Kitchen):
             OU.gripper_obj_far(self, obj)
             for obj in ["vegetable_fridge", "fruit_fridge", "food"]
         )
-        fridge_door_closed = not self.fridge.is_open(env=self)
+        fridge_door_closed = self.fridge.is_closed(self)
 
         return (
             veg_on_correct_shelf
