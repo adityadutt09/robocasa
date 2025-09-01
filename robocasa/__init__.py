@@ -322,6 +322,9 @@ from robocasa.environments.kitchen.multi_stage.managing_freezer_space.maximize_f
 from robocasa.environments.kitchen.multi_stage.managing_freezer_space.move_fridge_to_freezer import (
     MoveFridgeToFreezer,
 )
+from robocasa.environments.kitchen.multi_stage.managing_freezer_space.move_to_freezer_drawer import (
+    MoveToFreezerDrawer,
+)
 from robocasa.environments.kitchen.multi_stage.managing_freezer_space.reorganize_frozen_vegetables import (
     ReorganizeFrozenVegetables,
 )
@@ -378,6 +381,9 @@ from robocasa.environments.kitchen.multi_stage.mixing_and_blending.spicy_marinad
 )
 from robocasa.environments.kitchen.multi_stage.plating_food.balanced_meal_prep import (
     BalancedMealPrep,
+)
+from robocasa.environments.kitchen.multi_stage.plating_food.plate_steak_meal import (
+    PlateSteakMeal,
 )
 from robocasa.environments.kitchen.multi_stage.plating_food.plate_store_dinner import (
     PlateStoreDinner,
@@ -590,6 +596,12 @@ from robocasa.environments.kitchen.multi_stage.setting_the_table.align_silverwar
 from robocasa.environments.kitchen.multi_stage.setting_the_table.arrange_bread_basket import (
     ArrangeBreadBasket,
 )
+from robocasa.environments.kitchen.multi_stage.setting_the_table.arrange_bread_bowl import (
+    ArrangeBreadBowl,
+)
+from robocasa.environments.kitchen.multi_stage.setting_the_table.arrange_drinkware import (
+    ArrangeDrinkware,
+)
 from robocasa.environments.kitchen.multi_stage.setting_the_table.beverage_organization import (
     BeverageOrganization,
 )
@@ -655,6 +667,9 @@ from robocasa.environments.kitchen.multi_stage.steaming_food.steam_vegetables im
 )
 from robocasa.environments.kitchen.multi_stage.storing_leftovers.freeze_cooked_food import (
     FreezeCookedFood,
+)
+from robocasa.environments.kitchen.multi_stage.storing_leftovers.prepare_storing_leftovers import (
+    PrepareStoringLeftovers,
 )
 from robocasa.environments.kitchen.multi_stage.storing_leftovers.store_dumplings import (
     StoreDumplings,
