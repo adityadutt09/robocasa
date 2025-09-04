@@ -68,7 +68,7 @@ from robocasa.environments.kitchen.multi_stage.baking_cookies_cakes.cool_baked_c
 from robocasa.environments.kitchen.multi_stage.baking_cookies_cakes.mix_cake_frosting import (
     MixCakeFrosting,
 )
-
+from robocasa.environments.kitchen.multi_stage.boiling.boil_pot import BoilPot
 from robocasa.environments.kitchen.multi_stage.boiling.cool_kettle import CoolKettle
 from robocasa.environments.kitchen.multi_stage.boiling.fill_kettle import FillKettle
 from robocasa.environments.kitchen.multi_stage.boiling.heat_multiple_water import (
@@ -105,6 +105,9 @@ from robocasa.environments.kitchen.multi_stage.broiling_fish.prepare_broiling_st
 )
 from robocasa.environments.kitchen.multi_stage.broiling_fish.remove_broiled_fish import (
     RemoveBroiledFish,
+)
+from robocasa.environments.kitchen.multi_stage.broiling_fish.toaster_oven_broil_fish import (
+    ToasterOvenBroilFish,
 )
 from robocasa.environments.kitchen.multi_stage.broiling_fish.wash_fish import (
     WashFish,
@@ -199,6 +202,9 @@ from robocasa.environments.kitchen.multi_stage.filling_serving_dishes.mixed_frui
 )
 from robocasa.environments.kitchen.multi_stage.frying.assemble_cooking_array import (
     AssembleCookingArray,
+)
+from robocasa.environments.kitchen.multi_stage.frying.distribute_steak_on_pans import (
+    DistributeSteakOnPans,
 )
 from robocasa.environments.kitchen.multi_stage.frying.flip_sausage import (
     FlipSausage,
@@ -472,8 +478,14 @@ from robocasa.environments.kitchen.multi_stage.preparing_sandwiches.heat_kebab_s
 from robocasa.environments.kitchen.multi_stage.preparing_sandwiches.hot_dog_setup import (
     HotDogSetup,
 )
+from robocasa.environments.kitchen.multi_stage.preparing_sandwiches.prepare_sandwich_station import (
+    PrepareSandwichStation,
+)
 from robocasa.environments.kitchen.multi_stage.preparing_sandwiches.prepare_sausage_cheese import (
     PrepareSausageCheese,
+)
+from robocasa.environments.kitchen.multi_stage.preparing_sandwiches.toast_heatable_ingredients import (
+    ToastHeatableIngredients,
 )
 from robocasa.environments.kitchen.multi_stage.reheating_food.heat_mug import HeatMug
 from robocasa.environments.kitchen.multi_stage.reheating_food.make_loaded_potato import (

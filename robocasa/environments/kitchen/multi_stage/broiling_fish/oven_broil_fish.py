@@ -3,7 +3,9 @@ from robocasa.environments.kitchen.kitchen import *
 
 class OvenBroilFish(Kitchen):
     """
-    Broil Fish: composite task for preparing fish in the oven.
+    Broil Fish: composite task for Broiling Fish activity.
+
+    Simulates preparing the oven for broiling fish.
 
     Steps:
         1. Place the fish on the tray.

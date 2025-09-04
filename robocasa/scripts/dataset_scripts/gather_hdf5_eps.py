@@ -85,6 +85,10 @@ def merge_eps(all_eps_directory):
         except:
             continue
 
+    if len(successful_episodes) == 0:
+        print(colored(f"No episodes to merge in.", "yellow"))
+        return
+
     # if env_info is still None, infer it (hacky)
     if env_info is None:
         print(
@@ -141,6 +145,7 @@ def merge_eps(all_eps_directory):
 
     merged_hdf5_path = os.path.join(session_folder, "demo.hdf5")
     do_merge = True
+
     if os.path.exists(merged_hdf5_path):
         with h5py.File(merged_hdf5_path) as f:
             num_demos = len(f["data"])

@@ -2562,7 +2562,7 @@ OBJ_CATEGORIES = dict(
         ),
     ),
     pickle_slice=dict(
-        types=(),
+        types=("vegetable"),
         graspable=False,
         washable=False,
         microwavable=False,
@@ -2574,7 +2574,7 @@ OBJ_CATEGORIES = dict(
         ),
     ),
     tomato_slice=dict(
-        types=(),
+        types=("vegetable"),
         graspable=False,
         washable=False,
         microwavable=False,
@@ -2586,7 +2586,7 @@ OBJ_CATEGORIES = dict(
         ),
     ),
     turkey_slice=dict(
-        types=(),
+        types=("meat"),
         graspable=False,
         washable=False,
         microwavable=False,

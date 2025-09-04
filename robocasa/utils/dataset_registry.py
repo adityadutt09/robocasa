@@ -360,6 +360,12 @@ SINGLE_STAGE_TASK_DATASETS = OrderedDict(
         ),
         horizon=400,
     ),
+    PreheatOven=dict(
+        train=dict(
+            human_path="v0.5/train/atomic/PreheatOven/20250903",
+        ),
+        horizon=300,
+    ),
     SlideDishwasherRack=dict(
         train=dict(
             mg_path="v0.5/train/atomic/SlideDishwasherRack/20250820/mg/demo/2025-08-20-21-57-11",
@@ -484,6 +490,12 @@ SINGLE_STAGE_TASK_DATASETS = OrderedDict(
 
 
 MULTI_STAGE_TASK_DATASETS = OrderedDict(
+    AddIceCubes=dict(
+        train=dict(
+            human_path="v0.5/train/composite/AddIceCubes/20250829",
+        ),
+        horizon=1100,
+    ),
     AddLemonToFish=dict(
         train=dict(
             human_path="v0.5/train/composite/AddLemonToFish/20250804",
@@ -501,6 +513,12 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
             human_path="v0.5/train/composite/AddSugarCubes/20250804",
         ),
         horizon=600,
+    ),
+    AddSweetener=dict(
+        train=dict(
+            human_path="v0.5/train/composite/AddSweetener/20250829",
+        ),
+        horizon=800,
     ),
     AdjustHeat=dict(
         train=dict(
@@ -541,11 +559,23 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
         ),
         horizon=2900,
     ),
+    ArrangeBreadBowl=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ArrangeBreadBowl/20250903",
+        ),
+        horizon=900,
+    ),
     ArrangeBuffetDessert=dict(
         train=dict(
             human_path="v0.5/train/composite/ArrangeBuffetDessert/20250730",
         ),
         horizon=2700,
+    ),
+    ArrangeDrinkware=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ArrangeDrinkware/20250902",
+        ),
+        horizon=1100,
     ),
     ArrangeTea=dict(
         train=dict(
@@ -597,6 +627,18 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
             human_path="v0.5/train/composite/BeverageSorting/20250718",
         ),
         horizon=3500,
+    ),
+    BlendIngredients=dict(
+        train=dict(
+            human_path="v0.5/train/composite/BlendIngredients/20250829",
+        ),
+        horizon=1200,
+    ),
+    BlendMarinade=dict(
+        train=dict(
+            human_path="v0.5/train/composite/BlendMarinade/20250902",
+        ),
+        horizon=2000,
     ),
     BowlAndCup=dict(
         train=dict(
@@ -669,6 +711,12 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
             human_path="v0.5/train/composite/ChooseMeasuringCup/20250718",
         ),
         horizon=1200,
+    ),
+    ChooseRipeFruit=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ChooseRipeFruit/20250901",
+        ),
+        horizon=600,
     ),
     CleanBoard=dict(
         train=dict(
@@ -765,6 +813,12 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
             human_path="v0.5/train/composite/CoolKettle/20250717",
         ),
         horizon=1600,
+    ),
+    CreateChildFriendlyFridge=dict(
+        train=dict(
+            human_path="v0.5/train/composite/CreateChildFriendlyFridge/20250826",
+        ),
+        horizon=2200,
     ),
     CupcakeCleanup=dict(
         train=dict(
@@ -871,11 +925,29 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
         ),
         horizon=900,
     ),
+    DumpLeftovers=dict(
+        train=dict(
+            human_path="v0.5/train/composite/DumpLeftovers/20250902",
+        ),
+        horizon=600,
+    ),
+    FillBlenderJug=dict(
+        train=dict(
+            human_path="v0.5/train/composite/FillBlenderJug/20250902",
+        ),
+        horizon=1000,
+    ),
     FillKettle=dict(
         train=dict(
             human_path="v0.5/train/composite/FillKettle/20250721",
         ),
         horizon=2200,
+    ),
+    FilterMicrowavableItem=dict(
+        train=dict(
+            human_path="v0.5/train/composite/FilterMicrowavableItem/20250901",
+        ),
+        horizon=1100,
     ),
     FoodCleanup=dict(
         train=dict(
@@ -900,6 +972,12 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
             human_path="v0.5/train/composite/FreezeIceTray/20250807",
         ),
         horizon=1600,
+    ),
+    FreshProduceOrganization=dict(
+        train=dict(
+            human_path="v0.5/train/composite/FreshProduceOrganization/20250828",
+        ),
+        horizon=1000,
     ),
     FryingPanAdjustment=dict(
         train=dict(
@@ -985,6 +1063,12 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
         ),
         horizon=2800,
     ),
+    JuiceFruitReamer=dict(
+        train=dict(
+            human_path="v0.5/train/composite/JuiceFruitReamer/20250902",
+        ),
+        horizon=400,
+    ),
     KettleBoiling=dict(
         train=dict(
             human_path="v0.5/train/composite/KettleBoiling/20250725",
@@ -1006,6 +1090,12 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
         ),
         horizon=2000,
     ),
+    LoadCondimentsInFridge=dict(
+        train=dict(
+            human_path="v0.5/train/composite/LoadCondimentsInFridge/20250826",
+        ),
+        horizon=2000,
+    ),
     LoadDishwasher=dict(
         train=dict(
             human_path="v0.5/train/composite/LoadDishwasher/20250717",
@@ -1014,6 +1104,24 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
             human_path="v0.5/test/composite/LoadDishwasher/20250811",
         ),
         horizon=1200,
+    ),
+    LoadFridgeByType=dict(
+        train=dict(
+            human_path="v0.5/train/composite/LoadFridgeByType/20250827",
+        ),
+        horizon=1000,
+    ),
+    LoadFridgeFifo=dict(
+        train=dict(
+            human_path="v0.5/train/composite/LoadFridgeFifo/20250826",
+        ),
+        horizon=1000,
+    ),
+    LoadPreparedFood=dict(
+        train=dict(
+            human_path="v0.5/train/composite/LoadPreparedFood/20250827",
+        ),
+        horizon=1000,
     ),
     LowerHeat=dict(
         train=dict(
@@ -1078,6 +1186,18 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
         ),
         horizon=2300,
     ),
+    MicrowaveCorrectMeal=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MicrowaveCorrectMeal/20250901",
+        ),
+        horizon=1000,
+    ),
+    MicrowaveDefrostMeat=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MicrowaveDefrostMeat/20250901",
+        ),
+        horizon=1200,
+    ),
     MicrowaveThawing=dict(
         train=dict(
             human_path="v0.5/train/composite/MicrowaveThawing/20250715",
@@ -1102,6 +1222,12 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
         ),
         horizon=1700,
     ),
+    MoveFreezerToFridge=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MoveFreezerToFridge/20250827",
+        ),
+        horizon=1000,
+    ),
     MoveFridgeToFreezer=dict(
         train=dict(
             human_path="v0.5/train/composite/MoveFridgeToFreezer/20250807",
@@ -1113,6 +1239,12 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
             human_path="v0.5/train/composite/MoveToCounter/20250729",
         ),
         horizon=800,
+    ),
+    MoveToFreezerDrawer=dict(
+        train=dict(
+            human_path="v0.5/train/composite/MoveToFreezerDrawer/20250902",
+        ),
+        horizon=1200,
     ),
     MultistepSteaming=dict(
         train=dict(
@@ -1246,11 +1378,35 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
         ),
         horizon=2200,
     ),
+    PlaceMicrowaveSafeItem=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PlaceMicrowaveSafeItem/20250901",
+        ),
+        horizon=900,
+    ),
+    PlaceStraw=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PlaceStraw/20250829",
+        ),
+        horizon=900,
+    ),
     PlaceVegetablesEvenly=dict(
         train=dict(
             human_path="v0.5/train/composite/PlaceVegetablesEvenly/20250724",
         ),
         horizon=1000,
+    ),
+    PlaceVeggiesInDrawer=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PlaceVeggiesInDrawer/20250826",
+        ),
+        horizon=1300,
+    ),
+    PlateSteakMeal=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PlateSteakMeal/20250902",
+        ),
+        horizon=700,
     ),
     PlateStoreDinner=dict(
         train=dict(
@@ -1387,11 +1543,23 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
         ),
         horizon=2400,
     ),
+    PrepareSmoothie=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PrepareSmoothie/20250829",
+        ),
+        horizon=1200,
+    ),
     PrepareSoupServing=dict(
         train=dict(
             human_path="v0.5/train/composite/PrepareSoupServing/20250724",
         ),
         horizon=2300,
+    ),
+    PrepareStoringLeftovers=dict(
+        train=dict(
+            human_path="v0.5/train/composite/PrepareStoringLeftovers/20250903",
+        ),
+        horizon=1600,
     ),
     PrepareToast=dict(
         train=dict(
@@ -1423,6 +1591,12 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
         ),
         horizon=1100,
     ),
+    RearrangeFridgeItems=dict(
+        train=dict(
+            human_path="v0.5/train/composite/RearrangeFridgeItems/20250827",
+        ),
+        horizon=1600,
+    ),
     RecycleBottlesBySize=dict(
         train=dict(
             human_path="v0.5/train/composite/RecycleBottlesBySize/20250717",
@@ -1449,6 +1623,18 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
             human_path="v0.5/train/composite/RecycleStackedYogurt/20250717",
         ),
         horizon=1400,
+    ),
+    RefillCondimentStation=dict(
+        train=dict(
+            human_path="v0.5/train/composite/RefillCondimentStation/20250827",
+        ),
+        horizon=1300,
+    ),
+    ReheatMeal=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ReheatMeal/20250901",
+        ),
+        horizon=1200,
     ),
     RemoveBroiledFish=dict(
         train=dict(
@@ -1480,11 +1666,23 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
         ),
         horizon=2400,
     ),
+    RestockCannedFood=dict(
+        train=dict(
+            human_path="v0.5/train/composite/RestockCannedFood/20250827",
+        ),
+        horizon=700,
+    ),
     RestockPantry=dict(
         train=dict(
             human_path="v0.5/train/composite/RestockPantry/20250714",
         ),
         horizon=1700,
+    ),
+    RestockSinkSupplies=dict(
+        train=dict(
+            human_path="v0.5/train/composite/RestockSinkSupplies/20250827",
+        ),
+        horizon=1500,
     ),
     RetrieveIceTray=dict(
         train=dict(
@@ -1497,6 +1695,12 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
             human_path="v0.5/train/composite/RetrieveMeat/20250728",
         ),
         horizon=700,
+    ),
+    ReturnHeatedFood=dict(
+        train=dict(
+            human_path="v0.5/train/composite/ReturnHeatedFood/20250901",
+        ),
+        horizon=900,
     ),
     ReturnWashingSupplies=dict(
         train=dict(
