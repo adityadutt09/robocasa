@@ -158,6 +158,9 @@ from robocasa.environments.kitchen.multi_stage.clearing_table.candle_cleanup imp
 from robocasa.environments.kitchen.multi_stage.clearing_table.clear_receptacles_for_cleaning import (
     ClearReceptaclesForCleaning,
 )
+from robocasa.environments.kitchen.multi_stage.clearing_table.cluster_items_for_clearing import (
+    ClusterItemsForClearing,
+)
 from robocasa.environments.kitchen.multi_stage.clearing_table.condiment_collection import (
     CondimentCollection,
 )
@@ -420,6 +423,12 @@ from robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt i
 )
 from robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning import (
     ScalePortioning,
+)
+from robocasa.environments.kitchen.multi_stage.sorting_ingredients.separate_raw_ingredients import (
+    SeparateRawIngredients,
+)
+from robocasa.environments.kitchen.multi_stage.sorting_ingredients.sort_breakfast_ingredients import (
+    SortBreakfastIngredients,
 )
 from robocasa.environments.kitchen.multi_stage.organizing_dishes_and_containers.empty_dish_rack import (
     EmptyDishRack,

@@ -362,6 +362,7 @@ SINGLE_STAGE_TASK_DATASETS = OrderedDict(
     ),
     PreheatOven=dict(
         train=dict(
+            mg_path="v0.5/train/atomic/PreheatOven/20250903/mg/demo/2025-09-04-10-51-08",
             human_path="v0.5/train/atomic/PreheatOven/20250903",
         ),
         horizon=300,
@@ -890,9 +891,9 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
         train=dict(
             human_path="v0.5/train/composite/DessertAssembly/20250719",
         ),
-        test=dict(
-            human_path="v0.5/test/composite/DessertAssembly/20250809",
-        ),
+        # test=dict( # cut this one out
+        #     human_path="v0.5/test/composite/DessertAssembly/20250809",
+        # ),
         horizon=900,
     ),
     DessertUpgrade=dict(
@@ -2226,3 +2227,66 @@ def get_ds_path(task, ds_type, split="train", return_info=False):
         ds_info["url"] = ds_config["download_links"][ds_type]
     ds_info["horizon"] = ds_config["horizon"]
     return ds_path, ds_info
+
+
+def get_ds_soup(split, task_type, source_type):
+    assert split in ["train", "test"]
+    assert task_type in ["atomic", "composite", "all"]
+    assert source_type in ["human", "mg", "all"]
+    assert (
+        len(SINGLE_STAGE_TASK_DATASETS) == 65 and len(MULTI_STAGE_TASK_DATASETS) == 251
+    )
+
+    if task_type == "atomic":
+        task_list = list(SINGLE_STAGE_TASK_DATASETS.keys())
+    elif task_type == "composite":
+        task_list = list(MULTI_STAGE_TASK_DATASETS.keys())
+    elif task_type == "all":
+        task_list = list(SINGLE_STAGE_TASK_DATASETS.keys()) + list(
+            MULTI_STAGE_TASK_DATASETS.keys()
+        )
+    else:
+        raise ValueError
+
+    if split == "train":
+        HELD_OUT_FROM_PRETRAINING = [
+            "ArrangeBreadBasket",
+            "ArrangeTea",
+            "BreadSelection",
+            "CategorizeCondiments",
+            "CuttingToolSelection",
+            "GarnishPancake",
+            "GatherTableware",
+            "HeatKebabSandwich",
+            "MakeIceLemonade",
+            "PanTransfer",
+            "PortionHotDogs",
+            "RecycleBottlesByType",
+            "SeparateFreezerRack",
+            "WaffleReheat",
+            "WashFruitColander",
+            "WeighIngredients",
+        ]
+        for task in HELD_OUT_FROM_PRETRAINING:
+            if task in task_list:
+                task_list.remove(task)
+
+    if source_type == "human":
+        ds_type_list = ["human_im"]
+    elif source_type == "mg":
+        ds_type_list = ["mg_im"]
+    elif source_type == "all":
+        ds_type_list = ["human_im", "mg_im"]
+    else:
+        raise ValueError
+
+    ds_path_list = []
+    for task in task_list:
+        for ds_type in ds_type_list:
+            ds_path = get_ds_path(
+                task=task, ds_type=ds_type, split=split, return_info=False
+            )
+            if ds_path is not None:
+                ds_path_list.append(ds_path)
+
+    return sorted(ds_path_list)
