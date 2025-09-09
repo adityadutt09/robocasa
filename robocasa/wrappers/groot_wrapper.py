@@ -14,7 +14,7 @@ from .gym_wrapper import (
 ALLOWED_LANGUAGE_CHARSET = (
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ,.\n\t[]{}()!?'_:"
 )
-FINAL_IMAGE_RESOLUTION = (128, 128)
+FINAL_IMAGE_RESOLUTION = (256, 256)
 
 
 class GrootRoboCasaEnv(RoboCasaEnv):
@@ -27,8 +27,7 @@ class GrootRoboCasaEnv(RoboCasaEnv):
                 low=0, high=255, shape=(*FINAL_IMAGE_RESOLUTION, 3), dtype=np.uint8
             )
 
-        # TODO switch later to: annotation.human.action.task_description
-        self.observation_space["annotation.human.coarse_action"] = spaces.Text(
+        self.observation_space["annotation.human.task_description"] = spaces.Text(
             max_length=256, charset=ALLOWED_LANGUAGE_CHARSET
         )
         self.action_space = self.key_converter.deduce_action_space(self.env)
@@ -66,9 +65,8 @@ class GrootRoboCasaEnv(RoboCasaEnv):
                 raw_obs[camera_name + "_image"]
             )
 
-        # TODO switch later to: annotation.human.action.task_description
-        # obs["annotation.human.action.task_description"] = raw_obs["language"]
-        obs["annotation.human.coarse_action"] = self.env_name
+        obs["annotation.human.task_description"] = raw_obs["language"]
+
         return obs
 
     def reset(self, seed=None, options=None):

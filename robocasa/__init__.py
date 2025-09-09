@@ -69,18 +69,18 @@ from robocasa.environments.kitchen.multi_stage.baking_cookies_cakes.mix_cake_fro
     MixCakeFrosting,
 )
 from robocasa.environments.kitchen.multi_stage.boiling.boil_pot import BoilPot
+from robocasa.environments.kitchen.multi_stage.boiling.boil_corn import BoilCorn
 from robocasa.environments.kitchen.multi_stage.boiling.cool_kettle import CoolKettle
 from robocasa.environments.kitchen.multi_stage.boiling.fill_kettle import FillKettle
 from robocasa.environments.kitchen.multi_stage.boiling.heat_multiple_water import (
     HeatMultipleWater,
 )
-from robocasa.environments.kitchen.multi_stage.boiling.microwave_teapot import (
-    MicrowaveTeapot,
+from robocasa.environments.kitchen.multi_stage.boiling.place_lid_to_boil import (
+    PlaceLidToBoil,
 )
 from robocasa.environments.kitchen.multi_stage.boiling.start_electric_kettle import (
     StartElectricKettle,
 )
-from robocasa.environments.kitchen.multi_stage.boiling.veggie_boil import VeggieBoil
 from robocasa.environments.kitchen.multi_stage.brewing.arrange_tea import ArrangeTea
 from robocasa.environments.kitchen.multi_stage.brewing.deliver_brewed_coffee import (
     DeliverBrewedCoffee,
@@ -400,11 +400,20 @@ from robocasa.environments.kitchen.multi_stage.mixing_and_blending.spicy_marinad
 from robocasa.environments.kitchen.multi_stage.mixing_ingredients.blend_salsa_mix import (
     BlendSalsaMix,
 )
+from robocasa.environments.kitchen.multi_stage.mixing_ingredients.blend_vegetable_sauce import (
+    BlendVegetableSauce,
+)
+from robocasa.environments.kitchen.multi_stage.mixing_ingredients.cheese_mixing import (
+    CheeseMixing,
+)
 from robocasa.environments.kitchen.multi_stage.mixing_ingredients.make_cheesecake_filling import (
     MakeCheesecakeFilling,
 )
 from robocasa.environments.kitchen.multi_stage.mixing_ingredients.make_chocolate_milk import (
     MakeChocolateMilk,
+)
+from robocasa.environments.kitchen.multi_stage.mixing_ingredients.prep_veggie_dip import (
+    PrepareVeggieDip,
 )
 from robocasa.environments.kitchen.multi_stage.plating_food.balanced_meal_prep import (
     BalancedMealPrep,

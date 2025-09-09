@@ -910,6 +910,8 @@ class Kitchen(ManipulationEnv, metaclass=KitchenEnvMeta):
                     aux_obj_cfg["obj_groups"] = (
                         direct_aux_mjcf_path or auxiliary_obj_group
                     )
+                    if "object_scale" in cfg:
+                        aux_obj_cfg["object_scale"] = cfg["object_scale"]
                     specified_aux_placement = cfg.get("auxiliary_obj_placement")
                     if specified_aux_placement is not None:
                         aux_obj_cfg["placement"] = specified_aux_placement

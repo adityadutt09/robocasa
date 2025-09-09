@@ -1,24 +1,11 @@
-import datetime, uuid
-from copy import deepcopy
 import numpy as np
-import os
 import robocasa  # we need this to register environments  # noqa: F401
 import robosuite
 
-# from robocasa.environments.tabletop.tabletop import Tabletop
-# from robocasa.models.robots import (
-#     # GROOT_ROBOCASA_ENVS_GR1_ARMS_ONLY,
-#     # GROOT_ROBOCASA_ENVS_GR1_ARMS_AND_WAIST,
-#     # GROOT_ROBOCASA_ENVS_GR1_FIXED_LOWER_BODY,
-#     # gather_robot_observations,
-#     # make_key_converter,
-# )
 
 import gymnasium as gym
 from gymnasium import spaces
 
-from robosuite.controllers import load_composite_controller_config
-from robosuite.controllers.parts.arm.osc import OperationalSpaceController
 from robosuite.controllers.composite.composite_controller import HybridMobileBase
 from robosuite.environments.base import REGISTERED_ENVS
 
@@ -26,87 +13,36 @@ from robosuite.environments.base import REGISTERED_ENVS
 ALLOWED_LANGUAGE_CHARSET = (
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ,.\n\t[]{}()!?'_:"
 )
-
-
 from robocasa.utils.env_utils import create_env
 
 
-# def gather_robot_observations(env, verbose=False):
-#     observations = {}
-
-#     for robot_id, robot in enumerate(env.robots):
-#         sim = robot.sim
-#         gripper_names = {
-#             robot.get_gripper_name(arm): robot.gripper[arm] for arm in robot.arms
-#         }
-#         for part_name, indexes in robot._ref_joints_indexes_dict.items():
-#             qpos_values = []
-#             for joint_id in indexes:
-#                 qpos_addr = sim.model.jnt_qposadr[joint_id]
-#                 # https://mujoco.readthedocs.io/en/stable/APIreference/APItypes.html#mjtjoint
-#                 joint_type = sim.model.jnt_type[joint_id]
-#                 if joint_type == mujoco.mjtJoint.mjJNT_FREE:
-#                     qpos_size = 7  # Free joint has 7 DOFs
-#                 elif joint_type == mujoco.mjtJoint.mjJNT_BALL:
-#                     qpos_size = 4  # Ball joint has 4 DOFs (quaternion)
-#                 else:
-#                     qpos_size = 1  # Revolute or prismatic joint has 1 DOF
-#                 qpos_values = np.append(
-#                     qpos_values, sim.data.qpos[qpos_addr : qpos_addr + qpos_size]
-#                 )
-#             if part_name in gripper_names.keys():
-#                 gripper = gripper_names[part_name]
-#                 # Reverse the order to match the real robot
-#                 qpos_values = unformat_gripper_space(gripper, qpos_values)[::-1]
-#             if len(qpos_values) > 0:
-#                 observations[f"robot{robot_id}_{part_name}"] = qpos_values
-
-#     if verbose:
-#         print("States:", [(k, len(observations[k])) for k in observations])
-
-#     return observations
-
-
-class RobotKeyConverter:
+class PandaOmronKeyConverter:
     @classmethod
     def get_camera_config(cls):
-        raise NotImplementedError
+        mapped_names = [
+            "video.robot0_agentview_left",
+            "video.robot0_agentview_right",
+            "video.robot0_eye_in_hand",
+        ]
+        camera_names = [
+            "robot0_agentview_left",
+            "robot0_agentview_right",
+            "robot0_eye_in_hand",
+        ]
+        camera_widths, camera_heights = 256, 256
+        return mapped_names, camera_names, camera_widths, camera_heights
 
     @classmethod
     def map_obs(cls, input_obs):
-        raise NotImplementedError
-
-    @classmethod
-    def map_action(cls, input_action):
-        raise NotImplementedError
-
-    @classmethod
-    def unmap_action(cls, input_action):
-        raise NotImplementedError
-
-    @classmethod
-    def get_metadata(cls, name):
-        raise NotImplementedError
-
-    @classmethod
-    def map_obs_in_eval(cls, input_obs):
-        output_obs = {}
-        mapped_obs = cls.map_obs(input_obs)
-        for k, v in mapped_obs.items():
-            assert k.startswith("hand.") or k.startswith("body.")
-            output_obs["state." + k[5:]] = v
+        output_obs = type(input_obs)()
+        output_obs = {
+            "hand.gripper_qpos": input_obs["robot0_gripper_qpos"],
+            "body.base_position": input_obs["robot0_base_pos"],
+            "body.base_rotation": input_obs["robot0_base_quat"],
+            "body.end_effector_position_relative": input_obs["robot0_base_to_eef_pos"],
+            "body.end_effector_rotation_relative": input_obs["robot0_base_to_eef_quat"],
+        }
         return output_obs
-
-    @classmethod
-    def get_missing_keys_in_dumping_dataset(cls):
-        return {}
-
-    @classmethod
-    def convert_to_float64(cls, input):
-        for k, v in input.items():
-            if isinstance(v, np.ndarray) and v.dtype == np.float32:
-                input[k] = v.astype(np.float64)
-        return input
 
     @classmethod
     def deduce_observation_space(cls, env):
@@ -151,58 +87,21 @@ class RobotKeyConverter:
                 raise ValueError(f"Unknown type: {type(v)}")
         return action_space
 
-
-class PandaOmronKeyConverter(RobotKeyConverter):
     @classmethod
-    def get_camera_config(cls):
-        mapped_names = [
-            "video.robot0_agentview_left",
-            "video.robot0_agentview_right",
-            "video.robot0_eye_in_hand",
-        ]
-        camera_names = [
-            "robot0_agentview_left",
-            "robot0_agentview_right",
-            "robot0_eye_in_hand",
-        ]
-        camera_widths, camera_heights = 128, 128
-        return mapped_names, camera_names, camera_widths, camera_heights
-
-    @classmethod
-    def map_obs(cls, input_obs):
-        output_obs = type(input_obs)()
-        output_obs = {
-            "hand.gripper_qpos": input_obs["robot0_gripper_qpos"],
-            "body.base_position": input_obs["robot0_base_pos"],
-            "body.base_rotation": input_obs["robot0_base_quat"],
-            "body.end_effector_position_relative": input_obs["robot0_base_to_eef_pos"],
-            "body.end_effector_rotation_relative": input_obs["robot0_base_to_eef_quat"],
-        }
+    def map_obs_in_eval(cls, input_obs):
+        output_obs = {}
+        mapped_obs = cls.map_obs(input_obs)
+        for k, v in mapped_obs.items():
+            assert k.startswith("hand.") or k.startswith("body.")
+            output_obs["state." + k[5:]] = v
         return output_obs
 
     @classmethod
-    def map_action(cls, input_action):
-        output_action = type(input_action)()
-        output_action = {
-            "hand.gripper_close": (
-                np.int64(0) if input_action["robot0_right_gripper"] < 0 else np.int64(1)
-            ),
-            # "hand.gripper_close": input_action["robot0_right_gripper"],
-            "body.end_effector_position": input_action["robot0_right"][..., 0:3],
-            "body.end_effector_rotation": input_action["robot0_right"][..., 3:6],
-            "body.base_motion": np.concatenate(
-                (
-                    input_action["robot0_base"],
-                    input_action["robot0_torso"],
-                ),
-                axis=-1,
-            ),
-            "body.control_mode": (
-                np.int64(0) if input_action["robot0_base_mode"] < 0 else np.int64(1)
-            ),
-            # "body.control_mode": input_action["robot0_base_mode"],
-        }
-        return output_action
+    def convert_to_float64(cls, input):
+        for k, v in input.items():
+            if isinstance(v, np.ndarray) and v.dtype == np.float32:
+                input[k] = v.astype(np.float64)
+        return input
 
     @classmethod
     def unmap_action(cls, input_action):
@@ -211,7 +110,6 @@ class PandaOmronKeyConverter(RobotKeyConverter):
             "robot0_right_gripper": (
                 -1.0 if input_action["action.gripper_close"] < 0.5 else 1.0
             ),
-            "robot0_right_gripper": input_action["action.gripper_close"],
             "robot0_right": np.concatenate(
                 (
                     input_action["action.end_effector_position"],
@@ -221,54 +119,23 @@ class PandaOmronKeyConverter(RobotKeyConverter):
             ),
             "robot0_base": input_action["action.base_motion"][..., 0:3],
             "robot0_torso": input_action["action.base_motion"][..., 3:4],
-            "robot0_base_mode": input_action["action.control_mode"],
             "robot0_base_mode": (
                 -1.0 if input_action["action.control_mode"] < 0.5 else 1.0
             ),
         }
         return output_action
 
-    @classmethod
-    def get_metadata(cls, name):
-        from gr00t.data.schema import RotationType
-
-        if name in [
-            "body.base_position",
-            "body.end_effector_position_relative",
-            "body.end_effector_position",
-        ]:
-            return {
-                "absolute": False,
-                "rotation_type": None,
-            }
-        elif name in ["body.base_rotation", "body.end_effector_rotation_relative"]:
-            return {
-                "absolute": False,
-                "rotation_type": RotationType.QUATERNION,
-            }
-        elif name in ["body.end_effector_rotation"]:
-            return {
-                "absolute": False,
-                "rotation_type": RotationType.AXIS_ANGLE,
-            }
-        else:
-            return {
-                "absolute": True,
-                "rotation_type": None,
-            }
-
 
 class RoboCasaEnv(gym.Env):
     def __init__(
         self,
         env_name=None,
-        robots_name=None,
         camera_names=None,
         camera_widths=None,
         camera_heights=None,
         enable_render=True,
-        dump_rollout_dataset_dir=None,
-        split="train",
+        # dump_rollout_dataset_dir=None,
+        split="test",
         **kwargs,  # Accept additional kwargs
     ):
         self.key_converter = PandaOmronKeyConverter
@@ -284,30 +151,6 @@ class RoboCasaEnv(gym.Env):
         if camera_heights is None:
             camera_heights = default_camera_heights
 
-        # controller_configs = load_composite_controller_config(
-        #     controller=None,
-        #     robot=robots_name.split("_")[0],
-        # )
-        # if (
-        #     robots_name in GROOT_ROBOCASA_ENVS_GR1_ARMS_ONLY
-        #     or robots_name in GROOT_ROBOCASA_ENVS_GR1_ARMS_AND_WAIST
-        #     or robots_name in GROOT_ROBOCASA_ENVS_GR1_FIXED_LOWER_BODY
-        # ):
-        #     controller_configs["type"] = "BASIC"
-        #     controller_configs["composite_controller_specific_configs"] = {}
-        #     controller_configs["control_delta"] = False
-
-        # self.env, self.env_kwargs = create_env_robosuite(
-        #     env_name=env_name,
-        #     robots=robots_name.split("_"),
-        #     controller_configs=controller_configs,
-        #     camera_names=camera_names,
-        #     camera_widths=camera_widths,
-        #     camera_heights=camera_heights,
-        #     enable_render=enable_render,
-        #     **kwargs,  # Forward kwargs to create_env_robosuite
-        # )
-
         self.env_name = env_name
         print(f"Creating {env_name} with split={split}")
         self.env = create_env(
@@ -315,6 +158,8 @@ class RoboCasaEnv(gym.Env):
             render_onscreen=False,
             # seed=0, # set seed=None to run unseeded
             split=split,
+            camera_widths=camera_widths,
+            camera_heights=camera_heights,
         )
         self.env.reset()
 
@@ -357,7 +202,8 @@ class RoboCasaEnv(gym.Env):
             shape = list(obs_value.shape)
             if obs_name.endswith("_image"):
                 continue
-            min_value, max_value = -1, 1
+            # min_value, max_value = -1, 1
+            min_value, max_value = -1000, 1000
             this_space = spaces.Box(
                 low=min_value, high=max_value, shape=shape, dtype=np.float32
             )
@@ -374,13 +220,7 @@ class RoboCasaEnv(gym.Env):
 
         self.observation_space = observation_space
 
-        self.dump_rollout_dataset_dir = dump_rollout_dataset_dir
-        self.groot_exporter = None
-        self.np_exporter = None
-
     def get_basic_observation(self, raw_obs):
-        # raw_obs.update(gather_robot_observations(self.env))
-
         # Image are in (H, W, C), flip it upside down
         def process_img(img):
             return np.copy(img[::-1, :, :])
@@ -413,7 +253,6 @@ class RoboCasaEnv(gym.Env):
 
         info = {}
         info["success"] = False
-        info["grasp_distractor_obj"] = False
 
         return obs, info
 
@@ -444,9 +283,6 @@ class RoboCasaEnv(gym.Env):
         truncated = False
 
         info["success"] = reward > 0
-        info["grasp_distractor_obj"] = False
-        if hasattr(self, "_check_grasp_distractor_obj"):
-            info["grasp_distractor_obj"] = self._check_grasp_distractor_obj()
 
         return obs, reward, done, truncated, info
 
