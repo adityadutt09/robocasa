@@ -6,7 +6,9 @@ from robocasa.environments import ALL_KITCHEN_ENVIRONMENTS
 from robocasa.utils.env_utils import create_env, run_random_rollouts
 
 
-def test_tasks_validity(env_names=None, env_seed=0, num_rollouts=10, num_steps=20):
+def test_tasks_validity(
+    env_names=None, env_seed=0, num_rollouts=10, num_steps=20, split="all"
+):
     """
     Tests that all kitchen environment tasks run error free. Iterates through
     all tasks, creates the environment, then runs NUM_ROLLOUTS test episodes per scene.
@@ -31,12 +33,12 @@ def test_tasks_validity(env_names=None, env_seed=0, num_rollouts=10, num_steps=2
 
         completed = True
         try:
-            env = create_env(env_name, seed=env_seed, split="all")
+            env = create_env(env_name, seed=env_seed, split=split)
             run_random_rollouts(
                 env,
                 num_rollouts=num_rollouts,
                 num_steps=num_steps,
-                video_path=f"/tmp/{env_name}.mp4",
+                video_path=f"/home/soroush/tmp/{env_name}.mp4",
             )
         except KeyboardInterrupt:
             print(colored(f"Exiting Test Early.", "yellow"))
@@ -93,6 +95,12 @@ if __name__ == "__main__":
         default=20,
         help="Number of steps to run each rollout",
     )
+    parser.add_argument(
+        "--split",
+        type=str,
+        default="all",
+        help="split. choose amongst all, train, test",
+    )
     args = parser.parse_args()
 
     test_tasks_validity(
@@ -100,4 +108,5 @@ if __name__ == "__main__":
         num_rollouts=args.num_rollouts,
         env_seed=args.env_seed,
         num_steps=args.num_steps,
+        split=args.split,
     )

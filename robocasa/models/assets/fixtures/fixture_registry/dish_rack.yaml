@@ -11,14 +11,14 @@ DishRack026:
   xml: objects/lightwheel/dish_rack/DishRack026
 
 DishRack027:
-  size: [null, null, 0.185]
+  size: [null, null, 0.205]
   xml: objects/lightwheel/dish_rack/DishRack027
 
 DishRack028:
   xml: objects/lightwheel/dish_rack/DishRack028
 
 DishRack029:
-  size: [null, null, 0.47]
+  size: [null, null, 0.43]
   xml: objects/lightwheel/dish_rack/DishRack029
 
 DishRack030:
@@ -58,7 +58,7 @@ DishRack043:
   xml: objects/lightwheel/dish_rack/DishRack043
 
 DishRack044:
-  size: [null, null, 0.197]
+  size: [null, null, 0.23]
   xml: objects/lightwheel/dish_rack/DishRack044
 
 DishRack045:
@@ -81,5 +81,5 @@ DishRack049:
   xml: objects/lightwheel/dish_rack/DishRack049
 
 DishRack050:
-  size: [null, null, 0.175]
+  size: [null, null, 0.20]
   xml: objects/lightwheel/dish_rack/DishRack050

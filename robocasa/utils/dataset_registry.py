@@ -2139,6 +2139,319 @@ MULTI_STAGE_TASK_DATASETS = OrderedDict(
     ),
 )
 
+PRE_TRAINING_TASKS = dict(
+    pretrain100=[
+        # 65 atomic tasks
+        "AdjustToasterOvenTemperature",
+        "AdjustWaterTemperature",
+        "CloseBlenderLid",
+        "CloseCabinet",
+        "CloseDishwasher",
+        "CloseDrawer",
+        "CloseElectricKettleLid",
+        "CloseFridge",
+        "CloseFridgeDrawer",
+        "CloseMicrowave",
+        "CloseOven",
+        "CloseStandMixerHead",
+        "CloseToasterOvenDoor",
+        "CoffeeServeMug",
+        "CoffeeSetupMug",
+        "NavigateKitchen",
+        "OpenBlenderLid",
+        "OpenCabinet",
+        "OpenDishwasher",
+        "OpenDrawer",
+        "OpenElectricKettleLid",
+        "OpenFridge",
+        "OpenFridgeDrawer",
+        "OpenMicrowave",
+        "OpenOven",
+        "OpenStandMixerHead",
+        "OpenToasterOvenDoor",
+        "PnPCabinetToCounter",
+        "PnPCounterToBlender",
+        "PnPCounterToCabinet",
+        "PnPCounterToDrawer",
+        "PnPCounterToMicrowave",
+        "PnPCounterToOven",
+        "PnPCounterToSink",
+        "PnPCounterToStandMixer",
+        "PnPCounterToStove",
+        "PnPCounterToToasterOven",
+        "PnPDrawerToCounter",
+        "PnPFridgeDrawerToShelf",
+        "PnPFridgeShelfToDrawer",
+        "PnPMicrowaveToCounter",
+        "PnPSinkToCounter",
+        "PnPStoveToCounter",
+        "PnPToasterOvenToCounter",
+        "PnPToasterToCounter",
+        "PreheatOven",
+        "SlideDishwasherRack",
+        "SlideOvenRack",
+        "SlideToasterOvenRack",
+        "StartCoffeeMachine",
+        "TurnOffMicrowave",
+        "TurnOffSinkFaucet",
+        "TurnOffStove",
+        "TurnOnBlender",
+        "TurnOnElectricKettle",
+        "TurnOnMicrowave",
+        "TurnOnSinkFaucet",
+        "TurnOnStove",
+        "TurnOnToaster",
+        "TurnOnToasterOven",
+        "TurnSinkSpout",
+        "OrganizeMugsByHandle",
+        "MakeIcedCoffee",
+        "CheesyBread",
+        "LowerHeat",
+        # 16 seen composite tasks
+        "DeliverStraw",
+        "GetToastedBread",
+        "KettleBoiling",
+        "LoadDishwasher",
+        "PackIdenticalLunches",
+        "PreSoakPan",
+        "PrepareCoffee",
+        "RinseSinkBasin",
+        "ScrubCuttingBoard",
+        "SearingMeat",
+        "SetUpCuttingStation",
+        "StackBowlsCabinet",
+        "SteamInMicrowave",
+        "StirVegetables",
+        "StoreLeftoversInBowl",
+        "WashLettuce",
+        # additional tasks beyond
+        "AddSweetener",
+        "ArrangeBuffetDessert",
+        "CleanBoard",
+        "CleanMicrowave",
+        "CoolBakedCake",
+        "DateNight",
+        "FilterMicrowavableItem",
+        "MeatSkewerAssembly",
+        "PlaceVegetablesEvenly",
+        "PrepMarinatingMeat",
+        "PrepSinkForCleaning",
+        "PrepareCocktailStation",
+        "PrepareSausageCheese",
+        "RemoveBroiledFish",
+        "RinseCuttingBoard",
+        "SizeSorting",
+        "TiltPan",
+        "ToastBagel",
+        "WarmCroissant",
+    ],
+    pretrain200=[
+        # 65 atomic tasks
+        "AdjustToasterOvenTemperature",
+        "AdjustWaterTemperature",
+        "CloseBlenderLid",
+        "CloseCabinet",
+        "CloseDishwasher",
+        "CloseDrawer",
+        "CloseElectricKettleLid",
+        "CloseFridge",
+        "CloseFridgeDrawer",
+        "CloseMicrowave",
+        "CloseOven",
+        "CloseStandMixerHead",
+        "CloseToasterOvenDoor",
+        "CoffeeServeMug",
+        "CoffeeSetupMug",
+        "NavigateKitchen",
+        "OpenBlenderLid",
+        "OpenCabinet",
+        "OpenDishwasher",
+        "OpenDrawer",
+        "OpenElectricKettleLid",
+        "OpenFridge",
+        "OpenFridgeDrawer",
+        "OpenMicrowave",
+        "OpenOven",
+        "OpenStandMixerHead",
+        "OpenToasterOvenDoor",
+        "PnPCabinetToCounter",
+        "PnPCounterToBlender",
+        "PnPCounterToCabinet",
+        "PnPCounterToDrawer",
+        "PnPCounterToMicrowave",
+        "PnPCounterToOven",
+        "PnPCounterToSink",
+        "PnPCounterToStandMixer",
+        "PnPCounterToStove",
+        "PnPCounterToToasterOven",
+        "PnPDrawerToCounter",
+        "PnPFridgeDrawerToShelf",
+        "PnPFridgeShelfToDrawer",
+        "PnPMicrowaveToCounter",
+        "PnPSinkToCounter",
+        "PnPStoveToCounter",
+        "PnPToasterOvenToCounter",
+        "PnPToasterToCounter",
+        "PreheatOven",
+        "SlideDishwasherRack",
+        "SlideOvenRack",
+        "SlideToasterOvenRack",
+        "StartCoffeeMachine",
+        "TurnOffMicrowave",
+        "TurnOffSinkFaucet",
+        "TurnOffStove",
+        "TurnOnBlender",
+        "TurnOnElectricKettle",
+        "TurnOnMicrowave",
+        "TurnOnSinkFaucet",
+        "TurnOnStove",
+        "TurnOnToaster",
+        "TurnOnToasterOven",
+        "TurnSinkSpout",
+        "OrganizeMugsByHandle",
+        "MakeIcedCoffee",
+        "CheesyBread",
+        "LowerHeat",
+        # 16 seen composite tasks
+        "DeliverStraw",
+        "GetToastedBread",
+        "KettleBoiling",
+        "LoadDishwasher",
+        "PackIdenticalLunches",
+        "PreSoakPan",
+        "PrepareCoffee",
+        "RinseSinkBasin",
+        "ScrubCuttingBoard",
+        "SearingMeat",
+        "SetUpCuttingStation",
+        "StackBowlsCabinet",
+        "SteamInMicrowave",
+        "StirVegetables",
+        "StoreLeftoversInBowl",
+        "WashLettuce",
+        # additional tasks beyond
+        "AddSugarCubes",
+        "AddSweetener",
+        "AlignSilverware",
+        "ArrangeBreadBowl",
+        "ArrangeBuffetDessert",
+        "ArrangeTeaAccompaniments",
+        "ArrangeUtensilsByType",
+        "ArrangeVegetables",
+        "BeverageSorting",
+        "BlendIngredients",
+        "BreadSetupSlicing",
+        "BuildAppetizerPlate",
+        "ButterOnPan",
+        "CandleCleanup",
+        "CerealAndBowl",
+        "ChooseMeasuringCup",
+        "CleanBoard",
+        "CleanMicrowave",
+        "ClearClutter",
+        "ClearCuttingBoard",
+        "ClearSink",
+        "CollectWashingSupplies",
+        "CookieDoughPrep",
+        "CoolBakedCake",
+        "CoolKettle",
+        "CreateChildFriendlyFridge",
+        "CupcakeCleanup",
+        "DateNight",
+        "DefrostByCategory",
+        "DeliverBrewedCoffee",
+        "DisplayMeatVariety",
+        "DistributeChicken",
+        "DivideBuffetTrays",
+        "DryDrinkware",
+        "FillKettle",
+        "FilterMicrowavableItem",
+        "FreezeCookedFood",
+        "FreshProduceOrganization",
+        "FryingPanAdjustment",
+        "GatherMarinadeIngredients",
+        "GatherVegetables",
+        "HeatMug",
+        "LineUpCondiments",
+        "LoadFridgeFifo",
+        "MatchCupAndDrink",
+        "MeatSkewerAssembly",
+        "MeatTransfer",
+        "MicrowaveThawingFridge",
+        "MixCakeFrosting",
+        "MixedFruitPlatter",
+        "MoveFreezerToFridge",
+        "MoveFridgeToFreezer",
+        "MoveToCounter",
+        "OrganizeBakingIngredients",
+        "OrganizeCleaningSupplies",
+        "OrganizeCoffeeCondiments",
+        "OvenBroilFish",
+        "PackFruitContainer",
+        "PastryDisplay",
+        "PlaceBeveragesTogether",
+        "PlaceEqualIceCubes",
+        "PlaceFoodInBowls",
+        "PlaceIceInCup",
+        "PlaceStraw",
+        "PlaceVegetablesEvenly",
+        "PlaceVeggiesInDrawer",
+        "PortionInTupperware",
+        "PortionOnSize",
+        "PreheatPot",
+        "PrepForSanitizing",
+        "PrepForTenderizing",
+        "PrepMarinatingMeat",
+        "PrepSinkForCleaning",
+        "PrepareCocktailStation",
+        "PrepareDishwasher",
+        "PrepareDrinkStation",
+        "PrepareSausageCheese",
+        "PrepareSmoothie",
+        "PrepareSoupServing",
+        "PrepareStoringLeftovers",
+        "PressChicken",
+        "PrewashFoodAssembly",
+        "PrewashFoodSorting",
+        "RearrangeFridgeItems",
+        "RecycleBottlesBySize",
+        "RecycleSodaCans",
+        "RemoveBroiledFish",
+        "ReorganizeFrozenVegetables",
+        "RestockPantry",
+        "RestockSinkSupplies",
+        "RetrieveIceTray",
+        "RetrieveMeat",
+        "ReturnWashingSupplies",
+        "RinseCuttingBoard",
+        "RotatePan",
+        "SanitizePrepCuttingBoard",
+        "SeasoningSpiceSetup",
+        "SeasoningSteak",
+        "ServeSteak",
+        "ServeTea",
+        "SetUpSpiceStation",
+        "SetupButterPlate",
+        "SetupSodaBowl",
+        "SetupWineGlasses",
+        "SizeSorting",
+        "SpicyMarinade",
+        "StackCans",
+        "StartElectricKettle",
+        "StockingBreakfastFoods",
+        "StoreDumplings",
+        "StoreLeftoversByType",
+        "StrainerSetup",
+        "SweetSavoryToastSetup",
+        "SweetenCoffee",
+        "ThawInSink",
+        "TiltPan",
+        "ToastBagel",
+        "TransportCookware",
+        "WarmCroissant",
+    ],
+)
+
 POST_TRAINING_TASKS = dict(
     atomic=[
         "CloseBlenderLid",
@@ -2253,7 +2566,9 @@ POST_TRAINING_TASKS = dict(
 )
 
 
-def get_ds_path(task, ds_type, split="train", return_info=False):
+def get_ds_meta(task, ds_type, split="train", demo_fraction=1.0):
+    meta = {}
+
     if task in SINGLE_STAGE_TASK_DATASETS:
         ds_config = SINGLE_STAGE_TASK_DATASETS[task]
     elif task in MULTI_STAGE_TASK_DATASETS:
@@ -2263,10 +2578,26 @@ def get_ds_path(task, ds_type, split="train", return_info=False):
 
     if ds_type in ["human_raw", "human_im"]:
         folder = ds_config.get(split, {}).get("human_path")
+        if split == "train":
+            num_total_demos = 100
+        elif split == "test":
+            num_total_demos = 500
+        else:
+            raise ValueError
     elif ds_type in ["mg_raw", "mg_im"]:
         folder = ds_config.get(split, {}).get("mg_path")
+        assert split == "train"
+        if task == "OpenCabinet":
+            num_total_demos = 5000
+        else:
+            num_total_demos = 10000
     elif ds_type in ["mg_5x5_raw", "mg_5x5_im"]:
         folder = ds_config.get(split, {}).get("mg_5x5_path")
+        assert split == "train"
+        if task == "OpenCabinet":
+            num_total_demos = 5000
+        else:
+            num_total_demos = 10000
     else:
         raise ValueError
 
@@ -2279,8 +2610,7 @@ def get_ds_path(task, ds_type, split="train", return_info=False):
 
     # if dataset type is not registered, return None
     if folder is None:
-        ret = (None, None) if return_info is True else None
-        return ret
+        return None
 
     if macros.DATASET_BASE_PATH is None:
         ds_base_path = os.path.join(
@@ -2288,29 +2618,33 @@ def get_ds_path(task, ds_type, split="train", return_info=False):
         )
     else:
         ds_base_path = macros.DATASET_BASE_PATH
-    ds_path = os.path.join(ds_base_path, folder, fname)
 
-    if return_info is False:
-        return ds_path
-
-    ds_info = {}
+    meta["path"] = os.path.join(ds_base_path, folder, fname)
     if "download_links" in ds_config:
-        ds_info["url"] = ds_config["download_links"][ds_type]
-    ds_info["horizon"] = ds_config["horizon"]
-    return ds_path, ds_info
+        meta["url"] = ds_config["download_links"][ds_type]
+    meta["horizon"] = ds_config["horizon"]
+    num_sampled_demos = int(num_total_demos * demo_fraction)
+    meta["filter_key"] = f"{num_sampled_demos}_demos"
+    meta["task"] = task
+    meta["split"] = split
+    meta["ds_type"] = ds_type
+    return meta
 
 
-def get_ds_soup(split, task_type, source_type):
+def get_ds_soup(split, task_type, source_type, demo_fraction=1.0):
     assert split in ["train", "test"]
     assert task_type in [
         "atomic",
         "composite",
         "all",
+        "pretrain100",
+        "pretrain200",
         "posttrain_atomic_seen",
         "posttrain_composite_seen",
         "posttrain_composite_unseen",
+        "pretrain_atomic_seen",
     ] + list(SINGLE_STAGE_TASK_DATASETS.keys()) + list(MULTI_STAGE_TASK_DATASETS.keys())
-    assert source_type in ["human", "mg", "all"]
+    assert source_type in ["human", "mg", "mg_5x5", "all"]
     assert (
         len(SINGLE_STAGE_TASK_DATASETS) == 65 and len(MULTI_STAGE_TASK_DATASETS) == 251
     )
@@ -2323,12 +2657,18 @@ def get_ds_soup(split, task_type, source_type):
         task_list = list(SINGLE_STAGE_TASK_DATASETS.keys()) + list(
             MULTI_STAGE_TASK_DATASETS.keys()
         )
+    elif task_type == "pretrain100":
+        task_list = PRE_TRAINING_TASKS["pretrain100"]
+    elif task_type == "pretrain200":
+        task_list = PRE_TRAINING_TASKS["pretrain200"]
     elif task_type == "posttrain_atomic_seen":
         task_list = POST_TRAINING_TASKS["atomic_seen"]
     elif task_type == "posttrain_composite_seen":
         task_list = POST_TRAINING_TASKS["composite_seen"]
     elif task_type == "posttrain_composite_unseen":
         task_list = POST_TRAINING_TASKS["composite_unseen"]
+    elif task_type == "pretrain_atomic_seen":
+        task_list = POST_TRAINING_TASKS["atomic_seen"]
     else:
         task_list = [task_type]
 
@@ -2343,16 +2683,21 @@ def get_ds_soup(split, task_type, source_type):
         ds_type_list = ["mg_im"]
     elif source_type == "all":
         ds_type_list = ["human_im", "mg_im"]
+    elif source_type == "mg_5x5":
+        ds_type_list = ["mg_5x5_im"]
     else:
         raise ValueError
 
-    ds_path_list = []
+    ds_soup_list = []
     for task in task_list:
         for ds_type in ds_type_list:
-            ds_path = get_ds_path(
-                task=task, ds_type=ds_type, split=split, return_info=False
+            ds_meta = get_ds_meta(
+                task=task,
+                ds_type=ds_type,
+                split=split,
+                demo_fraction=demo_fraction,
             )
-            if ds_path is not None:
-                ds_path_list.append(ds_path)
+            if ds_meta is not None:
+                ds_soup_list.append(ds_meta)
 
-    return sorted(ds_path_list)
+    return ds_soup_list

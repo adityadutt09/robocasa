@@ -1,5 +1,4 @@
 from robocasa.utils.dataset_registry import (
-    get_ds_path,
     SINGLE_STAGE_TASK_DATASETS,
     MULTI_STAGE_TASK_DATASETS,
 )

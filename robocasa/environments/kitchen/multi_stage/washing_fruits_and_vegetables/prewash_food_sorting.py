@@ -24,11 +24,11 @@ class PrewashFoodSorting(Kitchen):
         )
         return ep_meta
 
-    def _reset_internal(self):
+    def _setup_scene(self):
         """
         Resets simulation internal configurations.
         """
-        super()._reset_internal()
+        super()._setup_scene()
         self.cabinet.open_door(self)
 
     def _get_obj_cfgs(self):

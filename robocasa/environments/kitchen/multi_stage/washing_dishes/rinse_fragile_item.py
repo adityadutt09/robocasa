@@ -5,7 +5,7 @@ class RinseFragileItem(Kitchen):
     """
     Rinse Fragile Item: composite task for Washing Dishes activity.
 
-    Simulates the process of rinsing and securing a fragile item without breaking it.
+    Simulates the process of rinsing and securing a fragile item on a drying rack.
 
     Steps:
         1) Gently pick up the fragile item and navigate to the sink
@@ -24,8 +24,9 @@ class RinseFragileItem(Kitchen):
         self.dish_rack = self.register_fixture_ref(
             "dish_rack", dict(id=FixtureType.DISH_RACK)
         )
+        self.stove = self.register_fixture_ref("stove", dict(id=FixtureType.STOVE))
         self.counter = self.register_fixture_ref(
-            "counter", dict(id=FixtureType.COUNTER, ref=FixtureType.STOVE)
+            "counter", dict(id=FixtureType.COUNTER, ref=self.stove)
         )
         self.init_robot_base_ref = self.counter
 
@@ -33,11 +34,12 @@ class RinseFragileItem(Kitchen):
         ep_meta = super().get_ep_meta()
         ep_meta[
             "lang"
-        ] = "Rinse the teapot for 100 timesteps and place it in the dish rack when done."
+        ] = "Rinse the teapot briefly and place it in the dish rack when done."
         return ep_meta
 
     def _setup_scene(self):
         super()._setup_scene()
+        self.sink.set_handle_state(self, rng=self.rng, mode="on")
         self.teapot_contact_time = 0
 
     def _get_obj_cfgs(self):
@@ -47,31 +49,27 @@ class RinseFragileItem(Kitchen):
             dict(
                 name="obj",
                 obj_groups="teapot",
+                init_robot_here=True,
                 placement=dict(
                     fixture=self.counter,
                     sample_region_kwargs=dict(
-                        ref=FixtureType.STOVE,
+                        ref=self.stove,
+                        loc="left_right",
                     ),
-                    size=(0.45, 0.45),
-                    pos=("ref", -0.5),
+                    size=(0.6, 0.3),
+                    pos=("ref", -1.0),
                 ),
             )
         )
         return cfgs
 
     def _check_success(self):
-        water_on = self.sink.get_handle_state(env=self)["water_on"]
-        if not water_on:
-            return False
-
-        in_water = self.sink.obj_in_water_stream(
-            self, "teapot", self.sink, water_radius=0.10, partial_check=False
-        )
+        in_water = self.sink.check_obj_under_water(self, "obj")
 
         if in_water:
             self.teapot_contact_time += 1
 
-        gripper_far_teapot = OU.gripper_obj_far(self, obj_name="teapot")
-        teapot_in_rack = OU.check_obj_fixture_contact(self, "teapot", self.dish_rack)
+        gripper_far_teapot = OU.gripper_obj_far(self, obj_name="obj")
+        teapot_in_rack = OU.obj_inside_of(self, "obj", self.dish_rack, th=0.02)
 
         return self.teapot_contact_time >= 100 and gripper_far_teapot and teapot_in_rack

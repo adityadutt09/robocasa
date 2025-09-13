@@ -462,6 +462,8 @@ def playback_dataset(
 
     if env is not None:
         env.close()
+    del env
+    del video_writer
 
 
 def get_playback_args():
@@ -587,12 +589,26 @@ if __name__ == "__main__":
     if os.path.isdir(args.dataset):
         for root, dirs, files in os.walk(args.dataset):
             for file in files:
-                if file == "demo.hdf5":
+                if file == "ep_demo.hdf5":
+                    with open(os.path.join(root, "ep_stats.json"), "r") as stats_f:
+                        ep_stats = json.load(stats_f)
+                    stale = ep_stats.get("stale", False)
+                    if stale:
+                        continue
+                    if os.path.exists(os.path.join(root, "ep_demo.mp4")):
+                        # already recorded video
+                        continue
                     dataset_list.append(os.path.join(root, file))
     else:
         dataset_list = [args.dataset]
 
-    for dataset in dataset_list:
+    dataset_exceptions = []
+    for ds_i, dataset in enumerate(dataset_list):
+        print(
+            colored(
+                f"\n[{ds_i+1}/{len(dataset_list)}] Playing back {dataset}", "yellow"
+            )
+        )
         try:
             playback_dataset(
                 dataset=dataset,
@@ -611,6 +627,25 @@ if __name__ == "__main__":
                 first=args.first,
                 verbose=args.verbose,
             )
+        except KeyboardInterrupt:
+            print(colored(f"Exiting Playback Early.", "yellow"))
+            break
         except Exception as e:
-            print("Exception!")
-            print(traceback.format_exc())
+            stack_trace = traceback.format_exc()
+            print(colored("Exception!", "red"))
+            print(colored(f"{stack_trace}", "red"))
+            dataset_exceptions.append((dataset, stack_trace))
+            print(
+                colored(
+                    f"[{len(dataset_exceptions)}/{ds_i+1}] exceptions so far.\n", "red"
+                )
+            )
+
+    if len(dataset_exceptions) > 0:
+        print()
+        print(
+            colored(f"Playback failed with the following resulting in errors:", "red")
+        )
+        for (dataset, stack_trace) in dataset_exceptions:
+            print(colored(f"{dataset}:", "red"))
+            # print(colored(f"{stack_trace}\n", "red"))

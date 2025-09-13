@@ -5,17 +5,46 @@ class EmptyDishRack(Kitchen):
     """
     Empty Dish Drying Rack: composite task for Organizing Dishes and Containers.
 
-    Simulates the task of removing all drinking containers from the dish rack and placing them in the cabinet.
+    Simulates the task of removing a drinking container from the dish rack and placing it in the cabinet.
 
     Steps:
-        Pick up all mugs and cups from the dish rack.
-        Place them inside the cabinet where all cups and mugs go.
+        Pick up the mug from the dish rack and place it in the cabinet.
+        Close the cabinet door(s).
     """
 
-    EXCLUDE_LAYOUTS = Kitchen.DOUBLE_CAB_EXCLUDED_LAYOUTS
-
-    # DishRack028, DishRack030, DishRack048 slots too narrow, won't work universally
-    EXCLUDE_STYLES = [15, 16, 19, 20, 23, 27, 34, 38, 39]
+    # excluded models due to placement issues
+    EXCLUDE_STYLES = [
+        12,
+        14,
+        15,
+        16,
+        18,
+        19,
+        20,
+        22,
+        23,
+        25,
+        27,
+        29,
+        31,
+        32,
+        34,
+        36,
+        38,
+        39,
+        43,
+        44,
+        45,
+        48,
+        49,
+        50,
+        54,
+        55,
+        56,
+        57,
+        58,
+        60,
+    ]
 
     def __init__(self, enable_fixtures=None, *args, **kwargs):
         enable_fixtures = enable_fixtures or []
@@ -28,7 +57,7 @@ class EmptyDishRack(Kitchen):
             "dish_rack", dict(id=FixtureType.DISH_RACK)
         )
         self.cabinet = self.register_fixture_ref(
-            "cabinet", dict(id=FixtureType.CABINET_DOUBLE_DOOR, ref=self.dish_rack)
+            "cabinet", dict(id=FixtureType.CABINET_WITH_DOOR, ref=self.dish_rack)
         )
         self.init_robot_base_ref = self.dish_rack
 
@@ -36,7 +65,7 @@ class EmptyDishRack(Kitchen):
         ep_meta = super().get_ep_meta()
         ep_meta[
             "lang"
-        ] = "Pick up the mug from the dish rack and place it inside the cabinet where all mugs go."
+        ] = "Pick up the mug from the dish rack and place it inside the open cabinet where all mugs go. Then close the cabinet door(s)."
         return ep_meta
 
     def _setup_scene(self):
@@ -54,7 +83,7 @@ class EmptyDishRack(Kitchen):
                     placement=dict(
                         fixture=self.cabinet,
                         size=(0.40, 0.20),
-                        pos=(-0.9 + (i * 0.3), -1.0),
+                        pos=(-0.9 + (i * 0.9), -1.0),
                     ),
                 )
             )
@@ -63,7 +92,7 @@ class EmptyDishRack(Kitchen):
             dict(
                 name="mug",
                 obj_groups="mug",
-                object_scale=0.85,
+                object_scale=0.95,
                 placement=dict(
                     fixture=self.dish_rack,
                     size=(1.0, 1.0),
@@ -74,10 +103,8 @@ class EmptyDishRack(Kitchen):
         return cfgs
 
     def _check_success(self):
-        if not OU.obj_inside_of(self, "mug", self.cabinet):
-            return False
+        mug_inside = OU.obj_inside_of(self, "mug", self.cabinet)
+        gripper_far = OU.gripper_obj_far(self, obj_name="mug")
+        cabinet_closed = self.cabinet.is_closed(env=self)
 
-        if OU.gripper_obj_far(self, obj_name="mug"):
-            return True
-        else:
-            return False
+        return mug_inside and gripper_far and cabinet_closed

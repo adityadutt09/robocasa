@@ -33,11 +33,11 @@ class AirDryFruit(Kitchen):
         ep_meta["refs"]["num_fruit"] = self.num_fruit
         return ep_meta
 
-    def _reset_internal(self):
+    def _setup_scene(self):
         """
         Resets simulation internal configurations.
         """
-        super()._reset_internal()
+        super()._setup_scene()
         self.sink.set_handle_state(mode="on", env=self, rng=self.rng)
 
     def _get_obj_cfgs(self):

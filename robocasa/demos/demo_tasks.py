@@ -11,7 +11,7 @@ import robocasa
 from robocasa.scripts.download_datasets import download_datasets
 from robocasa.scripts.download_kitchen_assets import download_and_extract_zip
 from robocasa.scripts.dataset_scripts.playback_dataset import playback_dataset
-from robocasa.utils.dataset_registry import get_ds_path
+from robocasa.utils.dataset_registry import get_ds_meta
 import os
 
 
@@ -110,7 +110,7 @@ if __name__ == "__main__":
             task = args.task
         video_num += 1
 
-        dataset = get_ds_path(task, ds_type="human_raw")
+        dataset = get_ds_meta(task, ds_type="human_raw")["path"]
 
         if os.path.exists(dataset) is False:
             # download dataset files
