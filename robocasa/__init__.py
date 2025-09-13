@@ -809,6 +809,9 @@ from robocasa.environments.kitchen.multi_stage.washing_dishes.clear_sink import 
 from robocasa.environments.kitchen.multi_stage.washing_dishes.collect_washing_supplies import (
     CollectWashingSupplies,
 )
+from robocasa.environments.kitchen.multi_stage.washing_dishes.divide_basins import (
+    DivideBasins,
+)
 from robocasa.environments.kitchen.multi_stage.washing_dishes.dry_dishes import (
     DryDishes,
 )
@@ -821,20 +824,20 @@ from robocasa.environments.kitchen.multi_stage.washing_dishes.dump_leftovers imp
 from robocasa.environments.kitchen.multi_stage.washing_dishes.load_dishwasher import (
     LoadDishwasher,
 )
-from robocasa.environments.kitchen.multi_stage.washing_dishes.prepare_dishwasher import (
-    PrepareDishwasher,
-)
 from robocasa.environments.kitchen.multi_stage.washing_dishes.place_dishes_by_sink import (
     PlaceDishesBySink,
 )
-from robocasa.environments.kitchen.multi_stage.washing_dishes.divide_basins import (
-    DivideBasins,
+from robocasa.environments.kitchen.multi_stage.washing_dishes.place_on_dish_rack import (
+    PlaceOnDishRack,
 )
 from robocasa.environments.kitchen.multi_stage.washing_dishes.pre_rinse_station import (
     PreRinseStation,
 )
 from robocasa.environments.kitchen.multi_stage.washing_dishes.pre_soak_pan import (
     PreSoakPan,
+)
+from robocasa.environments.kitchen.multi_stage.washing_dishes.prepare_dishwasher import (
+    PrepareDishwasher,
 )
 from robocasa.environments.kitchen.multi_stage.washing_dishes.return_washing_supplies import (
     ReturnWashingSupplies,

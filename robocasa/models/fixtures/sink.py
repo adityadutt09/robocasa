@@ -35,6 +35,41 @@ class Sink(Fixture):
     def get_reset_region_names(self):
         return ("basin", "basin_right", "basin_left")
 
+    def get_reset_regions(self, env=None, side=None):
+        """
+        Return sink reset regions, selecting basin regions for double-basin sinks.
+
+        Args:
+            env: Unused, kept for API compatibility with other fixtures
+            side (str | None): If "left" or "right", select that basin when available.
+                If None, and a double basin exists, returns both basins. Otherwise falls
+                back to the single "basin" region when present.
+
+        Returns:
+            dict: reset regions as computed by the base Fixture using the chosen region names.
+        """
+        double_basin = "basin_left" in self._regions
+        single_basin = "basin" in self._regions
+
+        if double_basin:
+            chosen = side.lower() if isinstance(side, str) else None
+            if chosen == "left":
+                region_names = ("basin_left",)
+            elif chosen == "right":
+                region_names = ("basin_right",)
+            else:
+                region_names = ("basin_left", "basin_right")
+        elif single_basin:
+            if side is not None:
+                raise ValueError(
+                    "Side selection is not supported: this sink has a single basin"
+                )
+            region_names = ("basin",)
+        else:
+            region_names = self.get_reset_region_names()
+
+        return super().get_reset_regions(env=env, reset_region_names=region_names)
+
     def update_state(self, env):
         """
         Updates the water flowing of the sink based on the handle_joint position
