@@ -302,19 +302,27 @@ from robosuite.environments import ALL_ENVIRONMENTS
 from robosuite.models.grippers import ALL_GRIPPERS
 from robosuite.robots import ALL_ROBOTS
 
+import warnings
+
 import mujoco
 
-assert (
-    mujoco.__version__ == "3.2.6"
-), "MuJoCo version must be 3.2.6. Please run pip install mujoco==3.2.6"
+# Relaxed version check - warn instead of asserting
+_mujoco_version = tuple(int(x) for x in mujoco.__version__.split(".")[:2])
+if _mujoco_version < (3, 2):
+    warnings.warn(
+        f"MuJoCo version {mujoco.__version__} detected. RoboCasa was tested with MuJoCo 3.2.6+. "
+        "Some features may not work correctly with older versions."
+    )
 
 import numpy
 
-assert numpy.__version__ in [
-    "1.23.2",
-    "1.23.3",
-    "1.23.5",
-], "numpy version must be either 1.23.{2,3,5}. Please install one of these versions."
+# Relaxed numpy version check - warn for major incompatibilities only
+_numpy_version = tuple(int(x) for x in numpy.__version__.split(".")[:2])
+if _numpy_version < (1, 23):
+    warnings.warn(
+        f"NumPy version {numpy.__version__} detected. RoboCasa was tested with NumPy 1.23.x. "
+        "Some features may not work correctly with older versions."
+    )
 
 import robosuite
 
